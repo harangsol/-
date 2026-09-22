@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+data/posts.db
+reports/*
+!reports/sample-report.md

@@ -1,0 +1,581 @@
+{
+  "_warning": "합성 데모 데이터입니다. 실제 게시물이 아니며 URL 도 열리지 않습니다. 파이프라인 동작 확인용.",
+  "items": [
+    {
+      "platform": "instagram",
+      "post_id": "demo_000",
+      "url": "https://www.instagram.com/reel/demo_000/",
+      "author": "jeongchaek_fund",
+      "author_followers": 8400,
+      "caption": "정책자금 3천만원, 서류 딱 4장이면 끝납니다\n\n사장님들 은행 창구에서 헤매지 마세요.\n1) 사업자등록증 2) 부가세과세표준증명 3) 재무제표 4) 국세완납증명\n소상공인시장진흥공단 직접대출 기준이고 금리는 연 3%대입니다. 저장해두세요.\n\n#정책자금 #소상공인정책자금 #정부지원금",
+      "posted_at": "2026-09-17T23:00:00+00:00",
+      "likes": 12400,
+      "comments": 880,
+      "shares": 410,
+      "saves": 2600,
+      "views": 742000,
+      "media_type": "reel",
+      "hashtags": [
+        "정책자금",
+        "소상공인정책자금",
+        "정부지원금"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_001",
+      "url": "https://www.instagram.com/reel/demo_001/",
+      "author": "jeongchaek_fund",
+      "author_followers": 8400,
+      "caption": "이 서류 하나 빠뜨려서 정책자금 떨어진 사장님이 올해만 백 명\n\n국세완납증명서 유효기간이 지나서 반려되는 경우가 제일 많습니다.\n\n#정책자금 #운전자금",
+      "posted_at": "2026-09-04T05:00:00+00:00",
+      "likes": 2100,
+      "comments": 140,
+      "shares": 60,
+      "saves": 380,
+      "views": 88000,
+      "media_type": "reel",
+      "hashtags": [
+        "정책자금",
+        "운전자금"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_002",
+      "url": "https://www.instagram.com/reel/demo_002/",
+      "author": "jeongchaek_fund",
+      "author_followers": 8400,
+      "caption": "기술보증기금 vs 신용보증재단, 뭐가 유리할까요\n\n업력 3년 미만이면 기보, 담보 없으면 신보재단부터 보는 게 순서입니다.\n\n#기술보증기금 #신용보증재단",
+      "posted_at": "2026-08-19T21:00:00+00:00",
+      "likes": 1800,
+      "comments": 96,
+      "shares": 40,
+      "saves": 310,
+      "views": 61000,
+      "media_type": "reel",
+      "hashtags": [
+        "기술보증기금",
+        "신용보증재단"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_003",
+      "url": "https://www.instagram.com/reel/demo_003/",
+      "author": "jeongchaek_fund",
+      "author_followers": 8400,
+      "caption": "정책자금 컨설팅비 500만원 냈다는 분 보고 말립니다\n\n수수료 선입금 요구는 100% 거르세요. 직접 신청 절차를 알려드립니다.\n\n#정책자금 #정부지원사업",
+      "posted_at": "2026-09-12T13:00:00+00:00",
+      "likes": 4300,
+      "comments": 620,
+      "shares": 150,
+      "saves": 900,
+      "views": 210000,
+      "media_type": "reel",
+      "hashtags": [
+        "정책자금",
+        "정부지원사업"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_004",
+      "url": "https://www.instagram.com/reel/demo_004/",
+      "author": "biz_money_lab",
+      "author_followers": 145000,
+      "caption": "올해 소상공인 정책자금 예산 소진 속도, 작년의 2배입니다\n\n3월에 이미 40% 나갔습니다. 신청 계획 있으면 서류부터 준비하세요.\n\n#정책자금 #정부지원금",
+      "posted_at": "2026-09-10T08:00:00+00:00",
+      "likes": 9800,
+      "comments": 320,
+      "shares": 280,
+      "saves": 1400,
+      "views": 1250000,
+      "media_type": "reel",
+      "hashtags": [
+        "정책자금",
+        "정부지원금"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_005",
+      "url": "https://www.instagram.com/reel/demo_005/",
+      "author": "biz_money_lab",
+      "author_followers": 145000,
+      "caption": "창업자금 받고 3개월 만에 폐업한 이유\n\n자금 용도 증빙을 안 맞추면 회수 들어옵니다.\n\n#창업자금 #정책자금",
+      "posted_at": "2026-08-28T07:00:00+00:00",
+      "likes": 5200,
+      "comments": 190,
+      "shares": 90,
+      "saves": 700,
+      "views": 430000,
+      "media_type": "reel",
+      "hashtags": [
+        "창업자금",
+        "정책자금"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_006",
+      "url": "https://www.instagram.com/reel/demo_006/",
+      "author": "biz_money_lab",
+      "author_followers": 145000,
+      "caption": "운전자금 한도는 매출이 아니라 이걸로 정해집니다\n\n부채비율과 업종별 표준 한도표를 같이 봅니다.\n\n#운전자금 #정책자금",
+      "posted_at": "2026-08-12T16:00:00+00:00",
+      "likes": 3100,
+      "comments": 110,
+      "shares": 45,
+      "saves": 520,
+      "views": 0,
+      "media_type": "image",
+      "hashtags": [
+        "운전자금",
+        "정책자금"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_007",
+      "url": "https://www.threads.net/@sonsangin_note/post/demo_007",
+      "author": "sonsangin_note",
+      "author_followers": 3200,
+      "caption": "정책자금 상담받고 나온 사장님이 제일 많이 하는 말: \"이걸 왜 아무도 안 알려줬죠?\"\n\n중진공, 소진공, 지자체 자금은 창구가 다 다릅니다. 한 군데 떨어졌다고 끝이 아니에요.\n\n#정책자금",
+      "posted_at": "2026-09-16T06:00:00+00:00",
+      "likes": 5600,
+      "comments": 740,
+      "shares": 320,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "정책자금"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_008",
+      "url": "https://www.threads.net/@sonsangin_note/post/demo_008",
+      "author": "sonsangin_note",
+      "author_followers": 3200,
+      "caption": "이번 달 마감인 지자체 지원사업 정리해둡니다\n\n서울/경기/부산 순으로 올립니다.\n\n#정부지원사업 #정책자금",
+      "posted_at": "2026-09-01T22:00:00+00:00",
+      "likes": 1200,
+      "comments": 180,
+      "shares": 95,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "정부지원사업",
+        "정책자금"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_009",
+      "url": "https://www.threads.net/@sonsangin_note/post/demo_009",
+      "author": "sonsangin_note",
+      "author_followers": 3200,
+      "caption": "보증서 대출 거절 사유, 실제 통보서 문구 그대로 공개합니다\n\n'신용도 판단정보 보유'가 뜨면 사실상 6개월은 막힌 겁니다.\n\n#보증서대출 #정책자금",
+      "posted_at": "2026-08-07T15:00:00+00:00",
+      "likes": 980,
+      "comments": 120,
+      "shares": 60,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "보증서대출",
+        "정책자금"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_010",
+      "url": "https://www.instagram.com/reel/demo_010/",
+      "author": "tax_saving_kim",
+      "author_followers": 22000,
+      "caption": "종합소득세 500만원 아낀 사장님이 한 건 딱 하나였습니다\n\n노란우산공제 + 연금저축 조합입니다. 순서가 중요합니다.\n소득 구간별 절세액 표는 저장해두고 보세요.\n\n#절세 #종합소득세 #노란우산공제",
+      "posted_at": "2026-09-15T08:00:00+00:00",
+      "likes": 18700,
+      "comments": 1240,
+      "shares": 760,
+      "saves": 4100,
+      "views": 1980000,
+      "media_type": "reel",
+      "hashtags": [
+        "절세",
+        "종합소득세",
+        "노란우산공제"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_011",
+      "url": "https://www.instagram.com/reel/demo_011/",
+      "author": "tax_saving_kim",
+      "author_followers": 22000,
+      "caption": "경비처리 되는 줄 알았는데 세무조사 나온 항목 5가지\n\n가족 인건비, 차량 유지비 순으로 많이 걸립니다.\n\n#절세 #경비처리 #세무조사",
+      "posted_at": "2026-09-05T17:00:00+00:00",
+      "likes": 6400,
+      "comments": 410,
+      "shares": 210,
+      "saves": 1500,
+      "views": 520000,
+      "media_type": "reel",
+      "hashtags": [
+        "절세",
+        "경비처리",
+        "세무조사"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_012",
+      "url": "https://www.instagram.com/reel/demo_012/",
+      "author": "tax_saving_kim",
+      "author_followers": 22000,
+      "caption": "법인전환, 매출 얼마부터 유리한가요?\n\n단순히 매출이 아니라 대표 급여 설계까지 같이 봐야 합니다.\n\n#법인전환 #절세",
+      "posted_at": "2026-08-24T03:00:00+00:00",
+      "likes": 2900,
+      "comments": 180,
+      "shares": 70,
+      "saves": 640,
+      "views": 175000,
+      "media_type": "reel",
+      "hashtags": [
+        "법인전환",
+        "절세"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_013",
+      "url": "https://www.instagram.com/reel/demo_013/",
+      "author": "tax_saving_kim",
+      "author_followers": 22000,
+      "caption": "부가세 신고 전에 이것만 확인해도 가산세는 피합니다\n\n매입세금계산서 누락분 조회 방법입니다.\n\n#부가세 #절세",
+      "posted_at": "2026-08-01T08:00:00+00:00",
+      "likes": 1500,
+      "comments": 88,
+      "shares": 30,
+      "saves": 290,
+      "views": 0,
+      "media_type": "image",
+      "hashtags": [
+        "부가세",
+        "절세"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_014",
+      "url": "https://www.instagram.com/reel/demo_014/",
+      "author": "semu_daily",
+      "author_followers": 61000,
+      "caption": "연말정산 13월의 월급이 아니라 13월의 세금폭탄이 되는 이유\n\n중도 입사자와 이직자는 전 직장 원천징수영수증을 꼭 합산하세요.\n\n#연말정산 #절세 #세금폭탄",
+      "posted_at": "2026-09-11T07:00:00+00:00",
+      "likes": 11200,
+      "comments": 690,
+      "shares": 540,
+      "saves": 2900,
+      "views": 1420000,
+      "media_type": "reel",
+      "hashtags": [
+        "연말정산",
+        "절세",
+        "세금폭탄"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_015",
+      "url": "https://www.instagram.com/reel/demo_015/",
+      "author": "semu_daily",
+      "author_followers": 61000,
+      "caption": "증여세 없이 자녀에게 줄 수 있는 금액, 10년 단위로 끊어보세요\n\n미성년 2천만원, 성년 5천만원입니다.\n\n#증여세 #절세",
+      "posted_at": "2026-08-30T20:00:00+00:00",
+      "likes": 8800,
+      "comments": 520,
+      "shares": 610,
+      "saves": 3300,
+      "views": 990000,
+      "media_type": "reel",
+      "hashtags": [
+        "증여세",
+        "절세"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_016",
+      "url": "https://www.threads.net/@jeolse_talk/post/demo_016",
+      "author": "jeolse_talk",
+      "author_followers": 12000,
+      "caption": "세무사가 절대 먼저 말 안 해주는 절세 항목 하나 풀겠습니다\n\n청년 고용 증대 세액공제. 요건만 맞으면 1인당 최대 1,550만원입니다. 소급 경정청구도 됩니다.\n\n#절세 #세액공제",
+      "posted_at": "2026-09-16T20:00:00+00:00",
+      "likes": 9200,
+      "comments": 1350,
+      "shares": 880,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "절세",
+        "세액공제"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_017",
+      "url": "https://www.threads.net/@jeolse_talk/post/demo_017",
+      "author": "jeolse_talk",
+      "author_followers": 12000,
+      "caption": "환급 대행 수수료 30% 내지 마세요\n\n홈택스에서 직접 경정청구 하는 화면 순서를 적어둡니다.\n\n#절세 #환급",
+      "posted_at": "2026-09-08T07:00:00+00:00",
+      "likes": 3400,
+      "comments": 420,
+      "shares": 260,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "절세",
+        "환급"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_018",
+      "url": "https://www.threads.net/@jeolse_talk/post/demo_018",
+      "author": "jeolse_talk",
+      "author_followers": 12000,
+      "caption": "부가세 신고 기간에 제일 많이 받는 질문 3개\n\n간이과세 전환 시점 질문이 압도적입니다.\n\n#부가세 #절세",
+      "posted_at": "2026-08-15T02:00:00+00:00",
+      "likes": 760,
+      "comments": 95,
+      "shares": 40,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "부가세",
+        "절세"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_019",
+      "url": "https://www.instagram.com/reel/demo_019/",
+      "author": "saving_2030",
+      "author_followers": 4900,
+      "caption": "청년도약계좌, 5년 뒤 5천만원이 진짜 가능한지 계산해봤습니다\n\n월 70만원 납입 기준 정부기여금까지 넣은 실제 수령액입니다. 소득 구간별로 다릅니다.\n\n#청년도약계좌 #재테크 #저축",
+      "posted_at": "2026-09-19T07:00:00+00:00",
+      "likes": 15600,
+      "comments": 980,
+      "shares": 720,
+      "saves": 3800,
+      "views": 1640000,
+      "media_type": "reel",
+      "hashtags": [
+        "청년도약계좌",
+        "재테크",
+        "저축"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_020",
+      "url": "https://www.instagram.com/reel/demo_020/",
+      "author": "saving_2030",
+      "author_followers": 4900,
+      "caption": "파킹통장 금리 순위, 이번 주 기준으로 정리했습니다\n\n1금융권만 추렸습니다.\n\n#파킹통장 #재테크",
+      "posted_at": "2026-09-08T16:00:00+00:00",
+      "likes": 3200,
+      "comments": 210,
+      "shares": 140,
+      "saves": 880,
+      "views": 240000,
+      "media_type": "reel",
+      "hashtags": [
+        "파킹통장",
+        "재테크"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_021",
+      "url": "https://www.instagram.com/reel/demo_021/",
+      "author": "saving_2030",
+      "author_followers": 4900,
+      "caption": "적금 풍차돌리기, 솔직히 요즘은 비추입니다\n\n관리 비용 대비 이자 차이가 거의 없습니다. 대안을 알려드립니다.\n\n#적금추천 #재테크",
+      "posted_at": "2026-08-31T20:00:00+00:00",
+      "likes": 5100,
+      "comments": 640,
+      "shares": 190,
+      "saves": 1100,
+      "views": 380000,
+      "media_type": "reel",
+      "hashtags": [
+        "적금추천",
+        "재테크"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_022",
+      "url": "https://www.instagram.com/reel/demo_022/",
+      "author": "saving_2030",
+      "author_followers": 4900,
+      "caption": "ISA 계좌 3년 만기 때 뭘 해야 하는지 모르는 분 많습니다\n\n연금계좌 이체하면 추가 세액공제가 붙습니다.\n\n#ISA계좌 #연금저축",
+      "posted_at": "2026-08-18T08:00:00+00:00",
+      "likes": 2400,
+      "comments": 150,
+      "shares": 80,
+      "saves": 700,
+      "views": 130000,
+      "media_type": "reel",
+      "hashtags": [
+        "ISA계좌",
+        "연금저축"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_023",
+      "url": "https://www.instagram.com/reel/demo_023/",
+      "author": "money_habit_kr",
+      "author_followers": 210000,
+      "caption": "IRP 수수료 0원인 곳, 여기 있습니다\n\n증권사별 수수료 비교표입니다.\n\n#IRP #연금저축",
+      "posted_at": "2026-08-25T15:00:00+00:00",
+      "likes": 7600,
+      "comments": 240,
+      "shares": 180,
+      "saves": 1900,
+      "views": 0,
+      "media_type": "image",
+      "hashtags": [
+        "IRP",
+        "연금저축"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_024",
+      "url": "https://www.instagram.com/reel/demo_024/",
+      "author": "money_habit_kr",
+      "author_followers": 210000,
+      "caption": "연금저축 세액공제 한도 늘어난 거 모르는 분 아직도 많습니다\n\n연 600만원, 총급여 5,500만원 이하면 16.5% 돌려받습니다.\n\n#연금저축 #세액공제 #절세",
+      "posted_at": "2026-09-14T06:00:00+00:00",
+      "likes": 14300,
+      "comments": 480,
+      "shares": 390,
+      "saves": 3600,
+      "views": 2100000,
+      "media_type": "reel",
+      "hashtags": [
+        "연금저축",
+        "세액공제",
+        "절세"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_025",
+      "url": "https://www.threads.net/@jeoching_diary/post/demo_025",
+      "author": "jeoching_diary",
+      "author_followers": 900,
+      "caption": "통장 쪼개기 6개월 해보고 남은 결론 하나\n\n고정비 통장만 분리해도 절반은 됩니다. 나머지는 과합니다.\n\n#통장쪼개기 #저축 #재테크",
+      "posted_at": "2026-09-18T02:00:00+00:00",
+      "likes": 4200,
+      "comments": 580,
+      "shares": 310,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "통장쪼개기",
+        "저축",
+        "재테크"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_026",
+      "url": "https://www.threads.net/@jeoching_diary/post/demo_026",
+      "author": "jeoching_diary",
+      "author_followers": 900,
+      "caption": "1년에 1000만원 모으는 사람들의 공통점\n\n월급날이 아니라 지출일 기준으로 예산을 짭니다.\n\n#돈모으는법 #저축",
+      "posted_at": "2026-09-04T13:00:00+00:00",
+      "likes": 2800,
+      "comments": 340,
+      "shares": 180,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "돈모으는법",
+        "저축"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_027",
+      "url": "https://www.threads.net/@jeoching_diary/post/demo_027",
+      "author": "jeoching_diary",
+      "author_followers": 900,
+      "caption": "청약통장 해지할까 고민하는 분께\n\n공공분양 노릴 게 아니면 실익이 크지 않습니다.\n\n#청약통장 #저축",
+      "posted_at": "2026-08-08T13:00:00+00:00",
+      "likes": 520,
+      "comments": 88,
+      "shares": 30,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "청약통장",
+        "저축"
+      ]
+    },
+    {
+      "platform": "instagram",
+      "post_id": "demo_028",
+      "url": "https://www.instagram.com/reel/demo_028/",
+      "author": "cafe_tour_daily",
+      "author_followers": 33000,
+      "caption": "성수동 신상 카페 3곳, 웨이팅 없이 가는 시간대\n\n평일 2시가 제일 한가합니다.\n\n#카페추천 #성수동",
+      "posted_at": "2026-09-15T15:00:00+00:00",
+      "likes": 22000,
+      "comments": 340,
+      "shares": 890,
+      "saves": 5200,
+      "views": 3100000,
+      "media_type": "reel",
+      "hashtags": [
+        "카페추천",
+        "성수동"
+      ]
+    },
+    {
+      "platform": "threads",
+      "post_id": "demo_029",
+      "url": "https://www.threads.net/@coin_signal_room/post/demo_029",
+      "author": "coin_signal_room",
+      "author_followers": 5000,
+      "caption": "리딩방 무료 체험 선착순 30명\n\n수익 인증 확인하세요.\n\n#코인리딩 #리딩방",
+      "posted_at": "2026-09-20T08:00:00+00:00",
+      "likes": 300,
+      "comments": 40,
+      "shares": 10,
+      "saves": 0,
+      "views": null,
+      "media_type": "text",
+      "hashtags": [
+        "코인리딩",
+        "리딩방"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# 코어 파이프라인(sample/file 소스, 점수, 리포트)은 표준 라이브러리만으로 동작한다.
+# 아래는 실제 수집(Apify / Meta Graph API)을 붙일 때만 필요하다.
+requests>=2.31
