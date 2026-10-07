@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { photos } from "@/config/site";
+import { photos, profile } from "@/config/site";
 import { cx } from "@/components/ui/primitives";
 
 /**
@@ -36,8 +36,8 @@ export function HeroVisual() {
 function OrderNote({ className }: { className?: string }) {
   const rows = [
     { when: "지금", what: "비상자금 3개월치부터", done: true },
-    { when: "다음", what: "겹치는 보장이 있는지 확인", done: false },
-    { when: "나중", what: "퇴직연금 담긴 곳 점검", done: false },
+    { when: "다음", what: "대출 금리·만기 확인", done: false },
+    { when: "나중", what: "겹치는 보장 정리", done: false },
   ];
   return (
     <figure
@@ -82,29 +82,47 @@ function OrderNote({ className }: { className?: string }) {
   );
 }
 
-/** 황진 소개 섹션 비주얼. 사진이 없으면 브랜드 문장을 담은 패널. */
-export function AboutVisual() {
+/** 황진 소개 — 프로필 카드(사진이 있으면 사진 아래에 붙는다). 경력은 신뢰 근거로만 담백하게 보여준다. */
+export function ProfileCard() {
   const photo = photos.about;
-  if (photo.src) {
-    return (
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-paper">
-        <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 440px, 90vw" className="object-cover" loading="lazy" />
-      </div>
-    );
-  }
   return (
-    <div className="on-navy flex aspect-[5/4] w-full flex-col justify-between rounded-[6px] bg-navy p-7 text-on-navy sm:aspect-[4/5] sm:p-10">
-      <svg aria-hidden="true" viewBox="0 0 120 40" className="h-8 w-auto self-start text-[#9fd0a7]" fill="none">
-        <path d="M2 30c14 0 18-20 32-20s18 20 32 20 18-20 32-20 14 10 20 10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-      <p className="text-[1.5rem] font-bold leading-[1.45] tracking-[-0.03em] sm:text-[1.75rem]">
-        잘 벌고,
-        <br />
-        잘 쓰고,
-        <br />
-        오래 잘 살기.
-      </p>
-      <p className="text-base text-on-navy-muted">황진이 금융을 바라보는 기준</p>
+    <div>
+      {photo.src && (
+        <div className="relative mb-4 aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-paper">
+          <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 440px, 90vw" className="object-cover" loading="lazy" />
+        </div>
+      )}
+      <div className="on-navy rounded-[6px] bg-navy px-7 py-8 text-on-navy sm:px-9 sm:py-10">
+        <p className="text-[1.75rem] font-bold tracking-[-0.03em] text-white">황진</p>
+        <dl className="mt-6 space-y-5 border-t border-navy-line pt-6">
+          <div>
+            <dt className="text-base text-on-navy-muted">경력</dt>
+            <dd className="mt-1 text-[1.25rem] font-semibold">금융 현장 {profile.careerYears}년</dd>
+          </div>
+          <div>
+            <dt className="text-base text-on-navy-muted">함께 보는 영역</dt>
+            <dd className="mt-2">
+              <ul className="flex flex-wrap gap-2">
+                {profile.areas.map((a) => (
+                  <li key={a} className="rounded-full border border-navy-line px-3 py-1 text-base">
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+          {profile.credentials.length > 0 && (
+            <div>
+              <dt className="text-base text-on-navy-muted">자격·등록</dt>
+              <dd className="mt-1">{profile.credentials.join(" · ")}</dd>
+            </div>
+          )}
+          <div>
+            <dt className="text-base text-on-navy-muted">상담 방식</dt>
+            <dd className="mt-1">상품보다 상황을 먼저 봅니다.</dd>
+          </div>
+        </dl>
+      </div>
     </div>
   );
 }

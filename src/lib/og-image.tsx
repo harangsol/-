@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { profile } from "@/config/site";
 
 /**
  * 공유용 OG 이미지 렌더러.
@@ -13,16 +14,16 @@ export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_PRESETS = {
   home: {
-    eyebrow: "황진 개인금융",
+    eyebrow: `금융 현장 ${profile.careerYears}년, 황진`,
     title: "잘 벌고, 잘 쓰고,\n오래 잘 살기.",
-    sub: "보험 · 연금 · 퇴직연금 · 투자\n뭐부터 볼지 1분 금융점검으로 정리해보세요.",
-    alt: "황진 개인금융 — 잘 벌고, 잘 쓰고, 오래 잘 살기.",
+    sub: "대출 · 보험 · 연금 · 퇴직연금 · 투자\n뭐부터 볼지 함께 정리합니다.",
+    alt: "황진 — 잘 벌고, 잘 쓰고, 오래 잘 살기.",
   },
   check: {
-    eyebrow: "1분 개인금융 점검",
+    eyebrow: "황진의 1분 금융점검",
     title: "내 돈, 무엇부터\n봐야 할까?",
-    sub: "질문 8개 · 약 1분 · 이름과 연락처 없이\n지금 먼저 확인해볼 영역을 알려드려요.",
-    alt: "1분 개인금융 점검 — 내 돈, 무엇부터 봐야 할까?",
+    sub: "질문 9개 · 약 1분 · 이름과 연락처 없이\n지금 먼저 확인해볼 영역을 알려드려요.",
+    alt: "1분 금융점검 — 내 돈, 무엇부터 봐야 할까?",
   },
 } as const;
 
@@ -38,8 +39,8 @@ export async function renderOgImage(preset: OgPreset) {
   const [bold, medium] = await fontsPromise;
   const rows = [
     { when: "지금", what: "비상자금부터", on: true },
-    { when: "다음", what: "보장 겹침 확인", on: false },
-    { when: "나중", what: "퇴직연금 점검", on: false },
+    { when: "다음", what: "대출 금리·만기", on: false },
+    { when: "나중", what: "보장 겹침 정리", on: false },
   ];
 
   return new ImageResponse(

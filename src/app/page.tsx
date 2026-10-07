@@ -1,28 +1,30 @@
 import {
   About,
-  Areas,
+  Cases,
   CheckInvite,
   FinalCta,
   Hero,
   NotSaid,
+  Principle,
   Process,
-  Roles,
+  Referral,
   Thoughts,
-  Who,
+  Work,
 } from "@/components/home/sections";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <Thoughts />
-      <Roles />
-      <Areas />
-      <Who />
-      <Process />
+      <Work />
+      <Principle />
       <About />
+      <Cases />
+      <Process />
       <NotSaid />
+      <Thoughts />
       <CheckInvite />
+      <Referral />
       <FinalCta />
     </>
   );

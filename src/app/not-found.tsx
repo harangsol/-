@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="mt-4 text-muted">주소가 바뀌었거나 잘못 입력된 것 같아요. 아래에서 다시 시작해보세요.</p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link href="/check" className={buttonClass("primary", "sm:px-8")}>
-          1분 개인금융 점검하기
+          1분 금융점검 하기
           <Arrow />
         </Link>
         <Link href="/" className={buttonClass("outline", "sm:px-8")}>

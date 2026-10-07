@@ -20,9 +20,9 @@ export function ContactPanel() {
 
       <section id="form" aria-labelledby="form-title" className="mt-16 scroll-mt-24 border-t border-line pt-12">
         <h2 id="form-title" className="text-[1.5rem] font-bold text-navy sm:text-[1.75rem]">
-          간단 상담신청
+          내 상황 한번 얘기해보기
         </h2>
-        <p className="mb-8 mt-3 text-muted">이름과 연락처, 궁금한 영역만 있으면 됩니다. 1분이면 충분해요.</p>
+        <p className="mb-8 mt-3 text-muted">이름과 연락처, 궁금한 영역만 있으면 됩니다. 정리된 질문이 없어도 괜찮아요.</p>
         <ConsultationForm />
       </section>
     </>

@@ -135,7 +135,7 @@ export function ConsultationForm() {
             <path d="M5 12.5 10 17.5 19 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
-        <h2 className="mt-5 text-[1.5rem] font-bold text-navy">신청이 접수되었습니다.</h2>
+        <h2 className="mt-5 text-[1.5rem] font-bold text-navy">잘 전달되었습니다.</h2>
         <p className="mt-3 text-muted">
           {contact.responseNote}
           <br />
@@ -345,9 +345,9 @@ export function ConsultationForm() {
         )}
 
         <Button type="submit" className="w-full" disabled={status === "submitting"}>
-          {status === "submitting" ? "보내는 중…" : "상담 신청하기"}
+          {status === "submitting" ? "보내는 중…" : "뭐부터 볼지 물어보기"}
         </Button>
-        <p className="text-center text-base text-muted">신청 후에도 원하지 않으시면 언제든 그만하셔도 됩니다.</p>
+        <p className="text-center text-base text-muted">이야기해보고 원하지 않으시면 언제든 그만하셔도 됩니다.</p>
       </form>
 
       <Modal open={sheet === "privacy"} onClose={() => setSheet(null)} title="개인정보 수집 및 이용 동의 (필수)" labelId={fid("privacy-sheet")}>

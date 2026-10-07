@@ -13,7 +13,7 @@ type Props = {
   resultType?: string;
 };
 
-/** 상담 방법 3가지: 카카오톡 / 간단 상담신청 / 전화. 설정되지 않은 채널은 숨긴다. */
+/** 연락 방법 3가지: 카카오톡 / 연락처 남기기 / 전화. 설정되지 않은 채널은 숨긴다. */
 export function ContactOptions({ location, onFormSelect, resultType }: Props) {
   const params = { location, ...(resultType ? { result_type: resultType } : {}) };
   return (
@@ -38,18 +38,18 @@ export function ContactOptions({ location, onFormSelect, resultType }: Props) {
       <li>
         {onFormSelect ? (
           <button type="button" onClick={onFormSelect} className={optionClass}>
-            <OptionBody icon={<FormIcon />} title="간단 상담신청" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
+            <OptionBody icon={<FormIcon />} title="내 상황 한번 얘기해보기" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
           </button>
         ) : (
           <Link href="/contact#form" className={optionClass}>
-            <OptionBody icon={<FormIcon />} title="간단 상담신청" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
+            <OptionBody icon={<FormIcon />} title="내 상황 한번 얘기해보기" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
           </Link>
         )}
       </li>
       {contact.phone && (
         <li>
           <a href={phoneHref(contact.phone)} onClick={() => track("phone_contact_click", params)} className={optionClass}>
-            <OptionBody icon={<PhoneIcon />} title="전화로 문의하기" desc={contact.phone} />
+            <OptionBody icon={<PhoneIcon />} title="전화로 물어보기" desc={contact.phone} />
           </a>
         </li>
       )}

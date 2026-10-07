@@ -4,7 +4,7 @@ import { compliance } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "이용안내",
-  description: "황진 개인금융 안내 페이지와 1분 금융점검의 성격, 이용 시 유의사항입니다.",
+  description: "황진의 금융 안내 페이지와 1분 금융점검의 성격, 이용 시 유의사항입니다.",
   alternates: { canonical: "/terms" },
 };
 

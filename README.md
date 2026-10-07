@@ -1,9 +1,22 @@
-# 황진 개인금융 안내 페이지
+# 황진 — 대출·보험·연금·퇴직연금·투자 금융가이드
 
 > 잘 벌고, 잘 쓰고, 오래 잘 살기.
 
-Instagram·Threads에서 황진을 알게 된 30~50대가 들어와 **철학 이해 → 1분 점검 → 결과 확인 → 부담 없는 문의**까지 이어지는 모바일 퍼널입니다.
-하랑솔루션(B2B)과 분리된 개인 브랜드(B2C) 사이트입니다.
+가망고객과 기존고객이 **황진이 어떤 사람이고, 어떤 금융 일을 하며, 왜 믿을 수 있는지** 이해하고,
+스스로 1분 점검을 해본 뒤 부담 없이 물어보거나 **주변에 소개하고 싶어지는** 개인 브랜드 페이지입니다.
+하랑솔루션(B2B)과 분리된 개인 브랜드(B2C) 사이트이며, 화면에는 별도 브랜드명 없이 '황진'만 씁니다.
+
+### 홈 화면 흐름
+
+| 순서 | 섹션 | 방문자가 하게 되는 생각 |
+| --- | --- | --- |
+| 1 | HERO — 금융 현장 13년, 황진입니다 | 황진이 누구지? |
+| 2 | 황진은 이런 일을 합니다 (대출·보험·연금·퇴직연금·투자) | 이런 금융 일을 하는구나, 꽤 넓게 보네 |
+| 3 | 상품보다 상황을 먼저 봅니다 | 상품부터 권하는 스타일은 아니구나 |
+| 4 | 황진 소개 · 프로필 카드 | 금융 일을 오래 했구나 |
+| 5 | 상담 방식 (사례 탭) · 상담 과정 · 드리지 않는 것 | 상담 방식도 괜찮아 보인다 |
+| 6 | 이런 생각 해본 적 있나요? · 1분 금융점검 | 나도 한번 점검해볼까? |
+| 7 | 주변에 이런 분이 떠오른다면 (공유) | 아는 사람에게 보내줘도 되겠다 |
 
 - Next.js 16 (App Router, Cache Components) · React 19 · TypeScript · Tailwind CSS 4
 - 외부 UI 라이브러리 없음. 런타임 의존성은 `next`, `react`, `react-dom` 세 개뿐입니다.
@@ -15,8 +28,8 @@ Instagram·Threads에서 황진을 알게 된 30~50대가 들어와 **철학 이
 
 | 경로 | 내용 | 렌더링 |
 | --- | --- | --- |
-| `/` | 홈 — HERO, 공감, 돈의 역할, 점검 4가지, 대상, 상담 과정, 황진 소개, 드리지 않는 것, 1분 점검 안내, 최종 CTA | 정적 |
-| `/check` | 1분 점검 (한 화면 한 질문, `?q=1..8`) | 정적 + 클라이언트 |
+| `/` | 홈 (위 흐름 표) | 정적 |
+| `/check` | 1분 점검 (한 화면 한 질문, `?q=1..9`) | 정적 + 클라이언트 |
 | `/check/result` | 점검 결과 (검색 노출 안 함) | 정적 + 클라이언트 |
 | `/contact` | 카카오톡 · 간단 상담신청 · 전화 | 정적 + 클라이언트 |
 | `/privacy`, `/terms` | 개인정보처리방침, 이용안내 | 정적 |
@@ -29,13 +42,14 @@ Instagram·Threads에서 황진을 알게 된 30~50대가 들어와 **철학 이
 src/
 ├─ app/                     라우트 (위 표)
 ├─ components/
-│  ├─ home/                 홈 섹션 1~10, HERO 비주얼
+│  ├─ home/                 홈 섹션, HERO 비주얼·프로필 카드, 상담 사례 탭
 │  ├─ diagnostic/           1분 점검, 결과 화면
 │  ├─ contact/              상담 옵션, 상담 폼, 동의 요약
 │  ├─ layout/               헤더, 푸터, 하단 고정 CTA, 분석 로더
 │  └─ ui/                   버튼·섹션·모달 등 기본 요소
 ├─ config/
-│  ├─ site.ts               브랜드 문구, 연락처, 사진 슬롯, 금융 고지
+│  ├─ site.ts               이름·SEO 문구, 경력(profile), 공유 문구(share), 연락처, 사진 슬롯, 금융 고지
+│  ├─ cases.ts              상담 방식 사례 (현재 SAMPLE — 실제 사례로 교체)
 │  └─ privacy.ts            개인정보 항목·목적·보유기간 (법률 검토 대상)
 ├─ lib/
 │  ├─ diagnostic/           질문(questions.ts), 점수(scoring.ts), 저장(storage.ts)
@@ -152,6 +166,20 @@ HTTPS는 Vercel이 자동 발급·갱신합니다. 사이트는 HSTS 헤더를 �
 
 Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&utm_campaign=bio`처럼 UTM을 붙이면 채널별로 나뉘어 보이고, 상담 신청 행에도 같은 값이 저장됩니다.
 
+### 소개(추천) 지표
+
+| 이벤트 | 언제 | 파라미터 |
+| --- | --- | --- |
+| `referral_share_click` | '지인에게 이 페이지 보내기' 클릭 | `location`(home_referral·result), `method`(share_sheet·copy) |
+| `referral_url_copy` | 공유 시트가 없는 브라우저에서 링크 복사 완료 | `location` |
+
+공유된 링크에는 `utm_source=referral&utm_medium=share&utm_campaign=friend`가 붙습니다. GA에서 **소개로 들어온 방문 → 점검 → 상담** 전환을 따로 볼 수 있고, 상담 신청 행의 `utm_source`가 `referral`이면 지인 소개로 온 분입니다.
+
+| KPI | 계산 |
+| --- | --- |
+| 공유 클릭률 | `referral_share_click` ÷ 홈 방문 사용자 |
+| 소개 유입 상담 전환율 | `utm_source=referral` 세션의 `consultation_submit` ÷ 같은 세션 수 |
+
 ## 6. Meta Pixel 설정
 
 1. Meta 이벤트 관리자에서 픽셀을 만들고 ID를 `NEXT_PUBLIC_META_PIXEL_ID`에 넣습니다.
@@ -193,7 +221,7 @@ Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&
 
 | 바꾸고 싶은 것 | 파일 |
 | --- | --- |
-| 질문·보기 문구, 보기별 점수 | `src/lib/diagnostic/questions.ts` → `scoredQuestions` |
+| 질문·보기 문구, 보기별 점수, 질문 순서 | `src/lib/diagnostic/questions.ts` → `scoredQuestions` |
 | Q8 관심 영역 보기 | `questions.ts` → `interestQuestion` (상담 폼 `INTEREST_OPTIONS`도 함께) |
 | 타입 경계(11/8/4점) | `src/lib/diagnostic/scoring.ts` → `TYPE_THRESHOLDS` |
 | 보정 규칙 | `scoring.ts` → `classify()` |
@@ -201,20 +229,33 @@ Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&
 | 결과 제목·본문·CTA 문구 | `questions.ts` → `resultCopy` |
 | 영역 이름·설명 | `questions.ts` → `priorityLabels`, `priorityDescriptions` |
 
-바꾼 뒤에는 `npm test`로 규칙 테스트(3⁷ = 2,187가지 조합 전수 검사 포함)를 돌리세요.
+바꾼 뒤에는 `npm test`로 규칙 테스트(3⁸ = 6,561가지 조합 전수 검사 포함)를 돌리세요.
+
+## 11. 황진 소개·사례·공유 문구 수정
+
+| 바꾸고 싶은 것 | 위치 |
+| --- | --- |
+| 경력 연수(13년), 다루는 영역, 자격·등록 | `src/config/site.ts` → `profile` (자격은 실제 보유한 것만, 비우면 숨김) |
+| 상담 방식 사례 | `src/config/cases.ts` — 실제 사례로 바꿀 때는 본인 동의, 식별정보 제거, `sample: false`. 수익률·절감액 같은 성과 숫자는 쓰지 않습니다 |
+| 지인 공유 문구·링크 구분값 | `src/config/site.ts` → `share` |
+| 검색결과 제목·설명 | `src/config/site.ts` → `site.title`, `site.description` (화면에는 노출되지 않음) |
+| '황진은 이런 일을 합니다' 영역 설명 | `src/components/home/sections.tsx` → `WORK` |
 
 ---
 
 ## 1분 점검 알고리즘
 
-- Q1~Q7: 보기별 2 / 1 / 0점, 최대 14점. Q8은 점수 없이 관심 영역 태그.
+- 화면 순서: 소득·지출 → 비상자금 → **대출 구조(금리·월 상환액·만기)** → 보험 → 은퇴 생활비 → 연금 수령액 → 투자 목적 → 큰돈 시기 → 관심 영역 (9문항)
+- q1~q7: 보기별 2 / 1 / 0점, 최대 14점. 관심 영역(q8)은 점수 없이 태그로만 씁니다.
+- 대출 문항(`debt`): '대출이 없다'·'대부분 알고 있다' 2점, '대략만' 1점, '잘 모르겠다' 0점. **총점에는 넣지 않아** 원래의 11/8/4점 기준이 그대로 유지되고, 아래 보정 4와 '먼저 확인할 영역'에만 쓰입니다.
 - 기본 타입: 11~14 **A** · 8~10 **B** · 4~7 **C** · 0~3 **D**
 - 보정 (결과를 좋은 쪽으로는 올리지 않고, '먼저 정리할 쪽'으로만 내림)
   1. Q1 또는 Q2가 0점 → A 불가(최소 B)
   2. Q1과 Q2 모두 0점 → 최소 C
   3. Q1·Q2·Q3 중 2개 이상 0점 → D
+  4. 대출 문항이 0점(금리·상환액·만기를 잘 모름) → A 불가(최소 B)
   - 참고: 2번에 해당하면 3번(0점 2개 이상)에도 항상 해당하므로 실제 결과는 D가 됩니다. 명세대로 두 규칙 모두 구현했습니다.
-- 먼저 확인할 영역: Q1<2 또는 Q2<2 → 현금흐름/비상자금, Q3<2 → 보험, Q4<2 또는 Q5<2 → 연금/노후, Q6<2 → 투자 방향, Q7<2 → 생애자금 계획
+- 먼저 확인할 영역: Q1<2 또는 Q2<2 → 현금흐름/비상자금, 대출<2 → 대출/부채, Q3<2 → 보험, Q4<2 또는 Q5<2 → 연금/노후, Q6<2 → 투자 방향, Q7<2 → 생애자금 계획
 - 결과 화면은 '재무건전성·투자성향·적합성' 표현을 쓰지 않고 "지금 먼저 확인해볼 영역"으로만 안내하며, 참고용 고지를 함께 보여줍니다.
 
 ## 데이터 흐름과 개인정보
@@ -249,11 +290,11 @@ Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&
 
 | 항목 | 결과 |
 | --- | --- |
-| Lighthouse 모바일 `/` | Performance 95 · Accessibility 100 · SEO 100 · Best Practices 96* |
+| Lighthouse 모바일 `/` | Performance 95~96 · Accessibility 100 · SEO 100 · Best Practices 96* |
 | Lighthouse 모바일 `/check` · `/contact` | 93 · 100 · 100 / 98 · 100 · 100 |
 | 390×844, 393×873, 360×800, 1440 | 가로 스크롤 없음, 16px 미만 글자 없음, 44px 미만 터치 영역 없음 |
-| E2E (Playwright) | 점검 진행·이전 질문·브라우저 뒤로/앞으로·새로고침 유지·결과 타입·칩·상담 모달·폼 검증·동의·저장 행·GA/Meta 이벤트·개인정보 미전송 40개 항목 통과 |
-| 단위 테스트 | 14개 통과 |
+| E2E (Playwright) | 섹션 구성·'황진 개인금융' 미노출·제목, 공유(Web Share·복사 대체), 점검 9문항 진행·이전 질문·뒤로/앞으로·새로고침 유지, 결과 타입·칩, 하단 고정 CTA, 상담 모달·폼 검증·동의·저장 행, GA/Meta 이벤트, 개인정보 미전송 등 55개 항목 통과 |
+| 단위 테스트 | 15개 통과 |
 
 \* 테스트 환경에서 GA·Meta 외부 스크립트가 차단되어 생긴 콘솔 오류 때문이며 실제 배포 환경과는 무관합니다.
 

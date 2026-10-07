@@ -4,7 +4,7 @@ import { site } from "@/config/site";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: site.name,
-    short_name: "황진 개인금융",
+    short_name: "황진",
     description: site.description,
     start_url: "/",
     display: "browser",

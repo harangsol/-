@@ -1,13 +1,17 @@
 /**
- * 1분 개인금융 점검 — 점수 계산 로직.
+ * 1분 금융점검 — 점수 계산 로직.
  *
  * 이 파일은 의존성이 없는 순수 함수만 담는다. (tests/scoring.test.mjs 에서 직접 실행)
  * 결과 타입 경계나 보정 규칙을 바꾸려면 아래 상수와 classify() 만 수정하면 된다.
+ *
+ * - 총점은 q1~q7 (최대 14점) 기준. 원래 기준(11/8/4점)을 그대로 쓴다.
+ * - debt(대출 구조 문항)는 총점에 넣지 않고, 보정 규칙과 '먼저 확인할 영역'에만 쓴다.
  */
 
 export type ScoredQuestionId = "q1" | "q2" | "q3" | "q4" | "q5" | "q6" | "q7";
+export type QuestionId = ScoredQuestionId | "debt";
 export type Score = 0 | 1 | 2;
-export type Scores = Record<ScoredQuestionId, Score>;
+export type Scores = Record<QuestionId, Score>;
 export type ResultType = "A" | "B" | "C" | "D";
 
 export const SCORED_IDS: ScoredQuestionId[] = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"];
@@ -50,15 +54,19 @@ export function classify(scores: Scores): { total: number; type: ResultType } {
   const basicsZero = [scores.q1, scores.q2, scores.q3].filter((s) => s === 0).length;
   if (basicsZero >= 2) type = atLeast(type, "D");
 
+  // 보정 4. 대출 금리·상환액·만기를 잘 모르면 A가 될 수 없다. (현금흐름과 같은 기초 영역으로 본다)
+  if (scores.debt === 0) type = atLeast(type, "B");
+
   return { total, type };
 }
 
-export type PriorityTag = "cashflow" | "insurance" | "pension" | "investment" | "lifeplan";
+export type PriorityTag = "cashflow" | "debt" | "insurance" | "pension" | "investment" | "lifeplan";
 
 /** 결과 화면의 '지금 먼저 확인해볼 영역' 칩. 배열 순서대로 표시된다. */
 export function priorityTags(scores: Scores): PriorityTag[] {
   const tags: PriorityTag[] = [];
   if (scores.q1 < 2 || scores.q2 < 2) tags.push("cashflow");
+  if (scores.debt < 2) tags.push("debt");
   if (scores.q3 < 2) tags.push("insurance");
   if (scores.q4 < 2 || scores.q5 < 2) tags.push("pension");
   if (scores.q6 < 2) tags.push("investment");

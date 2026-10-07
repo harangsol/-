@@ -4,6 +4,7 @@
  */
 
 export const INTEREST_OPTIONS = [
+  { value: "loan", label: "대출" },
   { value: "insurance", label: "보험" },
   { value: "pension", label: "연금" },
   { value: "retirement_pension", label: "퇴직연금" },
@@ -18,7 +19,7 @@ export const TIME_OPTIONS = ["평일 오전", "평일 오후", "평일 저녁", 
 export const CONCERN_MAX = 200;
 
 const RESULT_TYPES = ["A", "B", "C", "D"] as const;
-const PRIORITY_TAGS = ["cashflow", "insurance", "pension", "investment", "lifeplan"] as const;
+const PRIORITY_TAGS = ["cashflow", "debt", "insurance", "pension", "investment", "lifeplan"] as const;
 type PriorityTagValue = (typeof PRIORITY_TAGS)[number];
 
 export type ConsultationInput = {

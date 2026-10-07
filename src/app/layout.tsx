@@ -4,7 +4,7 @@ import { Analytics } from "@/components/layout/analytics";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StickyCta } from "@/components/layout/sticky-cta";
-import { site, siteUrl, social } from "@/config/site";
+import { profile, site, siteUrl, social } from "@/config/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -53,8 +53,8 @@ const jsonLd = {
       "@type": "Person",
       "@id": `${siteUrl}/#person`,
       name: site.person,
-      description: "보험, 연금, 퇴직연금, 투자를 하나의 그림으로 정리하도록 돕는 개인금융 상담",
-      knowsAbout: ["개인 금융", "보험 점검", "연금", "퇴직연금", "노후 준비", "자산관리"],
+      description: `금융 현장 ${profile.careerYears}년. 대출, 보험, 연금, 퇴직연금, 투자를 하나의 그림으로 정리하도록 돕는 금융 상담`,
+      knowsAbout: ["대출", "부채 관리", "보험", "연금", "퇴직연금", "투자", "자산관리", "노후 준비"],
       url: siteUrl,
       ...(social.instagram || social.threads
         ? { sameAs: [social.instagram, social.threads].filter(Boolean) }

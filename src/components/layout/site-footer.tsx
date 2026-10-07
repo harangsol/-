@@ -9,14 +9,15 @@ export function SiteFooter() {
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-[1.25rem] font-bold tracking-[-0.03em] text-on-navy">{site.name}</p>
-            <p className="mt-2 text-base">{site.tagline}</p>
+            <p className="mt-2 text-base">{site.areasLabel}</p>
+            <p className="mt-1 text-base">{site.tagline}</p>
           </div>
           <nav aria-label="하단 메뉴" className="-mx-2 flex flex-wrap gap-x-2 gap-y-1 text-base">
             <Link href="/check" className="flex min-h-11 items-center px-2 hover:text-on-navy">
               1분 금융점검
             </Link>
             <Link href="/contact" className="flex min-h-11 items-center px-2 hover:text-on-navy">
-              문의하기
+              물어보기
             </Link>
             <Link href="/privacy" className="flex min-h-11 items-center px-2 font-semibold text-on-navy hover:underline">
               개인정보처리방침

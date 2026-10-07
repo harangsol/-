@@ -1,15 +1,30 @@
 import Link from "next/link";
+import { ShareButton } from "@/components/ui/share-button";
 import { Arrow, buttonClass, Container, cx, Eyebrow, Section, SectionTitle } from "@/components/ui/primitives";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { AboutVisual, HeroVisual } from "./visuals";
+import { profile } from "@/config/site";
+import { ConsultCases } from "./consult-cases";
+import { HeroVisual, ProfileCard } from "./visuals";
 
-/* SECTION 1 — HERO */
+/*
+ * 홈 화면 흐름 — 방문자가 이 순서로 생각하게 만든다.
+ *  1. 황진이 누구지?            → Hero
+ *  2. 이런 금융 일을 하는구나     → Work
+ *  3. 대출부터 투자까지 넓게 보네  → Work
+ *  4. 상품부터 권하지 않는구나     → Principle
+ *  5. 금융 일을 오래 했구나       → About
+ *  6. 상담 방식도 괜찮아 보인다    → ConsultCases, Process, NotSaid
+ *  7. 나도 한번 점검해볼까?       → Thoughts, CheckInvite
+ *  8. 아는 사람에게 보내줘도 되겠다 → Referral
+ */
+
+/* 1 — HERO */
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden bg-ivory pb-20 pt-24 sm:pb-28 sm:pt-36">
       <Container className="grid items-center gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
         <div>
-          <Eyebrow>황진의 개인금융 안내</Eyebrow>
+          <Eyebrow>금융 현장 {profile.careerYears}년, 황진입니다</Eyebrow>
           <h1
             id="hero-title"
             className="text-[clamp(2.125rem,9.4vw,4rem)] font-extrabold leading-[1.22] tracking-[-0.045em] text-navy"
@@ -22,13 +37,13 @@ export function Hero() {
             돈은 상품 하나로 관리되지 않습니다.
           </p>
           <p className="mt-3 max-w-[30rem] text-muted sm:text-[1.1875rem]">
-            보험도, 연금도, 퇴직연금도, 투자도
+            대출도, 보험도, 연금도, 투자도
             <br /> 지금 내 삶에 맞는 <strong className="font-semibold text-ink">순서</strong>가 먼저입니다.
           </p>
 
           <div className="mt-9 max-w-[26rem]">
             <p className="mb-3 text-base font-medium text-navy">
-              보험 · 연금 · 퇴직연금 · 투자,
+              대출 · 보험 · 연금 · 퇴직연금 · 투자,
               <br />
               뭐부터 볼지 한번 정리해보세요.
             </p>
@@ -39,7 +54,7 @@ export function Hero() {
               params={{ location: "hero" }}
               className={buttonClass("primary", "w-full text-[1.125rem] sm:w-auto sm:px-8")}
             >
-              1분 개인금융 점검하기
+              1분 금융점검 하기
               <Arrow />
             </TrackedLink>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -47,13 +62,15 @@ export function Hero() {
               <br />
               먼저 지금 상황부터 봅니다.
             </p>
-            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-base text-navy/80" aria-label="점검 안내">
-              <li>질문 8개</li>
-              <li aria-hidden="true" className="text-line">|</li>
-              <li>약 1분</li>
-              <li aria-hidden="true" className="text-line">|</li>
-              <li>이름·연락처 없이 결과 확인</li>
-            </ul>
+            <a
+              href="#work"
+              className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-base font-semibold text-navy underline decoration-navy/30 underline-offset-[6px] hover:decoration-navy"
+            >
+              황진은 어떤 일을 하나요?
+              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4" fill="none">
+                <path d="M10 4v11m-4.5-4.5L10 15l4.5-4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           </div>
         </div>
         <HeroVisual />
@@ -62,203 +79,189 @@ export function Hero() {
   );
 }
 
-/* SECTION 2 — 이런 생각 해본 적 있나요? */
-const THOUGHTS = [
-  "보험료는 계속 나가는데\n필요한 보장이 맞는지 모르겠다.",
-  "연금은 있지만\n노후에 충분한지는 모르겠다.",
-  "투자는 하는데\n왜 이걸 갖고 있는지 애매하다.",
-  "퇴직연금은\n거의 확인하지 않는다.",
-  "아이, 부모님, 집, 노후까지\n한꺼번에 신경 쓰인다.",
+/* 2·3 — 황진은 이런 일을 합니다 */
+const WORK = [
+  {
+    name: "대출 · 부채관리",
+    body: "새로운 대출을 찾기 전에 현재 금리, 월 상환부담, 만기, 전체 부채 구조부터 확인합니다.",
+    looks: ["금리", "월 상환 부담", "만기", "자금이 필요한 시기", "전체 현금흐름"],
+    note: "대출은 더 받는 것보다 현재 구조를 먼저 보는 것이 중요할 때가 있습니다.",
+  },
+  {
+    name: "보험",
+    body: "많이 가입하는 것보다 내 삶에서 어떤 위험을 막고 있는지부터 봅니다.",
+    looks: ["막고 있는 위험", "겹치는 보장", "보험료 부담"],
+  },
+  {
+    name: "연금",
+    body: "상품 이름보다 은퇴 이후 필요한 생활비와 현재 준비된 현금흐름을 먼저 확인합니다.",
+    looks: ["은퇴 후 생활비", "국민·개인연금 예상액", "받는 시기"],
+  },
+  {
+    name: "퇴직연금",
+    body: "회사에서 만들어준 계좌로만 두지 않고 현재 구조와 운용 상태를 확인합니다.",
+    looks: ["DB·DC 유형", "계좌 안의 구성", "IRP"],
+  },
+  {
+    name: "투자 · 자산관리",
+    body: "수익률보다 이 돈을 언제, 무엇을 위해 쓸 것인지부터 정리합니다.",
+    looks: ["쓸 시기", "목적", "다른 돈과의 균형"],
+  },
 ];
 
-export function Thoughts() {
+export function Work() {
   return (
-    <Section tone="paper" labelledBy="thoughts-title">
-      <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div>
-          <Eyebrow>혹시</Eyebrow>
-          <SectionTitle id="thoughts-title" className="text-navy">
-            {"이런 생각,\n해본 적 있나요?"}
+    <Section id="work" tone="paper" labelledBy="work-title">
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <Eyebrow>하는 일</Eyebrow>
+          <SectionTitle id="work-title" className="text-navy">
+            {"황진은\n이런 일을 합니다."}
           </SectionTitle>
+          <p className="mt-5 max-w-[26rem] text-[1.0625rem] text-ink/90 sm:text-[1.1875rem]">
+            돈과 관련된 고민이 생겼을 때
+            <br />
+            무엇부터 볼지 함께 정리합니다.
+          </p>
         </div>
         <ul className="border-t border-navy/15">
-          {THOUGHTS.map((t) => (
-            <li key={t} className="reveal flex gap-4 border-b border-navy/15 py-6 sm:py-7">
-              <span aria-hidden="true" className="mt-[0.2em] font-serif text-[1.75rem] leading-none text-green">
-                “
-              </span>
-              <p className="pre-line text-[1.1875rem] font-medium leading-[1.6] text-ink sm:text-[1.3125rem]">{t}</p>
+          {WORK.map((w) => (
+            <li key={w.name} className="reveal border-b border-navy/15 py-8 sm:py-9">
+              <h3 className="text-[1.375rem] font-bold text-navy sm:text-[1.5rem]">{w.name}</h3>
+              <p className="mt-3 text-ink/90">{w.body}</p>
+              <ul className="mt-4 flex flex-wrap gap-2" aria-label={`${w.name}에서 함께 보는 것`}>
+                {w.looks.map((l) => (
+                  <li key={l} className="rounded-full bg-ivory px-3 py-1 text-base text-navy/85">
+                    {l}
+                  </li>
+                ))}
+              </ul>
+              {w.note && (
+                <p className="mt-5 border-l-[3px] border-green pl-4 text-[1.0625rem] font-semibold leading-[1.6] text-navy">
+                  {w.note}
+                </p>
+              )}
             </li>
           ))}
         </ul>
-      </div>
-      <div className="mt-16 max-w-[40rem] sm:mt-24">
-        <p className="text-[1.25rem] leading-[1.7] text-muted sm:text-[1.5rem]">
-          필요한 건 상품 하나를 더 고르는 일이 아니라
-        </p>
-        <p className="mt-1 text-[1.5rem] font-bold leading-[1.5] tracking-[-0.03em] text-navy sm:text-[2rem]">
-          내 돈의 전체 그림을 한번 보는 것입니다.
-        </p>
       </div>
     </Section>
   );
 }
 
-/* SECTION 3 — 돈은 각각 역할이 다릅니다 */
-const ROLES = [
-  { name: "현금", role: "갑자기 필요한 순간을\n버티게 합니다." },
-  { name: "보험", role: "큰 위험이 생겼을 때\n삶이 무너지지 않게 합니다." },
-  { name: "연금", role: "일하지 않는 시기의\n현금흐름을 준비합니다." },
-  { name: "투자", role: "긴 시간을 이용해\n자산의 성장을 추구합니다." },
-];
-
-export function Roles() {
+/* 4 — 상품보다 상황을 먼저 봅니다 */
+export function Principle() {
   return (
-    <Section tone="navy" labelledBy="roles-title">
-      <Eyebrow onNavy>돈의 역할</Eyebrow>
-      <SectionTitle id="roles-title">{"돈은 각각\n역할이 다릅니다."}</SectionTitle>
-      <dl className="mt-12 grid border-t border-navy-line sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
-        {ROLES.map((r, i) => (
-          <div
-            key={r.name}
-            className={cx(
-              "reveal border-b border-navy-line py-7 sm:px-6 sm:py-9 lg:border-b-0",
-              i % 2 === 1 && "sm:border-l",
-              i > 0 && "lg:border-l",
-              "sm:first:pl-0 lg:pl-6",
-            )}
-          >
-            <dt className="text-[1.5rem] font-bold tracking-[-0.03em] text-white">{r.name}</dt>
-            <dd className="pre-line mt-3 text-on-navy-muted">{r.role}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mt-14 max-w-[36rem] text-[1.3125rem] font-semibold leading-[1.6] tracking-[-0.02em] sm:mt-20 sm:text-[1.625rem]">
-        무엇이 더 좋은가가 아니라
+    <Section tone="navy" labelledBy="principle-title">
+      <h2
+        id="principle-title"
+        className="text-[clamp(2.25rem,10vw,4.25rem)] font-extrabold leading-[1.2] tracking-[-0.045em] text-white"
+      >
+        상품보다
         <br />
-        <span className="text-[#9fd0a7]">지금 나에게 무엇이 먼저인가</span>입니다.
-      </p>
-    </Section>
-  );
-}
+        상황을 먼저 봅니다.
+      </h2>
 
-/* SECTION 4 — 점검 4가지 */
-const AREAS = [
-  {
-    no: "01",
-    name: "보험",
-    questions: [
-      "지금 보험이 어떤 위험을 막고 있는지 말할 수 있나요?",
-      "같은 보장이 여러 곳에 겹쳐 있지는 않나요?",
-      "보험료가 매달 버는 돈에 비해 부담스럽지 않나요?",
-    ],
-  },
-  {
-    no: "02",
-    name: "연금",
-    questions: [
-      "국민연금 예상 수령액을 확인해본 적이 있나요?",
-      "개인연금은 언제부터, 얼마나 받게 되나요?",
-      "은퇴 후 한 달 생활비와 비교하면 얼마나 차이가 나나요?",
-    ],
-  },
-  {
-    no: "03",
-    name: "퇴직연금",
-    questions: [
-      "내 퇴직연금이 DB형인지 DC형인지 알고 있나요?",
-      "DC형·IRP라면 지금 어디에 담겨 있나요?",
-      "마지막으로 확인한 게 언제인가요?",
-    ],
-  },
-  {
-    no: "04",
-    name: "투자·자산관리",
-    questions: [
-      "이 돈은 언제, 무엇을 위해 쓸 돈인가요?",
-      "투자하는 이유와 기간이 정해져 있나요?",
-      "보험·연금·투자가 같은 방향을 보고 있나요?",
-    ],
-  },
-];
-
-export function Areas() {
-  return (
-    <Section labelledBy="areas-title">
-      <div className="max-w-[40rem]">
-        <Eyebrow>점검 영역</Eyebrow>
-        <SectionTitle id="areas-title" className="text-navy">
-          {"황진 개인금융 점검\n4가지"}
-        </SectionTitle>
-        <p className="mt-5 text-muted">
-          상품 이름보다 먼저, 스스로에게 던져볼 질문들입니다.
-          <br className="hidden sm:inline" /> 답이 바로 나오지 않는 곳이 먼저 볼 곳입니다.
+      <div className="mt-12 grid gap-8 border-t border-navy-line pt-10 sm:mt-16 sm:grid-cols-2 sm:gap-12">
+        <p className="text-[1.25rem] leading-[1.65] text-on-navy-muted sm:text-[1.5rem]">
+          보험을 문의해도
+          <br />
+          <span className="font-semibold text-on-navy">대출 부담이 먼저</span>일 수 있고,
+        </p>
+        <p className="text-[1.25rem] leading-[1.65] text-on-navy-muted sm:text-[1.5rem]">
+          투자를 고민해도
+          <br />
+          <span className="font-semibold text-on-navy">비상자금이 먼저</span>일 수 있습니다.
         </p>
       </div>
-      <ol className="mt-12 grid gap-x-16 sm:mt-16 lg:grid-cols-2">
-        {AREAS.map((a) => (
-          <li key={a.no} className="reveal border-t border-navy/15 py-9">
-            <div className="flex items-baseline gap-4">
-              <span className="text-base font-bold tabular-nums text-green">{a.no}</span>
-              <h3 className="text-[1.5rem] font-bold text-navy">{a.name}</h3>
-            </div>
-            <ul className="mt-5 space-y-3">
-              {a.questions.map((q) => (
-                <li key={q} className="flex gap-3 text-ink">
-                  <span aria-hidden="true" className="mt-[0.7em] h-px w-3 shrink-0 bg-navy/40" />
-                  <span>{q}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
-    </Section>
-  );
-}
 
-/* SECTION 5 — 이런 분이라면 */
-const WHO = [
-  "돈은 버는데 생각보다 남는 돈이 없는 분",
-  "보험을 여러 개 갖고 있지만 내용을 잘 모르는 분",
-  "노후가 현실적으로 느껴지기 시작한 분",
-  "퇴직연금을 그냥 두고 있는 분",
-  "투자·보험·연금을 따로따로 관리하는 분",
-  "결혼이나 출산 이후 돈 관리 기준을 다시 잡고 싶은 분",
-  "부모님과 아이를 동시에 생각해야 하는 분",
-];
-
-export function Who() {
-  return (
-    <Section tone="paper" labelledBy="who-title">
-      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div>
-          <Eyebrow>이런 분께</Eyebrow>
-          <SectionTitle id="who-title" className="text-navy">
-            {"이런 분이라면\n한번 점검해보세요."}
-          </SectionTitle>
-        </div>
-        <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-1">
-          {WHO.map((w) => (
-            <li key={w} className="flex items-start gap-4 border-b border-navy/15 py-4.5">
-              <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-[0.3em] size-5 shrink-0 text-green" fill="none">
-                <path d="M4 10.5 8 14.5 16 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="text-[1.0625rem] font-medium sm:text-[1.125rem]">{w}</span>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-14 sm:mt-20">
+        <p className="text-[1.125rem] text-on-navy-muted sm:text-[1.25rem]">그래서 상담은</p>
+        <p className="mt-4 text-[1.375rem] font-medium text-on-navy-muted line-through decoration-on-navy-muted/60 decoration-2 sm:text-[1.75rem]">
+          ‘무엇을 가입할까요?’
+        </p>
+        <p className="mt-2 text-[1.125rem] text-on-navy-muted sm:text-[1.25rem]">보다</p>
+        <p className="mt-2 text-[1.75rem] font-bold tracking-[-0.03em] text-[#9fd0a7] sm:text-[2.5rem]">
+          ‘지금 무엇이 필요한가요?’
+        </p>
+        <p className="mt-3 text-[1.125rem] text-on-navy sm:text-[1.25rem]">에서 시작합니다.</p>
       </div>
     </Section>
   );
 }
 
-/* SECTION 6 — 상담 과정 */
+/* 5 — 황진 소개 (신뢰) */
+export function About() {
+  return (
+    <Section id="about" labelledBy="about-title">
+      <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-20">
+        <div className="hidden lg:sticky lg:top-24 lg:block">
+          <ProfileCard />
+        </div>
+        <div>
+          <Eyebrow>황진 소개</Eyebrow>
+          <SectionTitle id="about-title" className="text-navy">
+            {"돈과 사람 사이에서\n깨지고 배우며 컸습니다."}
+          </SectionTitle>
+
+          <div className="mt-8 lg:hidden">
+            <ProfileCard />
+          </div>
+
+          <p className="mt-10 text-[1.5rem] font-bold tracking-[-0.03em] text-navy sm:text-[1.75rem]">
+            금융 현장에서 {profile.careerYears}년.
+          </p>
+          <div className="mt-5 space-y-5 text-ink/90">
+            <p>보험, 대출, 연금, 투자와 사람들의 다양한 돈 고민을 가까이에서 봐왔습니다.</p>
+            <p>좋은 선택도 봤고, 조금 더 일찍 알았으면 좋았을 선택도 봤습니다.</p>
+            <p>저 역시 돈과 일, 사람 사이에서 많은 시행착오를 겪었습니다.</p>
+            <p>
+              그래서 지금은 상품 하나를 설명하기보다
+              <strong className="font-semibold text-navy"> 그 사람의 전체 상황부터 보는 방식</strong>으로 상담합니다.
+            </p>
+          </div>
+
+          <div className="mt-12 border-t border-navy/15 pt-8">
+            <p className="text-[1.25rem] font-semibold leading-[1.7] text-navy sm:text-[1.375rem]">
+              잘 벌고, 잘 쓰고,
+              <br />
+              가족과 오래 건강하게 살기.
+            </p>
+            <p className="mt-4 text-muted">
+              제가 생각하는 금융의 목적도
+              <br />
+              여기에서 크게 벗어나지 않습니다.
+            </p>
+            <p className="mt-6 text-[1.125rem] font-bold text-navy">— 황진</p>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* 6 — 상담 방식 / 사례 */
+export function Cases() {
+  return (
+    <Section id="cases" tone="paper" labelledBy="cases-title">
+      <div className="max-w-[40rem]">
+        <Eyebrow>상담 방식</Eyebrow>
+        <SectionTitle id="cases-title" className="text-navy">
+          {"이렇게 생각하고\n상담합니다."}
+        </SectionTitle>
+        <p className="mt-5 text-muted">처음 들은 질문과 실제로 먼저 보는 것은 다를 때가 많습니다.</p>
+      </div>
+      <ConsultCases />
+    </Section>
+  );
+}
+
+/* 6 — 상담 과정 */
 const STEPS = [
   {
     no: "01",
     title: "현재 상황 확인",
-    body: "가지고 있는 보험, 연금, 퇴직연금, 투자, 그리고 앞으로 필요한 돈을 한자리에 펼쳐봅니다.",
+    body: "가지고 있는 대출, 보험, 연금, 퇴직연금, 투자, 그리고 앞으로 필요한 돈을 한자리에 펼쳐봅니다.",
   },
   {
     no: "02",
@@ -319,55 +322,7 @@ export function Process() {
   );
 }
 
-/* SECTION 7 — 황진 소개 */
-export function About() {
-  return (
-    <Section id="about" tone="paper" labelledBy="about-title">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-20">
-        <div className="order-2 hidden lg:order-1 lg:sticky lg:top-24 lg:block">
-          <AboutVisual />
-        </div>
-        <div className="order-1 lg:order-2">
-          <Eyebrow>황진 소개</Eyebrow>
-          <SectionTitle id="about-title" className="text-navy">
-            {"돈과 사람 사이에서\n깨지고 배우며 컸습니다."}
-          </SectionTitle>
-          <div className="mt-8 space-y-5 text-ink/90">
-            <p>금융 현장에서 오랜 시간, 다양한 사람들의 돈 고민을 만나왔습니다.</p>
-            <p>
-              좋은 선택으로 마음이 편해지는 경우도 봤고, 조금 더 일찍 알았으면 좋았을 일을 뒤늦게 알게 되는 경우도 많이
-              봤습니다.
-            </p>
-            <p>저 역시 돈과 일, 사람 사이에서 많은 시행착오를 겪었습니다.</p>
-            <p>그래서 지금은 상품부터 이야기하기보다,</p>
-          </div>
-          <blockquote className="my-7 border-l-[3px] border-green pl-5">
-            <p className="text-[1.375rem] font-bold leading-[1.5] tracking-[-0.03em] text-navy sm:text-[1.625rem]">
-              “그 사람이 어떤 삶을 원하는지”
-            </p>
-            <p className="mt-1 text-ink/90">를 먼저 봅니다.</p>
-          </blockquote>
-
-          <div className="mt-12 border-t border-navy/15 pt-8">
-            <p className="text-[1.25rem] font-semibold leading-[1.7] text-navy sm:text-[1.375rem]">
-              잘 벌고, 잘 쓰고,
-              <br />
-              가족과 오래 건강하게 살기.
-            </p>
-            <p className="mt-4 text-muted">
-              제가 생각하는 금융의 목적도
-              <br />
-              여기에서 크게 벗어나지 않습니다.
-            </p>
-            <p className="mt-6 text-[1.125rem] font-bold text-navy">— 황진</p>
-          </div>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* SECTION 8 — 내가 드리지 않는 것 */
+/* 6 — 내가 드리지 않는 것 */
 const NOT_SAID = ["무조건 바꾸라는 말.", "무조건 투자해야 한다는 말.", "무조건 이 상품이 좋다는 말.", "당장 결정해야 한다는 말."];
 
 export function NotSaid() {
@@ -398,10 +353,51 @@ export function NotSaid() {
   );
 }
 
-/* SECTION 9 — 1분 금융점검 안내 */
+/* 7 — 이런 생각 해본 적 있나요? */
+const THOUGHTS = [
+  "보험료는 계속 나가는데\n필요한 보장이 맞는지 모르겠다.",
+  "대출 이자는 매달 나가는데\n지금 조건이 괜찮은지 모르겠다.",
+  "연금은 있지만\n노후에 충분한지는 모르겠다.",
+  "투자는 하는데\n왜 이걸 갖고 있는지 애매하다.",
+  "퇴직연금은\n거의 확인하지 않는다.",
+  "아이, 부모님, 집, 노후까지\n한꺼번에 신경 쓰인다.",
+];
+
+export function Thoughts() {
+  return (
+    <Section tone="paper" labelledBy="thoughts-title">
+      <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div>
+          <Eyebrow>혹시</Eyebrow>
+          <SectionTitle id="thoughts-title" className="text-navy">
+            {"이런 생각,\n해본 적 있나요?"}
+          </SectionTitle>
+        </div>
+        <ul className="border-t border-navy/15">
+          {THOUGHTS.map((t) => (
+            <li key={t} className="reveal flex gap-4 border-b border-navy/15 py-6 sm:py-7">
+              <span aria-hidden="true" className="mt-[0.2em] font-serif text-[1.75rem] leading-none text-green">
+                “
+              </span>
+              <p className="pre-line text-[1.1875rem] font-medium leading-[1.6] text-ink sm:text-[1.3125rem]">{t}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-16 max-w-[40rem] sm:mt-24">
+        <p className="text-[1.25rem] leading-[1.7] text-muted sm:text-[1.5rem]">필요한 건 상품 하나를 더 고르는 일이 아니라</p>
+        <p className="mt-1 text-[1.5rem] font-bold leading-[1.5] tracking-[-0.03em] text-navy sm:text-[2rem]">
+          내 돈의 전체 그림을 한번 보는 것입니다.
+        </p>
+      </div>
+    </Section>
+  );
+}
+
+/* 7 — 1분 금융점검 안내 */
 export function CheckInvite() {
   const facts = [
-    { k: "8개", v: "질문" },
+    { k: "9개", v: "질문" },
     { k: "약 1분", v: "소요" },
     { k: "없음", v: "개인정보 입력" },
   ];
@@ -429,7 +425,7 @@ export function CheckInvite() {
           params={{ location: "check_section" }}
           className={buttonClass("primary", "mt-10 w-full sm:w-auto sm:px-10")}
         >
-          1분 개인금융 점검 시작하기
+          1분 금융점검 시작하기
           <Arrow />
         </TrackedLink>
         <p className="mt-4 text-base text-muted">결과는 이 브라우저에만 잠시 저장되고, 서버로 보내지 않습니다.</p>
@@ -438,7 +434,54 @@ export function CheckInvite() {
   );
 }
 
-/* SECTION 10 — 최종 CTA */
+/* 8 — 주변에 이런 분이 떠오른다면 */
+const FRIENDS = [
+  "보험은 많은데 잘 모르겠다는 친구",
+  "대출 부담 때문에 고민하는 가족",
+  "퇴직연금을 거의 확인하지 않는 직장동료",
+  "투자와 노후 준비가 막막한 지인",
+  "결혼이나 출산 이후 돈 관리를 다시 정리하고 싶은 사람",
+];
+
+export function Referral() {
+  return (
+    <Section id="referral" tone="paper" labelledBy="referral-title">
+      <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+        <div>
+          <Eyebrow>소개</Eyebrow>
+          <SectionTitle id="referral-title" className="text-navy">
+            {"주변에 이런 분이\n떠오른다면"}
+          </SectionTitle>
+          <ul className="mt-10 border-t border-navy/15">
+            {FRIENDS.map((f) => (
+              <li key={f} className="flex items-start gap-4 border-b border-navy/15 py-4.5">
+                <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-[0.25em] size-5 shrink-0 text-green" fill="none" stroke="currentColor" strokeWidth="1.7">
+                  <circle cx="10" cy="7" r="3.2" />
+                  <path d="M4 17c.8-3.2 3.2-5 6-5s5.2 1.8 6 5" strokeLinecap="round" />
+                </svg>
+                <span className="text-[1.0625rem] font-medium sm:text-[1.125rem]">{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:pt-24">
+          <p className="text-[1.125rem] text-ink/90 sm:text-[1.25rem]">상품을 권하려고 소개하지 않으셔도 됩니다.</p>
+          <p className="mt-6 text-[2rem] font-bold tracking-[-0.04em] text-navy sm:text-[2.5rem]">‘한번 정리해봐.’</p>
+          <p className="mt-4 text-[1.125rem] text-ink/90 sm:text-[1.25rem]">이 페이지 하나만 보내주세요.</p>
+          <ShareButton location="home_referral" className="mt-10 w-full sm:w-auto sm:px-8" />
+          <p className="text-base leading-relaxed text-muted">
+            받은 분께 먼저 연락드리지 않습니다.
+            <br />
+            받은 분이 원할 때만 이야기를 시작합니다.
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* 마지막 CTA */
 export function FinalCta() {
   return (
     <section id="final-cta" aria-labelledby="final-title" className="on-navy bg-navy-soft py-20 text-on-navy sm:py-28">
@@ -447,7 +490,7 @@ export function FinalCta() {
           {"상품을 고르기 전에,\n순서부터 정해보세요."}
         </h2>
         <p className="mx-auto mt-5 max-w-[30rem] text-on-navy-muted">
-          점검 결과를 보고 더 이야기 나누고 싶으면 그때 편하게 물어보셔도 됩니다.
+          점검부터 해도 되고, 지금 상황을 바로 이야기해도 됩니다. 어느 쪽이든 가입 권유부터 하지 않습니다.
         </p>
         <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <TrackedLink
@@ -456,11 +499,11 @@ export function FinalCta() {
             params={{ location: "final" }}
             className={buttonClass("primary", "sm:px-8")}
           >
-            1분 개인금융 점검하기
+            1분 금융점검 하기
             <Arrow />
           </TrackedLink>
           <Link href="/contact" className={buttonClass("outlineOnNavy", "sm:px-8")}>
-            바로 물어보기
+            내 상황 한번 얘기해보기
           </Link>
         </div>
       </Container>

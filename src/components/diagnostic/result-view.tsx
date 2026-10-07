@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ContactOptions } from "@/components/contact/contact-options";
 import { OPEN_CONTACT_EVENT } from "@/components/layout/sticky-cta";
 import { Modal } from "@/components/ui/modal";
+import { ShareButton } from "@/components/ui/share-button";
 import { Arrow, buttonClass, Container, cx } from "@/components/ui/primitives";
 import { compliance } from "@/config/site";
 import { track } from "@/lib/analytics";
@@ -56,7 +57,7 @@ export function ResultView() {
           있어요.
         </p>
         <Link href="/check" className={buttonClass("primary", "mt-8 w-full sm:w-auto sm:px-8")}>
-          1분 개인금융 점검하기
+          1분 금융점검 하기
           <Arrow />
         </Link>
       </Container>
@@ -179,10 +180,20 @@ export function ResultView() {
             <Link href="/check" onClick={restart} className="flex min-h-11 items-center text-on-navy underline underline-offset-4">
               다시 점검하기
             </Link>
-            <Link href="/" className="flex min-h-11 items-center text-on-navy underline underline-offset-4">
+            <Link href="/#about" className="flex min-h-11 items-center text-on-navy underline underline-offset-4">
               황진 소개 보기
             </Link>
           </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="share-title" className="bg-paper py-14 sm:py-16">
+        <Container className="max-w-[44rem]">
+          <h2 id="share-title" className="text-[1.375rem] font-bold text-navy sm:text-[1.625rem]">
+            주변에도 한번 해보라고 보내주세요
+          </h2>
+          <p className="mt-3 text-muted">상품을 권하려고 보내지 않으셔도 됩니다. ‘한번 정리해봐’ 한마디면 충분해요.</p>
+          <ShareButton location="result" variant="outline" className="mt-6 w-full sm:w-auto sm:px-8" />
         </Container>
       </section>
 

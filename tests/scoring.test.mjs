@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { baseType, classify, MAX_SCORE, priorityTags } from "../src/lib/diagnostic/scoring.ts";
 
-const s = (q1, q2, q3, q4, q5, q6, q7) => ({ q1, q2, q3, q4, q5, q6, q7 });
+const s = (q1, q2, q3, q4, q5, q6, q7, debt = 2) => ({ q1, q2, q3, q4, q5, q6, q7, debt });
 
 test("최대 점수는 14점", () => assert.equal(MAX_SCORE, 14));
 
@@ -46,24 +46,37 @@ test("보정은 결과를 좋은 쪽으로 올리지 않는다", () => {
   assert.equal(classify(s(1, 1, 1, 0, 0, 0, 0)).type, "D");
 });
 
+test("보정4: 대출 구조를 모르면(debt=0) A가 될 수 없다", () => {
+  assert.deepEqual(classify(s(2, 2, 2, 2, 2, 2, 2, 0)), { total: 14, type: "B" });
+  // 대출 문항은 총점에 들어가지 않는다
+  assert.equal(classify(s(2, 2, 2, 2, 2, 2, 2, 1)).total, 14);
+  assert.equal(classify(s(2, 2, 2, 2, 2, 2, 2, 1)).type, "A");
+  // 이미 C 이하라면 그대로
+  assert.equal(classify(s(1, 1, 1, 1, 1, 1, 1, 0)).type, "C");
+});
+
 test("먼저 확인할 영역 태그", () => {
   assert.deepEqual(priorityTags(s(2, 2, 2, 2, 2, 2, 2)), []);
   assert.deepEqual(priorityTags(s(1, 2, 2, 2, 2, 2, 2)), ["cashflow"]);
   assert.deepEqual(priorityTags(s(2, 1, 1, 2, 1, 0, 1)), ["cashflow", "insurance", "pension", "investment", "lifeplan"]);
+  assert.deepEqual(priorityTags(s(2, 2, 2, 2, 2, 2, 2, 1)), ["debt"]);
+  assert.deepEqual(priorityTags(s(1, 2, 2, 2, 2, 2, 2, 0)), ["cashflow", "debt"]);
   assert.deepEqual(priorityTags(s(2, 2, 2, 1, 2, 2, 2)), ["pension"]);
 });
 
-test("모든 3^7 조합에서 타입이 정의되고 규칙을 지킨다", () => {
+test("모든 3^8 조합에서 타입이 정의되고 규칙을 지킨다", () => {
   let n = 0;
   const vals = [0, 1, 2];
   for (const a of vals) for (const b of vals) for (const c of vals) for (const d of vals)
-    for (const e of vals) for (const f of vals) for (const g of vals) {
-      const r = classify(s(a, b, c, d, e, f, g));
+    for (const e of vals) for (const f of vals) for (const g of vals) for (const debt of vals) {
+      const r = classify(s(a, b, c, d, e, f, g, debt));
       n++;
       assert.ok(["A", "B", "C", "D"].includes(r.type));
       if (a === 0 || b === 0) assert.notEqual(r.type, "A");
       if (a === 0 && b === 0) assert.ok(r.type === "C" || r.type === "D");
       if ([a, b, c].filter((x) => x === 0).length >= 2) assert.equal(r.type, "D");
+      if (debt === 0) assert.notEqual(r.type, "A");
+      assert.equal(r.total, a + b + c + d + e + f + g);
     }
-  assert.equal(n, 2187);
+  assert.equal(n, 6561);
 });

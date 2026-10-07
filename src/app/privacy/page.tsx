@@ -6,7 +6,7 @@ import { privacyConfig, retentionLabel } from "@/config/privacy";
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
-  description: "황진 개인금융 상담 신청 시 개인정보를 어떻게 수집하고 이용하며 언제 파기하는지 안내합니다.",
+  description: "황진에게 상담을 신청할 때 개인정보를 어떻게 수집하고 이용하며 언제 파기하는지 안내합니다.",
   alternates: { canonical: "/privacy" },
 };
 

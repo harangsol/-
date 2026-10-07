@@ -20,7 +20,9 @@ export type AnalyticsEvent =
   | "consultation_form_view"
   | "consultation_submit"
   | "scroll_50"
-  | "scroll_90";
+  | "scroll_90"
+  | "referral_share_click"
+  | "referral_url_copy";
 
 const ALLOWED_PARAMS = [
   "location",
@@ -35,6 +37,7 @@ const ALLOWED_PARAMS = [
   "priority_tags",
   "page_path",
   "page_title",
+  "method",
 ] as const;
 
 type ParamKey = (typeof ALLOWED_PARAMS)[number];
