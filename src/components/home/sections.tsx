@@ -97,32 +97,32 @@ const WORK = [
   {
     icon: AreaIcons.loan,
     name: "대출 · 부채관리",
-    body: "새로운 대출부터 찾기보다 현재 금리, 월 상환부담, 만기, 전체 부채 구조부터 확인합니다.",
+    body: "새 대출을 찾기 전에 지금 대출의 구조부터 확인합니다.",
     keys: ["월 부담", "금리", "만기", "부채 구조"],
     loan: true,
   },
   {
     icon: AreaIcons.insurance,
     name: "보험 · 절세",
-    body: "많이 가입하는 것보다 현재 보험이 어떤 위험을 막고 있는지, 부담은 적절한지부터 봅니다.",
+    body: "많이 가입하기보다 어떤 위험을 막고 있는지부터 봅니다.",
     keys: ["위험 대비", "중복", "보험료 부담"],
   },
   {
     icon: AreaIcons.pension,
     name: "연금",
-    body: "상품 이름보다 은퇴 이후 필요한 생활비와 현재 준비된 현금흐름부터 확인합니다.",
+    body: "상품 이름보다 은퇴 후 필요한 생활비부터 확인합니다.",
     keys: ["은퇴 후 현금흐름"],
   },
   {
     icon: AreaIcons.retirement,
     name: "퇴직연금",
-    body: "회사에서 만들어준 계좌로만 두지 않고 현재 유형과 운용 상태부터 확인합니다.",
+    body: "회사가 만들어준 계좌로만 두지 않고 지금 상태를 확인합니다.",
     keys: ["DB · DC · IRP", "현재 운용 상태"],
   },
   {
     icon: AreaIcons.investment,
     name: "투자 · 자산관리",
-    body: "수익률보다 이 돈을 언제, 무엇을 위해 사용할 것인지부터 정리합니다.",
+    body: "수익률보다 언제, 무엇에 쓸 돈인지부터 정리합니다.",
     keys: ["목적", "기간", "언제 쓸 돈인지"],
   },
 ];
@@ -136,11 +136,6 @@ export function Work() {
           <SectionTitle id="work-title" className="text-navy">
             {"황진은\n이런 일을 합니다."}
           </SectionTitle>
-          <p className="mt-5 max-w-[26rem] text-[1.0625rem] sm:text-[1.1875rem]">
-            돈과 관련된 고민이 생겼을 때
-            <br />
-            무엇부터 볼지 함께 정리합니다.
-          </p>
         </div>
 
         <div>
@@ -162,7 +157,7 @@ export function Work() {
                   </p>
                   {w.loan && (
                     <p className="mt-4 border-l-[3px] border-green pl-4 font-semibold leading-[1.6] text-navy">
-                      대출은 더 받는 것보다 <span className="text-green">현재 구조</span>를 먼저 보는 것이 중요할 때가 있습니다.
+                      새로운 대출보다 <span className="text-green">현재 구조</span>를 먼저 봅니다.
                     </p>
                   )}
                 </div>
@@ -175,14 +170,13 @@ export function Work() {
             <TrackView event="profile_affiliation_view" params={{ location: "home_work" }} />
             <div className="flex items-baseline justify-between gap-3">
               <h3 className="text-[1.125rem] font-bold text-navy">업무 기반</h3>
-              <p className="text-base text-muted">금융 현장 {profile.careerYears}년</p>
             </div>
             <AffiliationCards audience="personal" className="mt-4" />
           </div>
 
           <div className="mt-8 rounded-[8px] border border-line bg-ivory px-5 py-5 sm:px-7 sm:py-6">
             <h3 className="font-bold text-navy">사업을 하시는 경우</h3>
-            <p className="mt-2">개인의 보험·대출·연금·투자와 별도로 사업자 정책자금과 사업의 자금 흐름도 함께 살펴볼 수 있습니다.</p>
+            <p className="mt-2">개인 금융과 따로, 사업자 정책자금과 사업 자금 흐름도 함께 봅니다.</p>
             <AffiliationCards audience="business" className="mt-4" />
           </div>
         </div>
@@ -259,11 +253,10 @@ export function About() {
         <div className="lg:col-start-2 lg:row-start-2">
           <div className="space-y-4">
             <p>
-              보험, 대출, 연금, 퇴직연금, 투자와 다양한 사람들의 돈 고민을 가까이에서 봐왔습니다. 좋은 선택도, 조금 더 일찍
-              알았으면 좋았을 선택도 봤습니다.
+              다양한 사람들의 돈 고민을 가까이에서 봐왔습니다. 좋은 선택도, 조금 더 일찍 알았으면 좋았을 선택도 봤습니다.
             </p>
             <p>
-              그래서 지금은 상품 하나를 먼저 설명하기보다
+              그래서 상품 하나보다
               <strong className="font-semibold text-navy"> 그 사람의 전체 상황부터</strong> 봅니다.
             </p>
           </div>
@@ -295,7 +288,7 @@ export function Cases() {
     <Section id="cases" tone="paper" labelledBy="cases-title">
       <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
         <div>
-          <Eyebrow>실제 상담은 이렇게 생각합니다</Eyebrow>
+          <Eyebrow>상담 방식</Eyebrow>
           <SectionTitle id="cases-title" className="text-navy">
             {"처음 질문과\n먼저 보는 문제가\n다를 때가 많습니다."}
           </SectionTitle>
@@ -313,23 +306,23 @@ const STEPS = [
   {
     no: "01",
     title: "현재 상황 확인",
-    body: "대출 · 보험 · 연금 · 퇴직연금 · 투자, 그리고 앞으로 필요한 돈을 한번에 펼쳐봅니다.",
+    body: "지금 가진 것과 앞으로 필요한 돈을 한번에 펼쳐봅니다.",
   },
   {
     no: "02",
     title: "우선순위 정리",
-    body: "모든 걸 한꺼번에 하지 않고 시기별로 나눕니다.",
+    body: "",
     order: true,
   },
   {
     no: "03",
     title: "유지할 것부터 찾기",
-    body: "바꾸는 것보다 잘 가지고 있는 것을 먼저 찾습니다.",
+    body: "바꿀 것보다 잘 가진 것을 먼저 찾습니다.",
   },
   {
     no: "04",
     title: "필요한 경우에만 대안 검토",
-    body: "정리 후에도 비어 있는 부분이 있을 때만 가능한 방법을 함께 살펴봅니다.",
+    body: "비어 있는 부분이 있을 때만 방법을 살펴봅니다.",
   },
 ];
 
@@ -348,7 +341,7 @@ export function Process() {
             <span aria-hidden="true" className="absolute -left-[7px] top-1 size-3 rounded-full bg-green lg:-top-[7px] lg:left-0" />
             <p className="text-base font-bold tracking-[0.04em] text-muted">STEP {s.no}</p>
             <h3 className="mt-2 text-[1.3125rem] font-bold text-navy">{s.title}</h3>
-            <p className="mt-2">{s.body}</p>
+            {s.body && <p className="mt-2">{s.body}</p>}
             {s.order && (
               <ul className="mt-4 flex gap-2" aria-label="우선순위 구분">
                 {["지금", "다음", "나중"].map((o, i) => (
@@ -452,7 +445,7 @@ export function CheckInvite() {
           1분 금융점검 시작하기
           <Arrow />
         </TrackedLink>
-        <p className="mt-4 text-base text-muted">결과는 이 브라우저에만 잠시 저장되고, 서버로 보내지 않습니다.</p>
+        <p className="mt-4 text-base text-muted">결과는 이 브라우저에만 저장됩니다.</p>
       </div>
     </Section>
   );
@@ -460,12 +453,12 @@ export function CheckInvite() {
 
 /* 09 — 주변에 이런 분이 떠오른다면 */
 const FRIENDS = [
-  "보험은 많은데 내용을 잘 모르는 친구",
-  "대출 부담 때문에 고민하는 가족",
-  "퇴직연금을 거의 확인하지 않는 직장동료",
-  "투자와 노후 준비가 막막한 지인",
-  "결혼·출산 이후 돈 관리를 다시 정리하고 싶은 사람",
-  "사업자 자금 문제로 고민하는 대표님",
+  "보험은 많은데 내용을 모르는 친구",
+  "대출 부담이 큰 가족",
+  "퇴직연금을 그냥 둔 직장동료",
+  "노후 준비가 막막한 지인",
+  "결혼·출산 후 돈 관리를 다시 잡고 싶은 사람",
+  "자금 문제로 고민하는 사업자 대표님",
 ];
 
 export function Referral() {
@@ -509,11 +502,7 @@ export function Referral() {
             이 페이지 하나만 보내주세요.
           </p>
           <ShareButton location="home_referral" label="필요한 분께 이 페이지 보내기" className="mt-8 w-full sm:w-auto sm:px-8" />
-          <p className="text-base leading-relaxed text-muted">
-            받은 분께 먼저 연락드리지 않습니다.
-            <br />
-            받은 분이 원할 때만 이야기를 시작합니다.
-          </p>
+          <p className="text-base leading-relaxed text-muted">받은 분께 먼저 연락드리지 않습니다.</p>
         </div>
       </div>
     </Section>
@@ -528,11 +517,7 @@ export function FinalCta() {
         <h2 id="final-title" className="pre-line text-[1.75rem] font-bold sm:text-[2.5rem]">
           {"상품을 고르기 전에,\n순서부터 정해보세요."}
         </h2>
-        <p className="mx-auto mt-5 max-w-[30rem] text-on-navy-muted">
-          급한 일이 생기고 나면 선택지가 줄어듭니다.
-          <br />
-          지금 1분만 써서 내 돈에서 먼저 볼 곳이 어디인지 확인해보세요.
-        </p>
+        <p className="mx-auto mt-5 max-w-[30rem] text-on-navy-muted">급한 일이 생기고 나면 선택지가 줄어듭니다.</p>
         <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <TrackedLink
             href="/check"
@@ -549,8 +534,6 @@ export function FinalCta() {
         </div>
         <p className="mt-8 text-base leading-relaxed text-on-navy-muted">
           정리된 질문이 없어도 괜찮습니다.
-          <br />
-          지금 상황부터 편하게 이야기하면 됩니다.
         </p>
       </Container>
     </section>

@@ -78,7 +78,7 @@ export function ConsultCases() {
             </ul>
           </FlowStep>
           <FlowStep no={3} label="정리" last>
-            <ul className="flex flex-wrap gap-2" aria-label="정리한 방향">
+            <ul className="flex flex-wrap gap-2" aria-label={c.direction}>
               {c.steps.map((st, i) => (
                 <li
                   key={st}
@@ -91,13 +91,12 @@ export function ConsultCases() {
                 </li>
               ))}
             </ul>
-            <p className="mt-2.5 text-muted">{c.direction}</p>
           </FlowStep>
         </ol>
       </div>
 
       {consultCases.some((x) => x.sample) && (
-        <p className="mt-4 text-base text-muted">사례는 상담 방식을 이해하기 위한 예시이며, 실제 방향은 개인별 상황에 따라 달라집니다.</p>
+        <p className="mt-4 text-base text-muted">상담 방식을 보여주는 예시입니다. 실제 방향은 사람마다 다릅니다.</p>
       )}
     </div>
   );

@@ -17,9 +17,9 @@
  * 디자인 토큰 — 오프화이트 70 / 딥네이비 20 / 클로버그린 10
  *
  * 텍스트 위계 (제목 → 핵심 → 설명)
- *   제목 navy #18263D · 본문 ink #4D535B · 보조 muted · 핵심 강조 green #3F7D4A (한 화면에 단어 1~2개만)
- *   muted 는 요청값 #858B91 이 아이보리/베이지 배경에서 WCAG 4.5:1 에 못 미쳐(3.2:1 / 3.0:1)
- *   가장 가까운 통과 값 #656B71 로 조정했다.
+ *   제목 navy #18263D · 본문 ink #4D535B · 보조 muted #858B91 · 핵심 강조 green #3F7D4A (한 화면에 단어 1~2개만)
+ *   ⚠️ muted #858B91 은 운영자 지정값이다. 아이보리/베이지 배경 대비 3.2:1 / 3.0:1 로 WCAG AA(4.5:1)에
+ *      못 미쳐, 보조 설명·작은 안내에만 쓴다. 읽기 어렵다는 의견이 있으면 #656B71(AA 통과)로 바꾸면 된다.
  *   green #3F7D4A 는 베이지 위 작은 글씨에서 4.2:1 이라, 작은 라벨은 green-deep 을 쓴다.
  * 네이비 배경
  *   제목 #FFFFFF · 본문 white 72% · 핵심 강조 mint #A8D3AD · 작은 라벨 mint-label #8EBB96
@@ -35,7 +35,7 @@
   --color-green-deep: #2d5c36;
   --color-green-soft: #e4ede3;
   --color-ink: #4d535b;
-  --color-muted: #656b71;
+  --color-muted: #858b91;
   --color-on-navy: #ffffff;
   --color-on-navy-muted: rgb(255 255 255 / 0.72);
   --color-mint: #a8d3ad;

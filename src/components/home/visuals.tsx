@@ -33,8 +33,9 @@ export function PhotoFrame({
           fill
           sizes={sizes}
           quality={80}
-          loading={eager ? "eager" : "lazy"}
-          fetchPriority={eager ? "high" : "auto"}
+          // HERO 사진은 첫 화면에 보이므로 미리 불러온다(preload). 나머지는 화면 근처에서 불러온다.
+          preload={eager}
+          loading={eager ? undefined : "lazy"}
           className="object-cover"
           style={{ objectPosition: p.focus }}
         />
