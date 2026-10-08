@@ -10,7 +10,9 @@ import { Arrow, buttonClass, Container, cx } from "@/components/ui/primitives";
 import { compliance } from "@/config/site";
 import { track } from "@/lib/analytics";
 import {
+  defaultAction,
   interestLabels,
+  priorityActions,
   priorityDescriptions,
   priorityLabels,
   resultCopy,
@@ -18,7 +20,6 @@ import {
 import { clearProgress, clearResult } from "@/lib/diagnostic/storage";
 import { useStoredResult } from "@/lib/diagnostic/use-stored-result";
 
-const ORDER_LABELS = ["지금", "다음", "나중"] as const;
 
 export function ResultView() {
   const result = useStoredResult();
@@ -65,7 +66,7 @@ export function ResultView() {
   }
 
   const copy = resultCopy[result.type];
-  const order = result.tags.slice(0, 3);
+  const actions = result.tags.length > 0 ? result.tags.slice(0, 3).map((t) => priorityActions[t]) : [defaultAction];
 
   const openContact = (location: string) => {
     track("result_cta_click", { location, result_type: result.type });
@@ -79,7 +80,8 @@ export function ResultView() {
 
   return (
     <>
-      <section aria-labelledby="result-title" className="bg-ivory pb-16 pt-24 sm:pb-24 sm:pt-32">
+      {/* 1. 결과 유형 */}
+      <section aria-labelledby="result-title" className="bg-ivory pb-14 pt-24 sm:pb-20 sm:pt-32">
         <Container className="max-w-[44rem]">
           <p className="text-base font-semibold text-green">1분 점검 결과</p>
           <h1 id="result-title" className="pre-line mt-4 text-[1.875rem] font-extrabold leading-[1.35] tracking-[-0.04em] text-navy sm:text-[2.5rem]">
@@ -90,25 +92,13 @@ export function ResultView() {
               <p key={b}>{b}</p>
             ))}
           </div>
-
-          <div className="mt-10">
-            <button
-              id="hero-cta"
-              type="button"
-              onClick={() => openContact("result_main")}
-              className={buttonClass("primary", "w-full text-[1.125rem] sm:w-auto sm:px-8")}
-            >
-              {copy.cta}
-              <Arrow />
-            </button>
-            <p className="mt-3 text-base text-muted">가입 권유 없이, 지금 상황부터 같이 봅니다.</p>
-          </div>
-          <p className="mt-10 rounded-[8px] border border-line bg-white px-5 py-4 text-base leading-relaxed text-muted">
+          <p className="mt-8 rounded-[8px] border border-line bg-white px-5 py-4 text-base leading-relaxed text-muted">
             {compliance.resultNotice}
           </p>
         </Container>
       </section>
 
+      {/* 2. 지금 먼저 확인해볼 영역 */}
       <section aria-labelledby="tags-title" className="border-t border-line bg-paper py-14 sm:py-20">
         <Container className="max-w-[44rem]">
           <h2 id="tags-title" className="text-[1.375rem] font-bold text-navy sm:text-[1.625rem]">
@@ -137,43 +127,47 @@ export function ResultView() {
               특별히 먼저 볼 곳은 보이지 않았어요. 1년에 한 번쯤, 각각의 돈이 같은 방향을 보고 있는지만 확인해보세요.
             </p>
           )}
-
-          <p className="mt-8 text-ink/90">
-            가장 궁금하다고 하신 영역은 <strong className="font-semibold text-navy">‘{interestLabels[result.interest]}’</strong>
-            입니다. 상담을 신청하시면 이 부분부터 이야기할 수 있어요.
-          </p>
         </Container>
       </section>
 
-      {order.length >= 2 && (
-        <section aria-labelledby="order-title" className="bg-ivory py-14 sm:py-20">
-          <Container className="max-w-[44rem]">
-            <h2 id="order-title" className="text-[1.375rem] font-bold text-navy sm:text-[1.625rem]">
-              이런 순서로 볼 수 있어요
-            </h2>
-            <p className="mt-2 text-muted">기초가 되는 영역부터 차례로 놓아본 예시입니다.</p>
-            <ol className="mt-6 overflow-hidden rounded-[8px] border border-line bg-white">
-              {order.map((t, i) => (
-                <li key={t} className="flex items-center gap-5 border-b border-dashed border-line px-5 py-4 last:border-0">
-                  <span className={cx("w-10 shrink-0 font-bold", i === 0 ? "text-green" : "text-navy/70")}>{ORDER_LABELS[i]}</span>
-                  <span className="font-medium text-ink">{priorityLabels[t]}</span>
-                </li>
-              ))}
-            </ol>
-          </Container>
-        </section>
-      )}
+      {/* 3. 이번 주에 해볼 간단한 행동 */}
+      <section aria-labelledby="actions-title" className="bg-ivory py-14 sm:py-20">
+        <Container className="max-w-[44rem]">
+          <h2 id="actions-title" className="text-[1.375rem] font-bold text-navy sm:text-[1.625rem]">
+            이번 주에 해볼 간단한 행동
+          </h2>
+          <p className="mt-2 text-muted">혼자서 10~20분이면 할 수 있는 것들입니다.</p>
+          <ol className="mt-6 overflow-hidden rounded-[8px] border border-line bg-white">
+            {actions.map((a, i) => (
+              <li key={a} className="flex gap-4 border-b border-dashed border-line px-5 py-4 last:border-0">
+                <span className={cx("w-6 shrink-0 font-bold tabular-nums", i === 0 ? "text-green" : "text-navy/70")}>{i + 1}</span>
+                <span className="text-ink">{a}</span>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
 
+      {/* 4. 황진에게 한번 물어보기 */}
       <section id="final-cta" aria-labelledby="next-title" className="on-navy bg-navy py-16 text-on-navy sm:py-20">
         <Container className="max-w-[44rem]">
-          <h2 id="next-title" className="text-[1.5rem] font-bold sm:text-[1.875rem]">
-            혼자 정리하기 어렵다면
+          <h2 id="next-title" className="text-[1.5rem] font-bold leading-[1.45] sm:text-[1.875rem]">
+            혼자 정리해봐도 괜찮고,
+            <br />
+            지금 상황을 편하게 이야기해도 됩니다.
           </h2>
           <p className="mt-4 text-on-navy-muted">
-            지금 가진 것 중 유지할 것부터 함께 찾아봅니다. 무엇을 바꿀지는 그다음이고, 최종 결정은 언제나 본인의 몫입니다.
+            가장 궁금하다고 하신 <strong className="font-semibold text-on-navy">‘{interestLabels[result.interest]}’</strong>부터 이야기할 수
+            있어요. 가입 권유부터 하지 않고, 최종 결정은 언제나 본인의 몫입니다.
           </p>
-          <button type="button" onClick={() => openContact("result_bottom")} className={buttonClass("light", "mt-8 w-full sm:w-auto sm:px-8")}>
-            황진에게 한번 물어보기
+          {/* 결과 화면에서는 하단 고정 버튼이 처음부터 보이고, 이 구역이 보이면 숨는다(sticky-cta.tsx). */}
+          <button
+            id="result-cta"
+            type="button"
+            onClick={() => openContact("result_main")}
+            className={buttonClass("light", "mt-8 w-full text-[1.125rem] sm:w-auto sm:px-8")}
+          >
+            내 상황 편하게 이야기해보기
             <Arrow />
           </button>
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-1 text-base">
@@ -193,10 +187,9 @@ export function ResultView() {
             주변에도 한번 해보라고 보내주세요
           </h2>
           <p className="mt-3 text-muted">상품을 권하려고 보내지 않으셔도 됩니다. ‘한번 정리해봐’ 한마디면 충분해요.</p>
-          <ShareButton location="result" variant="outline" className="mt-6 w-full sm:w-auto sm:px-8" />
+          <ShareButton location="result" variant="outline" label="필요한 분께 이 페이지 보내기" className="mt-6 w-full sm:w-auto sm:px-8" />
         </Container>
       </section>
-
 
       <Modal open={open} onClose={() => setOpen(false)} title="황진에게 한번 물어보기" labelId="contact-dialog-title">
         <p className="mb-5 text-muted">편한 방법을 골라주세요. 어떤 방법이든 가입 권유부터 하지 않습니다.</p>

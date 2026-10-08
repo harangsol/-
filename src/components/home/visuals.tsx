@@ -10,7 +10,8 @@ import { cx } from "@/components/ui/primitives";
 export function HeroVisual() {
   const photo = photos.hero;
   return (
-    <div className="relative mx-auto w-full max-w-[460px] lg:max-w-[480px]">
+    // 실제 사진이 없을 때 모바일에서는 메모 카드를 숨겨 첫 화면 다음 스크롤을 줄인다(데스크톱만 표시).
+    <div className={cx("relative mx-auto w-full max-w-[460px] lg:max-w-[480px]", !photo.src && "hidden lg:block")}>
       {photo.src ? (
         <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-paper">
           <Image
@@ -123,6 +124,28 @@ export function ProfileCard() {
           </div>
         </dl>
       </div>
+    </div>
+  );
+}
+
+/** PHOTO 02 — 모바일 '왜 황진인가' 사진. 사진이 없으면 그리지 않는다(데스크톱은 ProfileCard 가 사진을 함께 보여준다). */
+export function AboutPhotoMobile() {
+  const photo = photos.about;
+  if (!photo.src) return null;
+  return (
+    <div className="relative mt-8 aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-paper lg:hidden">
+      <Image src={photo.src} alt={photo.alt} fill sizes="90vw" className="object-cover" loading="lazy" />
+    </div>
+  );
+}
+
+/** PHOTO 03 — 감성 메시지 구간 라이프컷. 사진이 없으면 아무것도 그리지 않는다. */
+export function LifePhoto({ className }: { className?: string }) {
+  const photo = photos.life;
+  if (!photo.src) return null;
+  return (
+    <div className={cx("relative aspect-[16/10] w-full overflow-hidden rounded-[6px] bg-paper", className)}>
+      <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 600px, 90vw" className="object-cover" loading="lazy" />
     </div>
   );
 }

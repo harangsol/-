@@ -28,7 +28,7 @@ export function StickyCta() {
       Array.from(document.querySelectorAll<HTMLElement>(`[id="${id}"]`)).find((el) => el.offsetParent !== null) ?? null;
     const hero = visibleById("hero-cta");
     // 화면에 자체 CTA 가 있는 구역(소개·마지막 CTA)이 보이면 겹치지 않게 숨긴다.
-    const quiet = ["referral", "final-cta"].map(visibleById).filter((el): el is HTMLElement => !!el);
+    const quiet = ["referral", "final-cta", "site-footer"].map(visibleById).filter((el): el is HTMLElement => !!el);
     let heroOut = !hero;
     const quietIn = new Set<Element>();
     const update = () => setVisible(heroOut && quietIn.size === 0);

@@ -8,10 +8,10 @@ import {
   Principle,
   Process,
   Referral,
-  Thoughts,
   Work,
 } from "@/components/home/sections";
 
+/** 홈 10개 섹션 — 순서와 의도는 src/components/home/sections.tsx 상단 주석 참고 */
 export default function HomePage() {
   return (
     <>
@@ -21,9 +21,8 @@ export default function HomePage() {
       <About />
       <Cases />
       <Process />
-      <NotSaid />
-      <Thoughts />
       <CheckInvite />
+      <NotSaid />
       <Referral />
       <FinalCta />
     </>

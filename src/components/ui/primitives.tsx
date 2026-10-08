@@ -28,7 +28,7 @@ export function Section({
       id={id}
       aria-labelledby={labelledBy}
       className={cx(
-        "py-20 sm:py-28",
+        "py-16 sm:py-28",
         tone === "ivory" && "bg-ivory",
         tone === "paper" && "bg-paper",
         tone === "navy" && "on-navy bg-navy text-on-navy",

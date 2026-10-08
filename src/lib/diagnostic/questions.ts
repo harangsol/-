@@ -46,13 +46,13 @@ export const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: "debt",
-    title: "지금 가진 대출의 금리, 월 상환액,\n만기를 알고 있나요?",
+    title: "현재 가지고 있는 대출의\n금리 · 월 상환액 · 만기를 알고 있나요?",
     hint: "주택담보대출, 신용대출, 카드론 등을 모두 떠올려 보세요.",
     options: [
-      { label: "대출이 없다", bucket: "none", score: 2 },
       { label: "대부분 알고 있다", bucket: "yes", score: 2 },
-      { label: "대략만 알고 있다", bucket: "partial", score: 1 },
+      { label: "대략 알고 있다", bucket: "partial", score: 1 },
       { label: "잘 모르겠다", bucket: "no", score: 0 },
+      { label: "지금은 대출이 없다", bucket: "none", score: 2 },
     ],
   },
   {
@@ -130,6 +130,7 @@ export const priorityLabels: Record<PriorityTag, string> = {
   debt: "대출 / 부채",
   insurance: "보험",
   pension: "연금 / 노후",
+  retirement: "퇴직연금",
   investment: "투자 방향",
   lifeplan: "생애자금 계획",
 };
@@ -139,14 +140,31 @@ export const priorityDescriptions: Record<PriorityTag, string> = {
   debt: "금리, 월 상환 부담, 만기 — 더 받기 전에 지금 구조부터.",
   insurance: "지금 보험이 어떤 위험을 막고 있는지, 겹치거나 빈 곳은 없는지.",
   pension: "은퇴 후 필요한 생활비와 받게 될 연금 사이의 거리.",
+  retirement: "회사에서 만들어준 계좌가 어떤 유형이고, 지금 무엇에 담겨 있는지.",
   investment: "이 돈은 언제, 무엇을 위해 쓸 돈인지.",
   lifeplan: "집, 아이, 부모님, 은퇴 — 큰돈이 필요한 시기의 순서.",
 };
 
+/**
+ * 결과 화면 '이번 주에 해볼 간단한 행동'. 먼저 확인할 영역 순서대로 최대 3개를 보여준다.
+ * 혼자서 10~20분 안에 해볼 수 있는 일만 적는다. 상품 가입·해지 같은 행동은 넣지 않는다.
+ */
+export const priorityActions: Record<PriorityTag, string> = {
+  cashflow: "지난달 카드·계좌 내역에서 매달 나가는 고정지출만 따로 적어보기",
+  debt: "가진 대출마다 금리, 월 상환액, 만기를 한 장에 적어보기",
+  insurance: "‘내보험다보여’나 보험사 앱에서 가입한 보험 목록과 월 보험료 확인하기",
+  pension: "‘내 곁에 국민연금’ 앱에서 예상 수령액 한 번 확인하기",
+  retirement: "회사 퇴직연금이 DB형인지 DC형인지, 계좌에 무엇이 담겨 있는지 확인하기",
+  investment: "투자 중인 돈마다 ‘언제, 무엇에 쓸 돈인지’ 한 줄씩 메모해보기",
+  lifeplan: "앞으로 10년 안에 큰돈이 필요한 일을 연도별로 적어보기",
+};
+
+/** 먼저 확인할 영역이 없을 때 */
+export const defaultAction = "1년에 한 번, 대출·보험·연금·투자가 같은 방향을 보는지 점검할 날짜를 달력에 적어두기";
+
 export type ResultCopy = {
   title: string;
   body: string[];
-  cta: string;
 };
 
 /** 결과 타입별 문구. 결과 화면 문구는 여기서만 수정한다. */
@@ -156,7 +174,6 @@ export const resultCopy: Record<ResultType, ResultCopy> = {
     body: [
       "새로운 상품을 찾기보다 현재 보험, 연금, 투자, 현금이 같은 방향을 보고 있는지 정기적으로 확인해보는 것이 좋습니다.",
     ],
-    cta: "내 구조 한번 더 정리해보기",
   },
   B: {
     title: "돈은 관리하고 있지만\n연결이 필요합니다.",
@@ -164,20 +181,17 @@ export const resultCopy: Record<ResultType, ResultCopy> = {
       "보험은 보험대로, 투자는 투자대로, 연금은 연금대로 준비되어 있을 가능성이 있습니다.",
       "전체 그림을 한번 연결해보세요.",
     ],
-    cta: "황진에게 한번 물어보기",
   },
   C: {
     title: "먼저 기초부터\n정리할 필요가 있습니다.",
     body: [
       "새로운 상품을 알아보기 전에 현금흐름, 비상자금, 대출, 보험, 노후 준비 중 무엇이 먼저인지 정리하는 것이 도움이 될 수 있습니다.",
     ],
-    cta: "내 우선순위 같이 정리해보기",
   },
   D: {
     title: "지금은 무엇부터 할지\n순서를 정하는 게 먼저입니다.",
     body: [
       "이것저것 하나씩 가입하거나 투자하기보다 ‘지금 · 다음 · 나중’ 순서를 한번 정해보세요.",
     ],
-    cta: "황진에게 한번 물어보기",
   },
 };

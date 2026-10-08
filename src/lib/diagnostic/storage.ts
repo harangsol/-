@@ -114,7 +114,7 @@ export function finalize(answers: Progress["answers"]): StoredResult | null {
     type,
     total,
     scores,
-    tags: priorityTags(scores),
+    tags: priorityTags(scores, interestQuestion.options[interestIdx].value),
     interest: interestQuestion.options[interestIdx].value,
     completedAt: Date.now(),
   };

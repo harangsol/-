@@ -22,7 +22,11 @@ export type AnalyticsEvent =
   | "scroll_50"
   | "scroll_90"
   | "referral_share_click"
-  | "referral_url_copy";
+  | "referral_url_copy"
+  | "referral_section_view"
+  | "profile_affiliation_view"
+  | "loan_section_view"
+  | "contact_option_click";
 
 const ALLOWED_PARAMS = [
   "location",

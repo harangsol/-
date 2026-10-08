@@ -19,7 +19,7 @@ export const TIME_OPTIONS = ["평일 오전", "평일 오후", "평일 저녁", 
 export const CONCERN_MAX = 200;
 
 const RESULT_TYPES = ["A", "B", "C", "D"] as const;
-const PRIORITY_TAGS = ["cashflow", "debt", "insurance", "pension", "investment", "lifeplan"] as const;
+const PRIORITY_TAGS = ["cashflow", "debt", "insurance", "pension", "retirement", "investment", "lifeplan"] as const;
 type PriorityTagValue = (typeof PRIORITY_TAGS)[number];
 
 export type ConsultationInput = {

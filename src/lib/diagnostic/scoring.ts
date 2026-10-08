@@ -60,15 +60,20 @@ export function classify(scores: Scores): { total: number; type: ResultType } {
   return { total, type };
 }
 
-export type PriorityTag = "cashflow" | "debt" | "insurance" | "pension" | "investment" | "lifeplan";
+export type PriorityTag = "cashflow" | "debt" | "insurance" | "pension" | "retirement" | "investment" | "lifeplan";
 
-/** 결과 화면의 '지금 먼저 확인해볼 영역' 칩. 배열 순서대로 표시된다. */
-export function priorityTags(scores: Scores): PriorityTag[] {
+/**
+ * 결과 화면의 '지금 먼저 확인해볼 영역' 칩. 배열 순서대로 표시된다.
+ * interest: Q8(가장 궁금한 영역) 값. '퇴직연금'을 고른 경우 퇴직연금 영역을 함께 보여준다.
+ */
+export function priorityTags(scores: Scores, interest?: string): PriorityTag[] {
   const tags: PriorityTag[] = [];
   if (scores.q1 < 2 || scores.q2 < 2) tags.push("cashflow");
   if (scores.debt < 2) tags.push("debt");
   if (scores.q3 < 2) tags.push("insurance");
   if (scores.q4 < 2 || scores.q5 < 2) tags.push("pension");
+  // 연금 수령액(Q5)을 전혀 모르거나 퇴직연금이 가장 궁금하다면, 퇴직연금을 따로 확인한다.
+  if (scores.q5 === 0 || interest === "retirement_pension") tags.push("retirement");
   if (scores.q6 < 2) tags.push("investment");
   if (scores.q7 < 2) tags.push("lifeplan");
   return tags;

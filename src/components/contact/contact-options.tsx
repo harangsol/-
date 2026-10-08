@@ -16,6 +16,7 @@ type Props = {
 /** 연락 방법 3가지: 카카오톡 / 연락처 남기기 / 전화. 설정되지 않은 채널은 숨긴다. */
 export function ContactOptions({ location, onFormSelect, resultType }: Props) {
   const params = { location, ...(resultType ? { result_type: resultType } : {}) };
+  const option = (method: "kakao" | "form" | "phone") => track("contact_option_click", { ...params, method });
   return (
     <ul className="space-y-3">
       {contact.kakaoUrl && (
@@ -24,7 +25,10 @@ export function ContactOptions({ location, onFormSelect, resultType }: Props) {
             href={contact.kakaoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track("kakao_contact_click", params)}
+            onClick={() => {
+              option("kakao");
+              track("kakao_contact_click", params);
+            }}
             className={optionClass}
           >
             <OptionBody
@@ -37,18 +41,28 @@ export function ContactOptions({ location, onFormSelect, resultType }: Props) {
       )}
       <li>
         {onFormSelect ? (
-          <button type="button" onClick={onFormSelect} className={optionClass}>
+          <button
+            type="button"
+            onClick={() => {
+              option("form");
+              onFormSelect();
+            }}
+            className={optionClass}
+          >
             <OptionBody icon={<FormIcon />} title="내 상황 한번 얘기해보기" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
           </button>
         ) : (
-          <Link href="/contact#form" className={optionClass}>
+          <Link href="/contact#form" onClick={() => option("form")} className={optionClass}>
             <OptionBody icon={<FormIcon />} title="내 상황 한번 얘기해보기" desc="이름과 연락처만 남기면 편한 시간에 연락드려요" />
           </Link>
         )}
       </li>
       {contact.phone && (
         <li>
-          <a href={phoneHref(contact.phone)} onClick={() => track("phone_contact_click", params)} className={optionClass}>
+          <a href={phoneHref(contact.phone)} onClick={() => {
+              option("phone");
+              track("phone_contact_click", params);
+            }} className={optionClass}>
             <OptionBody icon={<PhoneIcon />} title="전화로 물어보기" desc={contact.phone} />
           </a>
         </li>

@@ -12,7 +12,9 @@ export default function TermsPage() {
   return (
     <LegalPage title="이용안내" intro={<p>이 페이지를 이용하시기 전에 아래 내용을 한 번 읽어주세요.</p>}>
       <LegalSection title="1. 이 페이지의 성격">
-        <p>{compliance.pageNotice}</p>
+        {compliance.pageNotice.map((t) => (
+          <p key={t}>{t}</p>
+        ))}
         <p>개별 금융상품의 안내·판매가 필요한 경우에는 이 페이지와 분리된 별도의 절차와 법령상 필요한 고지를 거칩니다.</p>
       </LegalSection>
       <LegalSection title="2. 1분 금융점검">

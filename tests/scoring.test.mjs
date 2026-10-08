@@ -61,6 +61,10 @@ test("먼저 확인할 영역 태그", () => {
   assert.deepEqual(priorityTags(s(2, 1, 1, 2, 1, 0, 1)), ["cashflow", "insurance", "pension", "investment", "lifeplan"]);
   assert.deepEqual(priorityTags(s(2, 2, 2, 2, 2, 2, 2, 1)), ["debt"]);
   assert.deepEqual(priorityTags(s(1, 2, 2, 2, 2, 2, 2, 0)), ["cashflow", "debt"]);
+  // 퇴직연금: Q5 0점이거나 관심 영역이 퇴직연금일 때
+  assert.deepEqual(priorityTags(s(2, 2, 2, 2, 0, 2, 2)), ["pension", "retirement"]);
+  assert.deepEqual(priorityTags(s(2, 2, 2, 2, 2, 2, 2), "retirement_pension"), ["retirement"]);
+  assert.deepEqual(priorityTags(s(2, 2, 2, 2, 2, 2, 2), "loan"), []);
   assert.deepEqual(priorityTags(s(2, 2, 2, 1, 2, 2, 2)), ["pension"]);
 });
 
