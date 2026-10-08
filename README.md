@@ -270,7 +270,8 @@ Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&
 | --- | --- |
 | 경력 연수(13년), 다루는 영역, 자격·등록 | `src/config/site.ts` → `profile` (자격은 실제 보유한 것만, 비우면 숨김) |
 | 상담 사례 (처음 질문 / 먼저 본 것 / 정리한 방향) | `src/config/cases.ts` — 실제 사례로 바꿀 때는 본인 동의, 식별정보 제거, `sample: false`. 수익률·절감액 같은 성과 숫자는 쓰지 않습니다 |
-| 사진 3장 (HERO 업무컷 · 프로필 · 라이프컷) | `public/images/`에 넣고 `src/config/site.ts` → `photos`의 `src` 채우기. 비어 있으면 HERO는 메모 카드(데스크톱), 나머지는 사진 자리를 표시하지 않습니다 |
+| 사진 3장 (PHOTO 01 HERO 업무컷 · 02 프로필 · 03 상담 장면) | `public/images/`에 원본 JPG를 넣고 `src/config/site.ts` → `photos`의 `src`·`focus` 채우기 (`public/images/README.md` 참고). AVIF/WebP 자동 변환. 비어 있으면 배포 화면에서는 사진 자리를 숨기고(HERO는 데스크톱에서 메모 카드), 개발 화면이나 `NEXT_PUBLIC_SHOW_PHOTO_SLOTS=1`이면 '사진 자리'를 표시합니다 |
+| (선택) B-roll 영상 1개 | `src/config/site.ts` → `brollVideo`의 `src`·`poster` 둘 다 채우면 상담 철학 섹션에 표시 (무음·화면에 보일 때만 재생·동작 줄이기 설정 존중) |
 | 결과 화면 '이번 주에 해볼 간단한 행동' | `src/lib/diagnostic/questions.ts` → `priorityActions` |
 | 지인 공유 문구·링크 구분값 | `src/config/site.ts` → `share` |
 | 검색결과 제목·설명 | `src/config/site.ts` → `site.title`, `site.description` (화면에는 노출되지 않음) |
@@ -319,7 +320,10 @@ Instagram·Threads 프로필 링크에 `?utm_source=instagram&utm_medium=social&
 
 ## 디자인 메모
 
-- 오프화이트 / 딥네이비 / 클로버그린. 그린은 원안 `#3E7C49`를 베이지 배경에서 WCAG 4.5:1을 넘도록 `#387042`로, 보조 텍스트는 `#6D716F` → `#5F6361`로 미세 조정했습니다.
+- 오프화이트 70 / 딥네이비 20 / 클로버그린 10.
+- 텍스트 위계: 제목 `#18263D` → 핵심 강조 `#3F7D4A`(한 화면에 단어 1~2개) → 본문 `#4D535B` → 보조 `#656B71`. 보조는 요청값 `#858B91`이 배경 대비 3.2:1로 WCAG 기준(4.5:1)에 못 미쳐 가장 가까운 통과 값으로 조정했습니다. 베이지 위 작은 그린 라벨은 `#2D5C36`.
+- 네이비 배경: 제목 흰색, 본문 흰색 72%, 강조 `#A8D3AD`, 작은 라벨 `#8EBB96`.
+- 버튼 역할: 주 행동 = 그린 채움, 모바일 하단 고정 = 네이비 채움, 보조 = 투명 + 네이비 테두리.
 - 폰트: Pretendard. 사이트 문구에 쓰인 글자만 담은 106KB 파일 하나를 preload하고, 그 밖의 글자(사용자가 입력한 이름 등)는 동적 서브셋이 필요할 때만 받습니다. 문구를 많이 바꾸면 `python3 scripts/build-site-font.py <PretendardVariable.woff2>`로 다시 만드세요(안 해도 깨지지는 않습니다).
 - **사진**: 현재는 사진 대신 '지금·다음·나중' 메모 카드가 HERO 비주얼입니다. 실제 사진은 `public/images/`에 넣고 `src/config/site.ts`의 `photos.hero.src`, `photos.about.src`를 채우면 자동으로 교체됩니다. 정장·팔짱 사진은 HERO에 쓰지 마세요.
 

@@ -51,3 +51,24 @@ export function AffiliationRows({
     </dl>
   );
 }
+
+/**
+ * 업무 기반을 본문 텍스트가 아닌 '신뢰 정보 블록'으로 — 작은 카드 2열(모바일 1~2열).
+ * 로고 없이 텍스트만, 관계 표현은 config 값 그대로.
+ */
+export function AffiliationCards({ audience, className }: { audience: Affiliation["audience"]; className?: string }) {
+  const rows = profileAffiliations.filter((a) => a.audience === audience).map((a) => ({ a, ...lines(a) })).filter((r) => r.main);
+  if (rows.length === 0) return null;
+  return (
+    <ul className={cx("grid gap-2.5", rows.length > 1 && "min-[400px]:grid-cols-2", className)}>
+      {rows.map(({ a, main, reg, disclaimer }) => (
+        <li key={a.id} className="rounded-[8px] border border-line bg-white px-4 py-3.5">
+          <p className="text-base text-muted">{a.category}</p>
+          <p className="mt-0.5 font-bold leading-snug text-navy">{main}</p>
+          {reg && <p className="mt-0.5 text-base text-ink">{reg}</p>}
+          {disclaimer && <p className="mt-1 text-base text-muted">{disclaimer}</p>}
+        </li>
+      ))}
+    </ul>
+  );
+}

@@ -45,7 +45,7 @@ export function Eyebrow({ children, onNavy }: { children: ReactNode; onNavy?: bo
     <p
       className={cx(
         "mb-5 text-base font-semibold tracking-[0.02em]",
-        onNavy ? "text-[#9fd0a7]" : "text-green",
+        onNavy ? "text-mint-label" : "text-green-deep",
       )}
     >
       {children}
@@ -69,13 +69,20 @@ export function SectionTitle({
   );
 }
 
+/**
+ * 버튼 역할
+ *  primary   — 클로버그린 채움. 화면의 주 행동 하나에만.
+ *  navy      — 딥네이비 채움. 모바일 하단 고정(sticky) CTA 전용.
+ *  outline   — 투명 + 네이비 테두리. 보조 행동.
+ *  outlineOnNavy — 네이비 배경 위 보조 행동.
+ */
 export const buttonStyles = {
   base: "inline-flex min-h-[3.25rem] items-center justify-center gap-2 rounded-[10px] px-6 text-[1.0625rem] font-semibold tracking-[-0.01em] transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60",
   primary: "bg-green text-white hover:bg-green-deep active:bg-green-deep",
   navy: "bg-navy text-white hover:bg-navy-soft",
   light: "bg-ivory text-navy hover:bg-white",
-  outline: "border border-navy/25 bg-transparent text-navy hover:border-navy hover:bg-white/60",
-  outlineOnNavy: "border border-white/30 bg-transparent text-white hover:border-white hover:bg-white/5",
+  outline: "border-[1.5px] border-navy bg-transparent text-navy hover:bg-white",
+  outlineOnNavy: "border-[1.5px] border-white/60 bg-transparent text-white hover:border-white hover:bg-white/5",
   ghost: "text-navy underline-offset-4 hover:underline",
 };
 

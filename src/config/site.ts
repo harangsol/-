@@ -113,30 +113,49 @@ export const compliance = {
 };
 
 /**
- * 사진 슬롯 (총 3장). public/images 에 사진을 넣고 src 를 채우면 자동으로 교체된다. 예: src: "/images/hero.jpg"
- * src 가 비어 있으면 절제된 그래픽 패널이 대신 표시된다. 금융 스톡이미지는 쓰지 않는다.
- * 정장·팔짱 사진은 HERO에 쓰지 않는다. 캐주얼/일하는 모습/걷는 장면 권장.
+ * 황진 실제 사진 3장 + (선택) 영상 1개. 스톡 사진은 쓰지 않는다.
+ *
+ * 사용법: public/images/ 에 원본 사진(jpg·png, 가로 1600px 이상 권장)을 넣고 src 에 경로를 적는다.
+ *   예) src: "/images/hwangjin-01.jpg"
+ *   Next/Image 가 기기 크기에 맞춰 AVIF/WebP 로 자동 변환·축소한다(next.config.ts images).
+ * focus: 사진을 자를 때 남길 위치(CSS object-position). 얼굴이 위쪽에 있으면 "50% 25%" 처럼 둔다.
+ * src 가 비어 있으면: 배포 화면에서는 사진 자리를 그리지 않거나 대체 그래픽을 보여주고,
+ *   개발 화면(npm run dev)이나 NEXT_PUBLIC_SHOW_PHOTO_SLOTS=1 일 때는 '사진 자리' 표시가 나온다.
  */
 export const photos = {
-  /** PHOTO 01 — HERO: 자연스럽게 일하는 모습 (노트북·책상·노트) */
+  /** PHOTO 01 — HERO: 자연스러운 캐주얼 업무사진 (네이비 셔츠·재킷, 정장 팔짱·정면 광고컷 금지) */
   hero: {
     src: "",
-    alt: "책상에서 노트를 펼쳐 놓고 일하는 황진",
-    width: 1200,
-    height: 1500,
+    alt: "책상에서 자료를 보며 일하는 황진",
+    focus: "50% 30%",
+    guide: "자연스러운 캐주얼 업무사진 · 네이비 셔츠/재킷",
   },
-  /** PHOTO 02 — 왜 황진인가: 신뢰감 있는 캐주얼 프로필 / 반신 */
+  /** PHOTO 02 — 왜 황진인가: 신뢰감 있는 캐주얼 프로필 또는 업무 중 반신 */
   about: {
     src: "",
     alt: "황진 프로필 사진",
-    width: 1200,
-    height: 1500,
+    focus: "50% 25%",
+    guide: "신뢰감 있는 캐주얼 프로필 · 반신",
   },
-  /** PHOTO 03 — 감성 메시지 구간: 운동·걷기·일상 라이프컷 (없으면 이 사진 자리는 표시하지 않음) */
-  life: {
+  /** PHOTO 03 — 상담 방식: 자료 보기·노트북·메모·이동하는 모습 */
+  work: {
     src: "",
-    alt: "아침 산책길을 걷는 황진",
-    width: 1600,
-    height: 1000,
+    alt: "노트에 메모하며 상담을 준비하는 황진",
+    focus: "50% 45%",
+    guide: "자료를 보거나 메모하는 모습 · 노트북 앞 · 걷는 모습",
   },
 } as const;
+
+/**
+ * (선택) 8~12초 B-roll 영상 1개 — '상품보다 상황을 먼저 봅니다' 섹션에 들어간다.
+ * src(mp4, H.264, 720p, 2~4MB 이하 권장)와 poster(첫 장면 jpg) 둘 다 있어야 표시된다.
+ * 소리 없이, 화면에 보일 때만 재생하고, '움직임 줄이기' 설정 사용자에게는 자동재생하지 않는다.
+ */
+export const brollVideo = {
+  src: "",
+  poster: "",
+  caption: ["금융 현장 13년.", "상품보다 상황을 먼저 봅니다."],
+};
+
+export const showPhotoSlots =
+  process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_SHOW_PHOTO_SLOTS === "1";

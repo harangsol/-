@@ -1,68 +1,105 @@
 import Image from "next/image";
-import { photos, profile } from "@/config/site";
+import type { ReactNode } from "react";
+import { photos, profile, showPhotoSlots } from "@/config/site";
 import { cx } from "@/components/ui/primitives";
 
+type PhotoKey = keyof typeof photos;
+const PHOTO_NO: Record<PhotoKey, string> = { hero: "PHOTO 01", about: "PHOTO 02", work: "PHOTO 03" };
+
 /**
- * HERO 오른쪽(모바일은 아래) 비주얼.
- * 실제 사진(src/config/site.ts → photos.hero)이 있으면 사진 + 메모 카드,
- * 없으면 '지금 · 다음 · 나중' 메모 카드만 단독으로 보여준다.
+ * 황진 실제 사진 한 장. src(config/site.ts → photos)가 있으면 Next/Image 로 최적화해 보여준다.
+ * 비어 있으면 개발 화면에서만 '사진 자리'를 표시하고, 배포 화면에서는 fallback(없으면 아무것도)을 그린다.
  */
-export function HeroVisual() {
-  const photo = photos.hero;
+export function PhotoFrame({
+  slot,
+  className,
+  sizes,
+  eager,
+  fallback = null,
+}: {
+  slot: PhotoKey;
+  className: string;
+  sizes: string;
+  eager?: boolean;
+  fallback?: ReactNode;
+}) {
+  const p: { src: string; alt: string; focus: string; guide: string } = photos[slot];
+  if (p.src) {
+    return (
+      <div className={cx("relative overflow-hidden rounded-[6px] bg-paper", className)}>
+        <Image
+          src={p.src}
+          alt={p.alt}
+          fill
+          sizes={sizes}
+          quality={80}
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
+          className="object-cover"
+          style={{ objectPosition: p.focus }}
+        />
+      </div>
+    );
+  }
+  if (!showPhotoSlots) return <>{fallback}</>;
   return (
-    // 실제 사진이 없을 때 모바일에서는 메모 카드를 숨겨 첫 화면 다음 스크롤을 줄인다(데스크톱만 표시).
-    <div className={cx("relative mx-auto w-full max-w-[460px] lg:max-w-[480px]", !photo.src && "hidden lg:block")}>
-      {photo.src ? (
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-paper">
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            priority
-            sizes="(min-width: 1024px) 460px, 90vw"
-            className="object-cover"
-          />
-        </div>
-      ) : (
-        <div aria-hidden="true" className="absolute inset-0 -z-0 translate-x-3 translate-y-3 rounded-[6px] bg-navy/[0.06]" />
+    <div
+      role="img"
+      aria-label={`${PHOTO_NO[slot]} 사진 자리`}
+      className={cx(
+        "flex flex-col items-center justify-center gap-2 rounded-[6px] border-2 border-dashed border-navy/20 bg-paper/70 px-6 text-center",
+        className,
       )}
-      <OrderNote className={photo.src ? "absolute -bottom-8 -left-4 w-[78%] sm:-left-10" : "relative"} />
-      {!photo.src && (
-        <p className="relative mt-5 text-base text-muted lg:mt-6">상담에서는 이렇게 ‘지금 · 다음 · 나중’ 순서부터 함께 정리합니다.</p>
-      )}
+    >
+      <svg aria-hidden="true" viewBox="0 0 24 24" className="size-7 text-navy/35" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <circle cx="12" cy="12" r="3.2" />
+        <path d="M8 5l1.2-2h5.6L16 5" />
+      </svg>
+      <span className="text-base font-bold text-muted">{PHOTO_NO[slot]} · 황진 실제 사진</span>
+      <span className="text-base text-muted">{p.guide}</span>
     </div>
   );
 }
 
-function OrderNote({ className }: { className?: string }) {
+/**
+ * HERO 비주얼 — 문구가 주인공, 사진은 30~35% 비중으로 보조.
+ * 사진이 없는 배포 화면에서는 '지금 · 다음 · 나중' 메모 카드(데스크톱만)를 대신 보여준다.
+ */
+export function HeroVisual() {
+  return (
+    <PhotoFrame
+      slot="hero"
+      eager
+      sizes="(min-width: 1024px) 400px, 92vw"
+      className="mx-auto aspect-[16/10] w-full max-w-[420px] lg:aspect-[4/5] lg:max-w-[400px]"
+      fallback={
+        <div className="mx-auto hidden w-full max-w-[440px] lg:block">
+          <OrderNote />
+          <p className="mt-5 text-base text-muted">상담에서는 이렇게 ‘지금 · 다음 · 나중’ 순서부터 함께 정리합니다.</p>
+        </div>
+      }
+    />
+  );
+}
+
+function OrderNote() {
   const rows = [
     { when: "지금", what: "비상자금 3개월치부터", done: true },
     { when: "다음", what: "대출 금리·만기 확인", done: false },
     { when: "나중", what: "겹치는 보장 정리", done: false },
   ];
   return (
-    <figure
-      className={cx(
-        "rounded-[6px] border border-line bg-white px-6 pb-6 pt-5 shadow-[0_24px_48px_-28px_rgba(23,36,58,0.45)] sm:px-7 lg:px-9 lg:pb-8 lg:pt-7",
-        className,
-      )}
-    >
+    <figure className="rounded-[6px] border border-line bg-white px-7 pb-7 pt-6 shadow-[0_24px_48px_-28px_rgba(24,38,61,0.45)] lg:px-9">
       <figcaption className="flex items-baseline justify-between border-b border-line pb-3">
-        <span className="text-base font-semibold text-navy lg:text-[1.125rem]">내 돈, 순서 정리</span>
+        <span className="text-[1.0625rem] font-semibold text-navy">내 돈, 순서 정리</span>
         <span className="text-base text-muted">예시</span>
       </figcaption>
       <ol className="mt-1">
         {rows.map((r) => (
-          <li key={r.when} className="flex items-center gap-4 border-b border-dashed border-line py-3.5 last:border-0 lg:py-5">
-            <span
-              className={cx(
-                "w-11 shrink-0 text-base font-bold",
-                r.when === "지금" ? "text-green" : "text-navy/70",
-              )}
-            >
-              {r.when}
-            </span>
-            <span className="flex-1 text-base leading-snug text-ink lg:text-[1.0625rem]">{r.what}</span>
+          <li key={r.when} className="flex items-center gap-4 border-b border-dashed border-line py-4 last:border-0">
+            <span className={cx("w-11 shrink-0 font-bold", r.done ? "text-green" : "text-muted")}>{r.when}</span>
+            <span className="flex-1 leading-snug text-ink">{r.what}</span>
             <span
               aria-hidden="true"
               className={cx(
@@ -83,69 +120,80 @@ function OrderNote({ className }: { className?: string }) {
   );
 }
 
-/** 황진 소개 — 프로필 카드(사진이 있으면 사진 아래에 붙는다). 경력은 신뢰 근거로만 담백하게 보여준다. */
-export function ProfileCard() {
-  const photo = photos.about;
+/** '왜 황진인가' 핵심 3줄 — 사진 아래(또는 사진 없이) 바로 읽히는 신뢰 정보 */
+export function CredentialSummary({ className }: { className?: string }) {
   return (
-    <div>
-      {photo.src && (
-        <div className="relative mb-4 aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-paper">
-          <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 440px, 90vw" className="object-cover" loading="lazy" />
+    <dl className={cx("on-navy rounded-[6px] bg-navy px-6 py-6 text-on-navy sm:px-8 sm:py-7", className)}>
+      <div>
+        <dt className="sr-only">경력</dt>
+        <dd className="text-[1.375rem] font-bold tracking-[-0.03em] text-white">금융 현장 {profile.careerYears}년</dd>
+      </div>
+      <div className="mt-2">
+        <dt className="sr-only">함께 보는 영역</dt>
+        <dd className="text-on-navy-muted">{profile.areas.join(" · ")}</dd>
+      </div>
+      {profile.credentials.length > 0 && (
+        <div className="mt-2">
+          <dt className="sr-only">자격·등록</dt>
+          <dd className="text-on-navy-muted">{profile.credentials.join(" · ")}</dd>
         </div>
       )}
-      <div className="on-navy rounded-[6px] bg-navy px-7 py-8 text-on-navy sm:px-9 sm:py-10">
-        <p className="text-[1.75rem] font-bold tracking-[-0.03em] text-white">황진</p>
-        <dl className="mt-6 space-y-5 border-t border-navy-line pt-6">
-          <div>
-            <dt className="text-base text-on-navy-muted">경력</dt>
-            <dd className="mt-1 text-[1.25rem] font-semibold">금융 현장 {profile.careerYears}년</dd>
-          </div>
-          <div>
-            <dt className="text-base text-on-navy-muted">함께 보는 영역</dt>
-            <dd className="mt-2">
-              <ul className="flex flex-wrap gap-2">
-                {profile.areas.map((a) => (
-                  <li key={a} className="rounded-full border border-navy-line px-3 py-1 text-base">
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-          {profile.credentials.length > 0 && (
-            <div>
-              <dt className="text-base text-on-navy-muted">자격·등록</dt>
-              <dd className="mt-1">{profile.credentials.join(" · ")}</dd>
-            </div>
-          )}
-          <div>
-            <dt className="text-base text-on-navy-muted">상담 방식</dt>
-            <dd className="mt-1">상품보다 상황을 먼저 봅니다.</dd>
-          </div>
-        </dl>
+      <div className="mt-4 border-t border-navy-line pt-4">
+        <dt className="sr-only">상담 방식</dt>
+        <dd className="font-semibold text-mint">상품보다 상황을 먼저 봅니다.</dd>
       </div>
-    </div>
+    </dl>
   );
 }
 
-/** PHOTO 02 — 모바일 '왜 황진인가' 사진. 사진이 없으면 그리지 않는다(데스크톱은 ProfileCard 가 사진을 함께 보여준다). */
-export function AboutPhotoMobile() {
-  const photo = photos.about;
-  if (!photo.src) return null;
-  return (
-    <div className="relative mt-8 aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-paper lg:hidden">
-      <Image src={photo.src} alt={photo.alt} fill sizes="90vw" className="object-cover" loading="lazy" />
-    </div>
-  );
-}
+/* ---------- 업무 영역 라인 아이콘 (24px, 1.6 stroke) — 금융 광고식 이미지 대신 개념만 ---------- */
 
-/** PHOTO 03 — 감성 메시지 구간 라이프컷. 사진이 없으면 아무것도 그리지 않는다. */
-export function LifePhoto({ className }: { className?: string }) {
-  const photo = photos.life;
-  if (!photo.src) return null;
-  return (
-    <div className={cx("relative aspect-[16/10] w-full overflow-hidden rounded-[6px] bg-paper", className)}>
-      <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 600px, 90vw" className="object-cover" loading="lazy" />
-    </div>
-  );
-}
+const iconProps = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+  className: "size-6",
+};
+
+export const AreaIcons = {
+  /** 대출: 매달 나가는 상환 일정 */
+  loan: (
+    <svg {...iconProps}>
+      <rect x="3.5" y="5" width="17" height="15" rx="2" />
+      <path d="M3.5 9.5h17M8 3v4M16 3v4M8 14h3M8 17h6" />
+    </svg>
+  ),
+  /** 보험: 위험을 막는 방패 */
+  insurance: (
+    <svg {...iconProps}>
+      <path d="M12 3.5 5 6v5.5c0 4.2 3 7.7 7 9 4-1.3 7-4.8 7-9V6l-7-2.5Z" />
+      <path d="m9 12 2.2 2.2L15.5 10" />
+    </svg>
+  ),
+  /** 연금: 은퇴 후 이어지는 시간 */
+  pension: (
+    <svg {...iconProps}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </svg>
+  ),
+  /** 퇴직연금: 회사에서 만든 계좌 */
+  retirement: (
+    <svg {...iconProps}>
+      <rect x="3.5" y="7.5" width="17" height="12" rx="2" />
+      <path d="M9 7.5V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5v2M3.5 12.5h17" />
+    </svg>
+  ),
+  /** 투자: 시간을 두고 자라는 것 */
+  investment: (
+    <svg {...iconProps}>
+      <path d="M12 20.5v-8" />
+      <path d="M12 12.5c0-3.5 2.5-6 6.5-6 0 3.8-2.6 6-6.5 6ZM12 15c0-2.8-2-4.8-5.5-4.8 0 3 2.2 4.8 5.5 4.8Z" />
+      <path d="M7 20.5h10" />
+    </svg>
+  ),
+};

@@ -15,12 +15,12 @@ export type ConsultCase = {
   tab: string;
   /** 처음 들은 질문 (고객의 말 그대로) */
   question: string;
-  /** 먼저 본 것 */
+  /** 먼저 본 것 — 앞 문장(선택) + 짧은 키워드 2~4개 */
+  lookedLead?: string;
   looked: string[];
-  /** 정리한 방향 (한 문장) */
+  /** 정리 — 짧은 키워드 2~3개 + 한 줄 설명 */
+  steps: string[];
   direction: string;
-  /** 정리한 방향을 단계로 나눠 보여줄 때 (선택) */
-  steps?: string[];
   sample: boolean;
 };
 
@@ -29,26 +29,30 @@ export const consultCases: ConsultCase[] = [
     id: "case-01",
     tab: "CASE 01",
     question: "보험료가 너무 많이 나가는 것 같아요.",
-    looked: ["보험만 보지 않고 월 지출", "기존 대출 상환액", "비상자금까지 함께 확인"],
-    direction: "유지할 것, 확인할 것, 다음에 준비할 것으로 구분했습니다.",
+    lookedLead: "보험만 보지 않고",
+    looked: ["월 지출", "대출 상환", "비상자금"],
     steps: ["유지할 것", "확인할 것", "다음에 준비할 것"],
+    direction: "세 가지로 나눠 순서를 정했습니다.",
     sample: true,
   },
   {
     id: "case-02",
     tab: "CASE 02",
     question: "투자를 시작하고 싶어요.",
-    looked: ["보유 현금", "대출", "앞으로 필요한 큰돈의 시기 확인"],
-    direction: "투자할 돈과 가까운 시기에 사용할 돈을 먼저 분리했습니다.",
-    steps: ["가까운 시기에 쓸 돈", "투자할 돈"],
+    lookedLead: "투자 상품보다 먼저",
+    looked: ["보유 현금", "대출", "큰돈이 필요한 시기"],
+    steps: ["가까이 쓸 돈", "투자할 돈"],
+    direction: "가까운 시기에 쓸 돈과 투자할 돈을 먼저 나눴습니다.",
     sample: true,
   },
   {
     id: "case-03",
     tab: "CASE 03",
     question: "퇴직연금 그냥 두고 있는데 괜찮나요?",
-    looked: ["현재 제도(DB·DC)", "운용 상태", "은퇴까지 남은 시간"],
-    direction: "무엇부터 확인해야 할지 순서부터 정리했습니다.",
+    lookedLead: "바꾸기 전에",
+    looked: ["현재 제도 (DB·DC)", "운용 상태", "은퇴까지 남은 시간"],
+    steps: ["제도 확인", "운용 상태 점검", "은퇴 시기에 맞추기"],
+    direction: "무엇부터 확인할지 순서부터 정리했습니다.",
     sample: true,
   },
 ];

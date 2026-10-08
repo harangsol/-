@@ -6,11 +6,11 @@ import { ContactOptions } from "@/components/contact/contact-options";
 import { OPEN_CONTACT_EVENT } from "@/components/layout/sticky-cta";
 import { Modal } from "@/components/ui/modal";
 import { ShareButton } from "@/components/ui/share-button";
-import { Arrow, buttonClass, Container, cx } from "@/components/ui/primitives";
+import { Arrow, buttonClass, Container } from "@/components/ui/primitives";
 import { compliance } from "@/config/site";
 import { track } from "@/lib/analytics";
 import {
-  defaultAction,
+  defaultActions,
   interestLabels,
   priorityActions,
   priorityDescriptions,
@@ -66,7 +66,8 @@ export function ResultView() {
   }
 
   const copy = resultCopy[result.type];
-  const actions = result.tags.length > 0 ? result.tags.slice(0, 3).map((t) => priorityActions[t]) : [defaultAction];
+  const focusTag = result.tags[0];
+  const actions = focusTag ? priorityActions[focusTag] : defaultActions;
 
   const openContact = (location: string) => {
     track("result_cta_click", { location, result_type: result.type });
@@ -130,21 +131,32 @@ export function ResultView() {
         </Container>
       </section>
 
-      {/* 3. 이번 주에 해볼 간단한 행동 */}
+      {/* 3. 이번 주에 해볼 것 — 가장 먼저 볼 영역 하나에 대해 2~3단계 */}
       <section aria-labelledby="actions-title" className="bg-ivory py-14 sm:py-20">
         <Container className="max-w-[44rem]">
           <h2 id="actions-title" className="text-[1.375rem] font-bold text-navy sm:text-[1.625rem]">
-            이번 주에 해볼 간단한 행동
+            이번 주에 해볼 것
           </h2>
-          <p className="mt-2 text-muted">혼자서 10~20분이면 할 수 있는 것들입니다.</p>
+          <p className="mt-2 text-muted">
+            {focusTag ? (
+              <>
+                <strong className="font-semibold text-green">{priorityLabels[focusTag]}</strong>부터, 혼자서 10~20분이면 됩니다.
+              </>
+            ) : (
+              "혼자서 10~20분이면 할 수 있는 것들입니다."
+            )}
+          </p>
           <ol className="mt-6 overflow-hidden rounded-[8px] border border-line bg-white">
             {actions.map((a, i) => (
-              <li key={a} className="flex gap-4 border-b border-dashed border-line px-5 py-4 last:border-0">
-                <span className={cx("w-6 shrink-0 font-bold tabular-nums", i === 0 ? "text-green" : "text-navy/70")}>{i + 1}</span>
-                <span className="text-ink">{a}</span>
+              <li key={a} className="flex items-center gap-4 border-b border-dashed border-line px-5 py-4 last:border-0">
+                <span className="w-7 shrink-0 font-bold tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-navy">{a}</span>
               </li>
             ))}
           </ol>
+          {result.tags.length > 1 && (
+            <p className="mt-4 text-base text-muted">나머지 영역은 이야기하면서 순서를 함께 정해도 됩니다.</p>
+          )}
         </Container>
       </section>
 
@@ -165,7 +177,7 @@ export function ResultView() {
             id="result-cta"
             type="button"
             onClick={() => openContact("result_main")}
-            className={buttonClass("light", "mt-8 w-full text-[1.125rem] sm:w-auto sm:px-8")}
+            className={buttonClass("primary", "mt-8 w-full text-[1.125rem] sm:w-auto sm:px-8")}
           >
             내 상황 편하게 이야기해보기
             <Arrow />

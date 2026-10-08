@@ -39,6 +39,14 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  // 실제 사진은 public/images 에 원본(jpg/png)으로 두면 기기 화면에 맞게 줄이고 AVIF → WebP 순으로 변환해 보낸다.
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [70, 80],
+    deviceSizes: [390, 640, 828, 1080, 1440, 1920],
+    imageSizes: [96, 160, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+  },
   turbopack: {
     rules: {
       "*.css": {
