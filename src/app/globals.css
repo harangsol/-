@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "./pretendard.css";
+
+/*
+ * 사이트 문구에 쓰인 글자만 담은 Pretendard 한 파일(scripts/build-site-font.py 로 생성, layout 에서 preload).
+ * 여기에 없는 글자(예: 사용자가 입력한 이름)는 다음 순서의 "Pretendard Variable" 동적 서브셋이 채운다.
+ */
+@font-face {
+  font-family: "Pretendard Site";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 45 920;
+  src: url(/fonts/pretendard-site.woff2) format("woff2-variations");
+}
+
+/*
+ * 디자인 토큰 — 오프화이트 70 / 딥네이비 20 / 클로버그린 10
+ *
+ * 텍스트 위계 (제목 → 핵심 → 설명)
+ *   제목 navy #18263D · 본문 ink #4D535B · 보조 muted #858B91 · 핵심 강조 green #3F7D4A (한 화면에 단어 1~2개만)
+ *   ⚠️ muted #858B91 은 운영자 지정값이다. 아이보리/베이지 배경 대비 3.2:1 / 3.0:1 로 WCAG AA(4.5:1)에
+ *      못 미쳐, 보조 설명·작은 안내에만 쓴다. 읽기 어렵다는 의견이 있으면 #656B71(AA 통과)로 바꾸면 된다.
+ *   green #3F7D4A 는 베이지 위 작은 글씨에서 4.2:1 이라, 작은 라벨은 green-deep 을 쓴다.
+ * 네이비 배경
+ *   제목 #FFFFFF · 본문 white 72% · 핵심 강조 mint #A8D3AD · 작은 라벨 mint-label #8EBB96
+ */
+@theme {
+  --color-ivory: #f8f6f1;
+  --color-paper: #f1ede4;
+  --color-line: #e2ddd2;
+  --color-navy: #18263d;
+  --color-navy-soft: #24344f;
+  --color-navy-line: #34445f;
+  --color-green: #3f7d4a;
+  --color-green-deep: #2d5c36;
+  --color-green-soft: #e4ede3;
+  --color-ink: #4d535b;
+  --color-muted: #858b91;
+  --color-on-navy: #ffffff;
+  --color-on-navy-muted: rgb(255 255 255 / 0.72);
+  --color-mint: #a8d3ad;
+  --color-mint-label: #8ebb96;
+
+  --font-sans:
+    "Pretendard Site", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.75;
+    letter-spacing: -0.01em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-green-soft);
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-green);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .on-navy :focus-visible {
+    outline-color: var(--color-mint);
+  }
+
+  button,
+  [role="button"],
+  summary {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .pre-line {
+    white-space: pre-line;
+  }
+}
+
+/* 질문 전환 — 짧고 절제된 움직임 */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise-in 360ms var(--ease-out-soft) both;
+}
+
+/* 스크롤 등장 — JS 없이 CSS scroll-driven animation 이 지원되는 브라우저에서만 */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(23 36 58 / 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    animation: none !important;
+  }
+}
