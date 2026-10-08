@@ -18,7 +18,7 @@ export function SiteHeader() {
           <Link href="/#about" className="hidden min-h-11 items-center px-3 text-navy/80 hover:text-navy lg:flex">
             황진 소개
           </Link>
-          <Link href="/#cases" className="hidden min-h-11 items-center px-3 text-navy/80 hover:text-navy lg:flex">
+          <Link href="/#process" className="hidden min-h-11 items-center px-3 text-navy/80 hover:text-navy lg:flex">
             상담 방식
           </Link>
           <HeaderCta />

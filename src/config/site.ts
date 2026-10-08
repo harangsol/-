@@ -121,6 +121,8 @@ export const compliance = {
     "1분 금융점검 결과는 개별 금융상품의 추천, 투자·보험 적합성 판단, 수익 또는 보험금 지급을 보장하지 않습니다.",
     "개별 금융상품의 계약 및 거래는 해당 금융회사의 설명서, 약관, 필수 고지사항 등을 확인한 뒤 본인이 결정하시기 바랍니다.",
   ],
+  /** 짧은 푸터 한 줄 */
+  footerNotice: "이 페이지는 개인 금융상황 정리를 돕는 안내이며, 특정 금융상품의 추천이나 수익·보장을 약속하지 않습니다.",
   resultNotice:
     "이 결과는 개인의 금융상황을 간단히 돌아보기 위한 참고용 안내이며, 개별 금융상품 추천이나 투자·보험 적합성 판단을 의미하지 않습니다.",
 };
@@ -153,7 +155,7 @@ export const photos = {
     zoom: 1.12,
     guide: "신뢰감 있는 캐주얼 프로필 · 반신",
   },
-  /** PHOTO 03 — 라이프컷: '잘 벌고, 잘 쓰고, 가족과 오래 건강하게 살기' 옆 */
+  /** PHOTO 03 — 홈 맨 마지막 마무리: '잘 벌고, 잘 쓰고, 가족과 오래 건강하게 살기' */
   life: {
     src: "/images/hwangjin-03-mountain.jpg",
     // 함께 선 분은 황진의 아버지 (본인 동의 받음, 2026-10)
@@ -162,17 +164,6 @@ export const photos = {
     guide: "걷기·운동·일상 라이프컷",
   },
 } as const;
-
-/**
- * (선택) 8~12초 B-roll 영상 1개 — '상품보다 상황을 먼저 봅니다' 섹션에 들어간다.
- * src(mp4, H.264, 720p, 2~4MB 이하 권장)와 poster(첫 장면 jpg) 둘 다 있어야 표시된다.
- * 소리 없이, 화면에 보일 때만 재생하고, '움직임 줄이기' 설정 사용자에게는 자동재생하지 않는다.
- */
-export const brollVideo = {
-  src: "",
-  poster: "",
-  caption: [`금융 현장 ${profile.careerYears}년.`, "상품보다 상황을 먼저 봅니다."],
-};
 
 export const showPhotoSlots =
   process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_SHOW_PHOTO_SLOTS === "1";

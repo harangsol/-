@@ -5,23 +5,17 @@ import { TrackView } from "@/components/ui/track-view";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { profile } from "@/config/site";
 import { AffiliationCards } from "./affiliations";
-import { ConsultCases } from "./consult-cases";
-import { BrollVideo } from "./broll-video";
 import { AreaIcons, CredentialSummary, HeroVisual, PhotoFrame } from "./visuals";
 
 /*
- * 홈 화면 (10개 섹션 + 푸터) — 방문자가 이 순서로 생각하게 만든다.
+ * 홈 화면 (7개 섹션 + 짧은 푸터) — 방문자가 이 순서로 생각하게 만든다.
  *  01 Hero          황진? 어떤 사람이지? / 금융 현장에서 오래 일했구나
  *  02 Work          보험만 하는 게 아니네. 대출·연금·퇴직연금·투자, 사업자 정책자금까지
- *  03 Principle     상품부터 권하지 않는 방식이네              (네이비)
- *  04 About         왜 황진인가 — 금융 현장 15년, 걸어온 길, 실제 강의 사진, 산행 라이프컷
- *  05 Cases         실제 상담도 전체 상황부터 보는구나
- *  06 Process       상품 이야기는 맨 마지막
- *  07 CheckInvite   나도 한번 정리해볼까?
- *  08 NotSaid       황진한테 물어봐도 부담 없겠네              (네이비)
- *  09 Referral      내 주변 누구한테 한번 보내줘야겠다
- *  10 FinalCta      상품을 고르기 전에, 순서부터              (네이비)
- * 네이비 섹션이 연달아 붙지 않게 배경을 번갈아 둔다.
+ *  03 About         왜 황진인가 — 금융 현장 15년, 걸어온 길, 실제 강의 사진
+ *  04 Process       상품 이야기는 맨 마지막
+ *  05 Referral      내 주변 누구한테 한번 보내줘야겠다
+ *  06 FinalCta      상품을 고르기 전에, 순서부터              (네이비)
+ *  07 Closing       아버지와 천왕봉 — 잘 벌고, 잘 쓰고, 가족과 오래 건강하게 살기
  */
 
 /* 01 — HERO — 문구가 주인공, 사진(PHOTO 01)은 약 35% 비중.
@@ -165,7 +159,7 @@ export function Work() {
             ))}
           </ul>
 
-          {/* 업무 기반 — 홈에서는 여기서 한 번만 자세히 보여준다 (그 외에는 푸터) */}
+          {/* 업무 기반 — 홈에서는 여기서 한 번만 보여준다 */}
           <div className="mt-10">
             <TrackView event="profile_affiliation_view" params={{ location: "home_work" }} />
             <div className="flex items-baseline justify-between gap-3">
@@ -185,51 +179,7 @@ export function Work() {
   );
 }
 
-/* 03 — 상품보다 상황을 먼저 봅니다 (대표 메시지) */
-export function Principle() {
-  return (
-    <Section tone="navy" labelledBy="principle-title">
-      <h2
-        id="principle-title"
-        className="text-[clamp(2.25rem,10vw,4.25rem)] font-extrabold leading-[1.2] tracking-[-0.045em] text-white"
-      >
-        상품보다
-        <br />
-        상황을 먼저 봅니다.
-      </h2>
-
-      <div className="mt-10 grid gap-6 border-t border-navy-line pt-8 sm:mt-16 sm:grid-cols-2 sm:gap-12 sm:pt-10">
-        <p className="text-[1.25rem] leading-[1.65] text-on-navy-muted sm:text-[1.5rem]">
-          보험을 문의하셔도
-          <br />
-          <span className="font-semibold text-on-navy">대출 부담이 먼저</span>일 수 있고,
-        </p>
-        <p className="text-[1.25rem] leading-[1.65] text-on-navy-muted sm:text-[1.5rem]">
-          투자를 고민하셔도
-          <br />
-          <span className="font-semibold text-on-navy">비상자금이 먼저</span>일 수 있습니다.
-        </p>
-      </div>
-
-      <div className="mt-10 sm:mt-20">
-        <p className="text-[1.125rem] text-on-navy-muted sm:text-[1.25rem]">그래서 상담은</p>
-        <p className="mt-4 text-[1.375rem] font-medium text-on-navy-muted line-through decoration-on-navy-muted/60 decoration-2 sm:text-[1.75rem]">
-          “무엇을 가입할까요?”
-        </p>
-        <p className="mt-2 text-[1.125rem] text-on-navy-muted sm:text-[1.25rem]">보다</p>
-        <p className="mt-2 text-[1.75rem] font-bold tracking-[-0.03em] text-mint sm:text-[2.5rem]">
-          “지금 무엇이 필요한가요?”
-        </p>
-        <p className="mt-3 text-[1.125rem] text-on-navy sm:text-[1.25rem]">에서 시작합니다.</p>
-      </div>
-
-      {/* (선택) 실제 B-roll 영상 1개 — config/site.ts → brollVideo 가 비어 있으면 그리지 않는다 */}
-      <BrollVideo />
-    </Section>
-  );
-}
-
-/* 04 — 왜 황진인가 — PHOTO 02(세미나) + 핵심 3줄 + 걸어온 길, PHOTO 03(산행) + 철학 한 줄 */
+/* 03 — 왜 황진인가 — PHOTO 02(세미나) + 핵심 3줄 + 걸어온 길 */
 export function About() {
   return (
     <Section id="about" labelledBy="about-title">
@@ -272,45 +222,13 @@ export function About() {
             <strong className="font-semibold text-navy"> 그 사람의 전체 상황부터</strong> 봅니다.
           </p>
 
-          <figure className="mt-10 border-t border-navy/15 pt-8">
-            {/* PHOTO 03 — 라이프컷 */}
-            <PhotoFrame slot="life" sizes="(min-width: 1024px) 560px, 92vw" className="mb-7 aspect-[16/10] w-full" />
-            <blockquote className="text-[1.3125rem] font-semibold leading-[1.65] text-navy sm:text-[1.5rem]">
-              잘 벌고,
-              <br />
-              잘 쓰고,
-              <br />
-              가족과 오래 건강하게 살기.
-            </blockquote>
-            <p className="mt-4">
-              돈을 관리하는 이유도
-              <br />
-              결국 잘 살기 위해서라고 생각합니다.
-            </p>
-            <figcaption className="mt-5 text-[1.0625rem] font-bold text-navy">— 황진</figcaption>
-          </figure>
         </div>
       </div>
     </Section>
   );
 }
 
-/* 05 — 실제 상담은 이렇게 생각합니다 */
-export function Cases() {
-  return (
-    <Section id="cases" tone="paper" labelledBy="cases-title">
-      <div className="max-w-[40rem]">
-        <Eyebrow>상담 방식</Eyebrow>
-        <SectionTitle id="cases-title" className="text-navy">
-          {"처음 질문과\n먼저 보는 문제가\n다를 때가 많습니다."}
-        </SectionTitle>
-      </div>
-      <ConsultCases />
-    </Section>
-  );
-}
-
-/* 06 — 상담 과정 */
+/* 04 — 상담 과정 */
 const STEPS = [
   {
     no: "01",
@@ -378,89 +296,7 @@ export function Process() {
   );
 }
 
-/* 08 — 제가 드리지 않는 것 */
-const NOT_SAID = ["무조건 바꾸라는 말", "무조건 투자해야 한다는 말", "무조건 이 상품이 좋다는 말", "당장 결정해야 한다는 말"];
-
-export function NotSaid() {
-  return (
-    <Section tone="navy" labelledBy="notsaid-title">
-      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div>
-          <Eyebrow onNavy>약속</Eyebrow>
-          <SectionTitle id="notsaid-title">{"제가 드리지\n않는 것"}</SectionTitle>
-        </div>
-        <div>
-          <ul className="border-t border-navy-line">
-            {NOT_SAID.map((n) => (
-              <li key={n} className="flex items-center gap-4 border-b border-navy-line py-5 sm:py-6">
-                <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5 shrink-0 text-on-navy-muted" fill="none">
-                  <path d="M5 5l10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                </svg>
-                <span className="text-[1.1875rem] font-medium text-on-navy sm:text-[1.3125rem]">{n}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-10 text-[1.25rem] font-semibold leading-[1.6] text-mint sm:text-[1.5rem]">
-            사람마다
-            <br />
-            필요한 답이 다르기 때문입니다.
-          </p>
-          <p className="mt-6 text-on-navy-muted">
-            필요한 것이 없다면
-            <br />
-            아무것도 하지 않는 것도 답일 수 있습니다.
-          </p>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* 07 — 1분 금융점검 */
-export function CheckInvite() {
-  const facts = [
-    { k: "9개", v: "질문" },
-    { k: "약 1분", v: "소요" },
-    { k: "없음", v: "개인정보 입력" },
-  ];
-  return (
-    <Section id="check" tone="paper" labelledBy="check-title">
-      <div className="mx-auto max-w-[44rem] text-center">
-        <Eyebrow>1분 금융점검</Eyebrow>
-        <h2
-          id="check-title"
-          className="text-[clamp(1.875rem,8vw,3rem)] font-extrabold leading-[1.3] tracking-[-0.04em] text-navy"
-        >
-          상품이 부족한지보다
-          <br />
-          <span className="text-green">순서</span>가 꼬여 있는지부터
-          <br />
-          확인해보세요.
-        </h2>
-        <dl className="mx-auto mt-10 grid max-w-[30rem] grid-cols-3 border-y border-navy/15 py-6">
-          {facts.map((f, i) => (
-            <div key={f.v} className={cx("flex flex-col-reverse", i > 0 && "border-l border-navy/15")}>
-              <dt className="mt-1 text-base text-muted">{f.v}</dt>
-              <dd className="text-[1.5rem] font-bold tracking-[-0.03em] text-navy">{f.k}</dd>
-            </div>
-          ))}
-        </dl>
-        <TrackedLink
-          href="/check"
-          event="hero_cta_click"
-          params={{ location: "check_section" }}
-          className={buttonClass("primary", "mt-10 w-full sm:w-auto sm:px-10")}
-        >
-          1분 금융점검 시작하기
-          <Arrow />
-        </TrackedLink>
-        <p className="mt-4 text-base text-muted">결과는 이 브라우저에만 저장됩니다.</p>
-      </div>
-    </Section>
-  );
-}
-
-/* 09 — 주변에 이런 분이 떠오른다면 */
+/* 05 — 주변에 이런 분이 떠오른다면 */
 const FRIENDS = [
   "보험은 많은데 내용을 모르는 친구",
   "대출 부담이 큰 가족",
@@ -518,7 +354,7 @@ export function Referral() {
   );
 }
 
-/* 10 — 최종 CTA */
+/* 06 — 최종 CTA */
 export function FinalCta() {
   return (
     <section id="final-cta" aria-labelledby="final-title" className="on-navy bg-navy py-16 text-on-navy sm:py-28">
@@ -544,6 +380,32 @@ export function FinalCta() {
         <p className="mt-8 text-base leading-relaxed text-on-navy-muted">
           정리된 질문이 없어도 괜찮습니다.
         </p>
+      </Container>
+    </section>
+  );
+}
+
+/* 07 — 마무리: PHOTO 03(아버지와 천왕봉) + 철학 한 줄 */
+export function Closing() {
+  return (
+    <section id="closing" aria-label="마무리" className="bg-ivory pb-10 pt-16 sm:pb-14 sm:pt-28">
+      <Container className="max-w-[48rem]">
+        <figure>
+          <PhotoFrame slot="life" sizes="(min-width: 768px) 720px, 92vw" className="aspect-[4/3] w-full" />
+          <blockquote className="mt-9 text-[1.3125rem] font-semibold leading-[1.65] text-navy sm:text-[1.625rem]">
+            잘 벌고,
+            <br />
+            잘 쓰고,
+            <br />
+            <span className="text-green">가족과 오래 건강하게</span> 살기.
+          </blockquote>
+          <p className="mt-4">
+            돈을 관리하는 이유도
+            <br />
+            결국 잘 살기 위해서라고 생각합니다.
+          </p>
+          <figcaption className="mt-5 text-[1.0625rem] font-bold text-navy">— 황진</figcaption>
+        </figure>
       </Container>
     </section>
   );

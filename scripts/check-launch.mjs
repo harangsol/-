@@ -33,10 +33,8 @@ for (const key of ["hero", "about", "life"]) {
 if (/credentials: \[\] as string\[\]/.test(site)) problems.push("[프로필] profile.credentials 비어 있음 (보유 자격이 있으면 입력, 없으면 무시)");
 problems.push(`[프로필] profile.careerYears = ${(site.match(/careerYears: (\d+)/) || [])[1]} — 실제 경력과 맞는지 확인`);
 
-// 4) 사례
-if (/sample: true/.test(read("src/config/cases.ts"))) problems.push("[사례] src/config/cases.ts 에 예시(SAMPLE) 사례가 남아 있음 — 화면에 '예시'로 표시됨");
 
-// 5) 환경변수 (현재 셸/.env.local 기준)
+// 4) 환경변수 (현재 셸/.env.local 기준)
 let env = { ...process.env };
 if (existsSync(new URL(".env.local", root))) {
   for (const line of read(".env.local").split("\n")) {

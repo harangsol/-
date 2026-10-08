@@ -4,7 +4,7 @@ import { displayValue, profileAffiliations, type Affiliation } from "@/config/pr
 /**
  * 업무 기반 (회사 · 등록 정보) — 로고 없이 텍스트로만, 담백하게.
  * 관계 표현(위촉·소속·등록 등)은 src/config/profileAffiliations.ts 에서만 정한다. 여기서 임의로 덧붙이지 않는다.
- * 노출 위치는 홈 '하는 일' 섹션과 푸터, 두 곳뿐이다.
+ * 노출 위치는 홈 '하는 일' 섹션 한 곳이다.
  */
 
 function lines(a: Affiliation) {
@@ -16,43 +16,6 @@ function lines(a: Affiliation) {
     reg: reg ? `${a.registrationLabel ?? "등록번호"} ${reg}` : "",
     disclaimer: displayValue(a.disclaimer),
   };
-}
-
-export function AffiliationRows({
-  audience,
-  tone = "light",
-  className,
-}: {
-  audience: Affiliation["audience"];
-  tone?: "light" | "footer";
-  className?: string;
-}) {
-  const rows = profileAffiliations.filter((a) => a.audience === audience).map((a) => ({ a, ...lines(a) })).filter((r) => r.main);
-  if (rows.length === 0) return null;
-
-  return (
-    <dl className={cx(tone === "light" ? "border-t border-navy/15" : "", className)}>
-      {rows.map(({ a, main, relation, reg, disclaimer }) => (
-        <div
-          key={a.id}
-          className={cx(
-            "grid gap-1",
-            tone === "light"
-              ? "border-b border-navy/15 py-3.5 sm:grid-cols-[10rem_1fr] sm:gap-6"
-              : "grid-cols-[8.5rem_1fr] gap-3 py-1.5 sm:grid-cols-[9rem_1fr] sm:gap-4",
-          )}
-        >
-          <dt className={cx("text-base", tone === "light" ? "text-muted" : "text-muted")}>{a.category}</dt>
-          <dd className={cx(tone === "light" ? "font-semibold text-navy" : "text-ink")}>
-            {main}
-            {relation && <span className="block font-normal text-ink">{relation}</span>}
-            {reg && <span className={cx("block font-normal", tone === "light" ? "text-ink/80" : "text-muted")}>{reg}</span>}
-            {disclaimer && <span className="mt-1 block text-base font-normal text-muted">{disclaimer}</span>}
-          </dd>
-        </div>
-      ))}
-    </dl>
-  );
 }
 
 /**
