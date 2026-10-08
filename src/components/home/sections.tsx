@@ -14,7 +14,7 @@ import { AreaIcons, CredentialSummary, HeroVisual, PhotoFrame } from "./visuals"
  *  01 Hero          황진? 어떤 사람이지? / 금융 현장에서 오래 일했구나
  *  02 Work          보험만 하는 게 아니네. 대출·연금·퇴직연금·투자, 사업자 정책자금까지
  *  03 Principle     상품부터 권하지 않는 방식이네              (네이비)
- *  04 About         왜 황진인가 — 13년, 실제 업무 기반
+ *  04 About         왜 황진인가 — 금융 현장 15년, 걸어온 길, 실제 강의 사진, 산행 라이프컷
  *  05 Cases         실제 상담도 전체 상황부터 보는구나
  *  06 Process       상품 이야기는 맨 마지막
  *  07 CheckInvite   나도 한번 정리해볼까?
@@ -229,7 +229,7 @@ export function Principle() {
   );
 }
 
-/* 04 — 왜 황진인가 — PHOTO 02 + 핵심 3줄(13년 / 영역 / 상품보다 상황) */
+/* 04 — 왜 황진인가 — PHOTO 02(세미나) + 핵심 3줄 + 걸어온 길, PHOTO 03(산행) + 철학 한 줄 */
 export function About() {
   return (
     <Section id="about" labelledBy="about-title">
@@ -245,23 +245,36 @@ export function About() {
           <PhotoFrame
             slot="about"
             sizes="(min-width: 1024px) 460px, 92vw"
-            className="mb-3 aspect-[4/3] w-full lg:aspect-[4/5]"
+            className="mb-3 aspect-[4/3] w-full"
           />
           <CredentialSummary />
         </div>
 
         <div className="lg:col-start-2 lg:row-start-2">
-          <div className="space-y-4">
-            <p>
-              다양한 사람들의 돈 고민을 가까이에서 봐왔습니다. 좋은 선택도, 조금 더 일찍 알았으면 좋았을 선택도 봤습니다.
-            </p>
-            <p>
-              그래서 상품 하나보다
-              <strong className="font-semibold text-navy"> 그 사람의 전체 상황부터</strong> 봅니다.
-            </p>
-          </div>
+          <ol className="border-l-2 border-navy/15" aria-label="걸어온 길">
+            {profile.path.map((p, i) => (
+              <li key={p.year} className="relative pb-5 pl-6 last:pb-0">
+                <span
+                  aria-hidden="true"
+                  className={cx(
+                    "absolute -left-[7px] top-[0.55em] size-3 rounded-full",
+                    i === profile.path.length - 1 ? "bg-green" : "border-2 border-navy/30 bg-ivory",
+                  )}
+                />
+                <p className="text-base font-bold tabular-nums text-navy">{p.year}</p>
+                <p className="mt-0.5">{p.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-8">
+            좋은 선택도, 조금 더 일찍 알았으면 좋았을 선택도 가까이에서 봐왔습니다. 그래서 상품 하나보다
+            <strong className="font-semibold text-navy"> 그 사람의 전체 상황부터</strong> 봅니다.
+          </p>
 
           <figure className="mt-10 border-t border-navy/15 pt-8">
+            {/* PHOTO 03 — 라이프컷 */}
+            <PhotoFrame slot="life" sizes="(min-width: 1024px) 560px, 92vw" className="mb-7 aspect-[16/10] w-full" />
             <blockquote className="text-[1.3125rem] font-semibold leading-[1.65] text-navy sm:text-[1.5rem]">
               잘 벌고,
               <br />
@@ -286,15 +299,11 @@ export function About() {
 export function Cases() {
   return (
     <Section id="cases" tone="paper" labelledBy="cases-title">
-      <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
-        <div>
-          <Eyebrow>상담 방식</Eyebrow>
-          <SectionTitle id="cases-title" className="text-navy">
-            {"처음 질문과\n먼저 보는 문제가\n다를 때가 많습니다."}
-          </SectionTitle>
-        </div>
-        {/* PHOTO 03 — 자료를 보거나 메모하는 실제 업무 장면 */}
-        <PhotoFrame slot="work" sizes="(min-width: 1024px) 520px, 92vw" className="aspect-[16/9] w-full" />
+      <div className="max-w-[40rem]">
+        <Eyebrow>상담 방식</Eyebrow>
+        <SectionTitle id="cases-title" className="text-navy">
+          {"처음 질문과\n먼저 보는 문제가\n다를 때가 많습니다."}
+        </SectionTitle>
       </div>
       <ConsultCases />
     </Section>

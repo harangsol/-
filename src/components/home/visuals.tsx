@@ -4,7 +4,7 @@ import { photos, profile, showPhotoSlots } from "@/config/site";
 import { cx } from "@/components/ui/primitives";
 
 type PhotoKey = keyof typeof photos;
-const PHOTO_NO: Record<PhotoKey, string> = { hero: "PHOTO 01", about: "PHOTO 02", work: "PHOTO 03" };
+const PHOTO_NO: Record<PhotoKey, string> = { hero: "PHOTO 01", about: "PHOTO 02", life: "PHOTO 03" };
 
 /**
  * 황진 실제 사진 한 장. src(config/site.ts → photos)가 있으면 Next/Image 로 최적화해 보여준다.
@@ -23,7 +23,7 @@ export function PhotoFrame({
   eager?: boolean;
   fallback?: ReactNode;
 }) {
-  const p: { src: string; alt: string; focus: string; guide: string } = photos[slot];
+  const p: { src: string; alt: string; focus: string; guide: string; zoom?: number } = photos[slot];
   if (p.src) {
     return (
       <div className={cx("relative overflow-hidden rounded-[6px] bg-paper", className)}>
@@ -37,7 +37,8 @@ export function PhotoFrame({
           preload={eager}
           loading={eager ? undefined : "lazy"}
           className="object-cover"
-          style={{ objectPosition: p.focus }}
+          // zoom: 넓은 사진에서 얼굴이 작아질 때 초점 위치를 기준으로 살짝 확대한다
+          style={{ objectPosition: p.focus, transform: p.zoom ? `scale(${p.zoom})` : undefined, transformOrigin: p.focus }}
         />
       </div>
     );
@@ -134,9 +135,17 @@ export function CredentialSummary({ className }: { className?: string }) {
         <dd className="text-on-navy-muted">{profile.areas.join(" · ")}</dd>
       </div>
       {profile.credentials.length > 0 && (
-        <div className="mt-2">
-          <dt className="sr-only">자격·등록</dt>
-          <dd className="text-on-navy-muted">{profile.credentials.join(" · ")}</dd>
+        <div className="mt-4">
+          <dt className="text-base text-mint-label">보유 자격</dt>
+          <dd className="mt-2">
+            <ul className="flex flex-wrap gap-1.5">
+              {profile.credentials.map((c) => (
+                <li key={c} className="rounded-full border border-navy-line px-2.5 py-0.5 text-base text-on-navy">
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </dd>
         </div>
       )}
       <div className="mt-4 border-t border-navy-line pt-4">

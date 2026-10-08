@@ -29,11 +29,12 @@ export type Affiliation = {
 };
 
 export const profileAffiliations: Affiliation[] = [
+  // 운영자 제공 정보 (2026-10). 화면에는 "회사명 + 관계" 순서로 붙여서 보인다. 예) 키움에셋플래너 소속 보험설계사
   {
     id: "kiwoom-ap",
     category: "보험 · 절세",
     companyName: "키움에셋플래너",
-    relationshipLabel: "",
+    relationshipLabel: "소속 보험설계사",
     disclaimer: "",
     audience: "personal",
   },
@@ -41,17 +42,17 @@ export const profileAffiliations: Affiliation[] = [
     id: "kis",
     category: "증권 · 퇴직연금",
     companyName: "한국투자증권",
-    relationshipLabel: "",
+    relationshipLabel: "소속 투자권유대행인 · 퇴직연금모집인",
     disclaimer: "",
     audience: "personal",
   },
   {
     id: "loan",
     category: "대출",
-    companyName: "",
-    relationshipLabel: "등록 대출상담사",
+    companyName: "C&U파트너스",
+    relationshipLabel: "소속 대출상담사",
     registrationLabel: "등록번호",
-    registrationNumber: "[LOAN_REGISTRATION_NUMBER]",
+    registrationNumber: "10-00054890",
     disclaimer: "",
     audience: "personal",
   },
@@ -59,7 +60,7 @@ export const profileAffiliations: Affiliation[] = [
     id: "harang-partners",
     category: "사업자 정책자금",
     companyName: "하랑파트너스",
-    relationshipLabel: "",
+    relationshipLabel: "대표",
     disclaimer: "",
     audience: "business",
   },

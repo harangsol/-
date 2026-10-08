@@ -23,7 +23,7 @@ for (const block of body.split(/\n  \{\n/).slice(1)) {
 // 2) 사진
 const site = read("src/config/site.ts");
 const photoBlock = site.slice(site.indexOf("export const photos"));
-for (const key of ["hero", "about", "work"]) {
+for (const key of ["hero", "about", "life"]) {
   const m = photoBlock.match(new RegExp(`${key}: \\{[\\s\\S]*?src: "([^"]*)"`));
   if (!m || !m[1]) problems.push(`[사진] photos.${key}.src 비어 있음`);
   else if (!existsSync(new URL(`public${m[1]}`, root))) problems.push(`[사진] photos.${key}.src 파일 없음: public${m[1]}`);

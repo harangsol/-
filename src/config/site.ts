@@ -18,17 +18,30 @@ export const siteUrl = trimSlash(
 
 /**
  * 황진 프로필 — 신뢰 근거로만 쓴다. 숫자를 부풀리거나 성과를 자랑하지 않는다.
- * ⚠️ 경력 연수·자격 등은 운영 전 실제 사실과 맞는지 반드시 확인한다.
+ * (운영자 제공 정보, 2026-10 기준) 2011년 금융영업 시작 → 15년차.
+ * ⚠️ 해가 바뀌면 careerYears 를 갱신한다.
  */
 export const profile = {
-  careerYears: 13,
+  careerYears: 15,
+  /** 걸어온 길 — '왜 황진인가'에 짧은 타임라인으로 보인다 */
+  path: [
+    { year: "2008", text: "인천 길병원 임상병리사" },
+    { year: "2011", text: "병원 현장에서 보험의 중요성을 느껴 금융 일을 시작" },
+    { year: "지금", text: "대출 · 보험 · 연금 · 퇴직연금 · 투자를 함께 봅니다" },
+  ],
   /** 실제로 다뤄온 영역 */
   areas: ["대출", "보험", "연금", "퇴직연금", "투자"],
   /**
    * 보유 자격·등록 사항. 실제 보유한 것만 적는다. 비어 있으면 화면에 표시하지 않는다.
    * 예: "AFPK", "투자권유대행인", "보험설계사(생명·손해)"
    */
-  credentials: [] as string[],
+  credentials: [
+    "생명·손해보험 설계사",
+    "변액보험 판매자격",
+    "대출상담사",
+    "펀드투자권유대행인",
+    "퇴직연금모집인",
+  ] as string[],
 };
 
 export const site = {
@@ -119,30 +132,33 @@ export const compliance = {
  *   예) src: "/images/hwangjin-01.jpg"
  *   Next/Image 가 기기 크기에 맞춰 AVIF/WebP 로 자동 변환·축소한다(next.config.ts images).
  * focus: 사진을 자를 때 남길 위치(CSS object-position). 얼굴이 위쪽에 있으면 "50% 25%" 처럼 둔다.
+ * zoom: (선택) 얼굴이 작게 보일 때 focus 를 기준으로 살짝 확대 (1.1~1.4).
  * src 가 비어 있으면: 배포 화면에서는 사진 자리를 그리지 않거나 대체 그래픽을 보여주고,
  *   개발 화면(npm run dev)이나 NEXT_PUBLIC_SHOW_PHOTO_SLOTS=1 일 때는 '사진 자리' 표시가 나온다.
  */
 export const photos = {
   /** PHOTO 01 — HERO: 자연스러운 캐주얼 업무사진 (네이비 셔츠·재킷, 정장 팔짱·정면 광고컷 금지) */
   hero: {
-    src: "",
-    alt: "책상에서 자료를 보며 일하는 황진",
-    focus: "50% 30%",
+    src: "/images/hwangjin-01-desk.jpg",
+    alt: "책상에서 자료를 보며 웃고 있는 황진",
+    focus: "57% 46%",
+    zoom: 1.3,
     guide: "자연스러운 캐주얼 업무사진 · 네이비 셔츠/재킷",
   },
-  /** PHOTO 02 — 왜 황진인가: 신뢰감 있는 캐주얼 프로필 또는 업무 중 반신 */
+  /** PHOTO 02 — 왜 황진인가: 실제 업무 장면 (기준금리 세미나 강의) */
   about: {
-    src: "",
-    alt: "황진 프로필 사진",
-    focus: "50% 25%",
+    src: "/images/hwangjin-02-seminar.jpg",
+    alt: "기준금리 변동을 주제로 세미나에서 강의하는 황진",
+    focus: "45% 42%",
+    zoom: 1.12,
     guide: "신뢰감 있는 캐주얼 프로필 · 반신",
   },
-  /** PHOTO 03 — 상담 방식: 자료 보기·노트북·메모·이동하는 모습 */
-  work: {
-    src: "",
-    alt: "노트에 메모하며 상담을 준비하는 황진",
-    focus: "50% 45%",
-    guide: "자료를 보거나 메모하는 모습 · 노트북 앞 · 걷는 모습",
+  /** PHOTO 03 — 라이프컷: '잘 벌고, 잘 쓰고, 가족과 오래 건강하게 살기' 옆 */
+  life: {
+    src: "/images/hwangjin-03-mountain.jpg",
+    alt: "지리산 천왕봉 정상 표지석 앞에서 함께 산행한 일행과 선 황진",
+    focus: "55% 35%",
+    guide: "걷기·운동·일상 라이프컷",
   },
 } as const;
 
@@ -154,7 +170,7 @@ export const photos = {
 export const brollVideo = {
   src: "",
   poster: "",
-  caption: ["금융 현장 13년.", "상품보다 상황을 먼저 봅니다."],
+  caption: [`금융 현장 ${profile.careerYears}년.`, "상품보다 상황을 먼저 봅니다."],
 };
 
 export const showPhotoSlots =
