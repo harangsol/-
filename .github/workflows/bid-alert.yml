@@ -1,0 +1,96 @@
+# 평일 아침 7시(KST)에 나라장터 맞춤 입찰공고 메일을 고객에게 보낸다.
+# 설정 방법은 bid-alert/README.md 의 "자동 발송 켜기"를 보세요.
+name: 입찰공고 아침 알림
+
+on:
+  schedule:
+    # GitHub cron은 UTC 기준. 22:07 UTC = 다음 날 07:07 KST. 일~목(UTC) = 월~금(KST)
+    - cron: "7 22 * * 0-4"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "보내지 않고 결과 건수만 확인"
+        type: boolean
+        default: false
+      start:
+        description: "다시 보낼 기간 시작 KST (예: 202611060700). 비우면 평소 기간"
+        required: false
+      end:
+        description: "다시 보낼 기간 끝 KST (예: 202611090700)"
+        required: false
+      only:
+        description: "이 이름의 고객 한 명에게만"
+        required: false
+
+concurrency:
+  group: bid-alert-send
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: bid-alert
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: AI 요약용 패키지 설치 (ANTHROPIC_API_KEY가 있을 때만)
+        if: env.ANTHROPIC_API_KEY != ''
+        run: pip install --quiet "anthropic>=2.6,<3"
+
+      - name: 테스트 (실패하면 발송하지 않음)
+        run: python -m unittest discover -s tests -t .
+
+      - name: 고객 목록 준비
+        env:
+          SUBSCRIBERS_TOML: ${{ secrets.SUBSCRIBERS_TOML }}
+        run: |
+          if [ -z "$SUBSCRIBERS_TOML" ]; then
+            echo "::error::SUBSCRIBERS_TOML 시크릿이 비어 있습니다."
+            exit 1
+          fi
+          printf '%s\n' "$SUBSCRIBERS_TOML" > subscribers.toml
+
+      - name: 공고 수집 및 메일 발송
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_SECURITY: ${{ secrets.SMTP_SECURITY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_REPLY_TO: ${{ secrets.MAIL_REPLY_TO }}
+          MAIL_FROM_NAME: ${{ vars.MAIL_FROM_NAME }}
+          BIDALERT_BRAND: ${{ vars.BIDALERT_BRAND }}
+          BIDALERT_CONTACT: ${{ vars.BIDALERT_CONTACT }}
+          IN_DRY_RUN: ${{ inputs.dry_run }}
+          IN_START: ${{ inputs.start }}
+          IN_END: ${{ inputs.end }}
+          IN_ONLY: ${{ inputs.only }}
+        run: |
+          # 비어 있는 선택 설정은 지워서 기본값이 쓰이게 한다.
+          for v in SMTP_PORT SMTP_SECURITY MAIL_FROM MAIL_REPLY_TO MAIL_FROM_NAME BIDALERT_BRAND BIDALERT_CONTACT; do
+            [ -z "${!v}" ] && unset "$v"
+          done
+          args=(run --subscribers subscribers.toml --out out)
+          [ "$IN_DRY_RUN" = "true" ] && args+=(--dry-run)
+          [ -n "$IN_START" ] && args+=(--start "$IN_START")
+          [ -n "$IN_END" ] && args+=(--end "$IN_END")
+          [ -n "$IN_ONLY" ] && args+=(--only "$IN_ONLY")
+          python -m bidalert "${args[@]}"
+
+      - name: 고객 목록 지우기
+        if: always()
+        run: rm -f subscribers.toml && rm -rf out

@@ -1,0 +1,6 @@
+# 실제 고객 목록과 발송 결과에는 개인정보가 들어 있으므로 올리지 않는다.
+subscribers.toml
+out/
+.env
+__pycache__/
+*.pyc

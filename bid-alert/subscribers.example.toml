@@ -1,0 +1,40 @@
+# 고객(구독자) 설정 예시
+# 실제 고객 목록은 subscribers.toml 로 복사해 쓰고, 저장소에는 올리지 마세요(.gitignore 처리됨).
+# GitHub Actions에서는 이 파일 내용을 통째로 SUBSCRIBERS_TOML 시크릿에 넣습니다.
+#
+# 키워드 규칙
+#   - 공백 무시: "홈페이지 구축" = "홈페이지구축"
+#   - "+"는 AND:  "유지보수+홈페이지" → 두 단어가 모두 있어야 함
+#   - exclude에 걸리면 제외
+# 업무구분(kinds): servc=용역, thng=물품, cnstwk=공사, frgcpt=외자
+# 금액은 원 단위. max_price = 0 이면 상한 없음.
+
+[[subscriber]]
+name = "하랑솔루션"
+email = ["ceo@example.com", "sales@example.com"]
+kinds = ["servc", "thng"]
+keywords = [
+  "홈페이지", "누리집", "웹사이트", "웹 접근성",
+  "통합메시지", "UMS", "알림톡", "대량 메일", "메일 발송",
+  "설문", "스트리밍", "뷰어", "포털 고도화",
+  "앱+유지보수",
+]
+exclude = ["청소", "경비", "인쇄", "소식지"]
+orgs = []                 # 공고·수요기관명 일부. 비우면 전체
+regions = ["서울", "경기"] # 참가제한지역이 있는 공고는 이 지역만. 제한 없는 공고는 항상 포함
+min_price = 10_000_000
+max_price = 500_000_000
+include_unpriced = true   # 추정가격이 공개되지 않은 공고도 받기
+ai_summary = true
+profile = """
+공공기관 홈페이지 구축·유지보수와 통합메시지(UMS)·대량메일 솔루션을 직접 개발·납품하는 직원 12명 회사.
+소프트웨어사업자(컴퓨터관련서비스사업) 신고, 직접생산확인 보유. 웹 접근성 인증 대응 경험 다수.
+1억~3억 원 규모 협상계약을 선호하고, 공사·인쇄·시설관리는 하지 않음.
+"""
+
+# [[subscriber]]
+# name = "두 번째 고객"
+# email = ["owner@example.org"]
+# kinds = ["servc"]
+# keywords = ["교육 운영", "연수"]
+# active = false          # 잠시 발송 중단

@@ -1,0 +1,27 @@
+# bid-alert 코드가 바뀔 때마다 테스트와 샘플 메일 생성을 돌린다.
+name: 입찰 알림 테스트
+
+on:
+  push:
+    paths: ["bid-alert/**", ".github/workflows/bid-alert*.yml"]
+  pull_request:
+    paths: ["bid-alert/**", ".github/workflows/bid-alert*.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: bid-alert
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet "anthropic>=2.6,<3"
+      - run: python -m unittest discover -s tests -t . -v
+      - run: python -m bidalert preview --out out
