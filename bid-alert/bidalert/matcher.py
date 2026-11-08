@@ -37,10 +37,10 @@ class Match:
     ai_pick: bool = False
 
 
-def match_notice(sub: Subscriber, n: Notice, now: datetime) -> Match | None:
+def match_notice(sub: Subscriber, n: Notice, now: datetime, include_closed: bool = False) -> Match | None:
     if n.kind not in sub.kinds:
         return None
-    if n.close_at and n.close_at < now:
+    if n.close_at and n.close_at < now and not include_closed:
         return None  # 이미 마감
 
     title = _norm(n.title)
@@ -74,13 +74,13 @@ def match_notice(sub: Subscriber, n: Notice, now: datetime) -> Match | None:
     # 점수: 맞은 키워드 수가 우선, 마감이 가까울수록 약간 가산
     score = float(len(hits))
     days = n.days_left(now)
-    if days is not None and days <= 3:
+    if days is not None and 0 <= days <= 3:
         score += 0.5
     return Match(notice=n, keywords=hits, score=score)
 
 
-def select(sub: Subscriber, notices: list[Notice], now: datetime) -> list[Match]:
-    matches = [m for n in notices if (m := match_notice(sub, n, now))]
+def select(sub: Subscriber, notices: list[Notice], now: datetime, include_closed: bool = False) -> list[Match]:
+    matches = [m for n in notices if (m := match_notice(sub, n, now, include_closed))]
     far = datetime.max.replace(tzinfo=now.tzinfo)
     matches.sort(key=lambda m: (-m.score, m.notice.close_at or far, m.notice.title))
     return matches

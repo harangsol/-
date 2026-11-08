@@ -46,6 +46,11 @@ class DigestTest(unittest.TestCase):
         self.assertIn("마감임박 1건", d.subject)
         self.assertEqual(d.urgent, 1)
 
+    def test_closed_notice_label_not_urgent(self):
+        d = build_digest(SUB, [m("홈페이지", days=-2)], now=NOW, window=WINDOW)
+        self.assertIn("마감됨", d.html)
+        self.assertEqual(d.urgent, 0)
+
     def test_empty_digest(self):
         d = build_digest(SUB, [], now=NOW, window=WINDOW)
         self.assertIn("조건에 맞는 새 공고가 없었습니다", d.html)

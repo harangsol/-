@@ -61,6 +61,7 @@ python -m bidalert run                         # 실제 발송
 | `--start 202611060700 --end 202611090700` | 지정한 기간으로 다시 보내기(KST) |
 | `--no-ai` | AI 브리핑 끄기 |
 | `--skip-empty` | 맞는 공고가 없는 날은 보내지 않기 |
+| `--include-closed` | 이미 마감된 공고도 포함(잠재 고객용 "지난 2주 리포트"에 사용) |
 
 ## 4. 자동 발송 켜기 (GitHub Actions)
 
@@ -100,7 +101,7 @@ python -m bidalert run                         # 실제 발송
 ## 6. 개발
 
 ```bash
-python -m unittest discover -s tests -t .     # 53개 테스트, 외부 연결 없음
+python -m unittest discover -s tests -t .     # 외부 연결 없이 도는 단위 테스트
 ```
 
 | 파일 | 역할 |

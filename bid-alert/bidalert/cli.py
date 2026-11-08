@@ -97,7 +97,7 @@ def cmd_run(args) -> int:
     def process(mailer) -> None:
         nonlocal failures
         for sub in subs:
-            matches = select(sub, notices, now)
+            matches = select(sub, notices, now, include_closed=args.include_closed)
             if not matches and args.skip_empty:
                 log.info("%s: 맞는 공고 없음 — 건너뜀", sub.name)
                 continue
@@ -195,6 +195,7 @@ def main(argv: list[str] | None = None) -> int:
         sp.add_argument("--anchor-hour", type=int, default=7, help="수집 기준 시각(KST, 기본 7시)")
         sp.add_argument("--start", help="수집 시작 KST (예: 202611060700). 생략하면 직전 평일 기준 시각")
         sp.add_argument("--end", help="수집 끝 KST. 생략하면 지금")
+        sp.add_argument("--include-closed", action="store_true", help="이미 마감된 공고도 포함(지난 기간 리포트용)")
 
     r = sub.add_parser("run", help="공고를 수집해 메일 발송")
     common(r)

@@ -57,7 +57,9 @@ def _dday(days: int | None) -> tuple[str, str]:
     """(라벨, 색)"""
     if days is None:
         return "", ""
-    if days <= 0:
+    if days < 0:
+        return "마감됨", "#78909c"
+    if days == 0:
         return "오늘 마감", "#c62828"
     if days <= URGENT_DAYS:
         return f"D-{days}", "#c62828"
@@ -174,7 +176,7 @@ def build_digest(
 ) -> Digest:
     now_k = now.astimezone(KST)
     count = len(matches)
-    urgent = sum(1 for m in matches if (d := m.notice.days_left(now)) is not None and d <= URGENT_DAYS)
+    urgent = sum(1 for m in matches if (d := m.notice.days_left(now)) is not None and 0 <= d <= URGENT_DAYS)
     date_label = f"{now_k.month}월 {now_k.day}일({WEEKDAYS[now_k.weekday()]})"
     subject = f"[{brand()}] {date_label} 맞춤 입찰공고 {count}건" + (f" · 마감임박 {urgent}건" if urgent else "")
     if sample:

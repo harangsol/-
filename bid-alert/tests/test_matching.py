@@ -42,6 +42,7 @@ class MatcherTest(unittest.TestCase):
 
     def test_closed_notice_skipped(self):
         self.assertIsNone(match_notice(sub(), notice("홈페이지", days=-1), NOW))
+        self.assertIsNotNone(match_notice(sub(), notice("홈페이지", days=-1), NOW, include_closed=True))
 
     def test_price_range(self):
         s = sub(min_price=50_000_000, max_price=200_000_000)
