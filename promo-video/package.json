@@ -1,0 +1,17 @@
+{
+  "name": "harangsol-promo-video",
+  "version": "1.0.0",
+  "description": "하랑솔루션 39초 세로 홍보영상 (GSAP 모션그래픽 + 합성 음악)",
+  "scripts": {
+    "audio": "python3 score.py",
+    "render": "node render.mjs --fps 60",
+    "render:fast": "node render.mjs --fps 30",
+    "stills": "node render.mjs --stills"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "pretendard": "^1.3.9"
+  },
+  "private": true,
+  "type": "module"
+}

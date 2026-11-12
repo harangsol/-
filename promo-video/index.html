@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>하랑솔루션 홍보영상</title>
+<style>
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2");
+  font-weight: 45 920;
+  font-display: block;
+}
+:root {
+  --navy: #10243E;
+  --navy-deep: #08152A;
+  --navy-2: #1D4E89;
+  --gold: #C9A227;
+  --gold-hi: #EBC75E;
+  --gold-lo: #9A7B14;
+  --paper: #F7F8FA;
+  --ink: #14213A;
+  --sub: #5B6472;
+  --line: #E3E6EB;
+  --red: #E0524A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #000; overflow: hidden; }
+body { font-family: "Pretendard Variable", sans-serif; word-break: keep-all; }
+
+#stage {
+  position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden;
+  background: var(--navy-deep); transform-origin: 0 0; color: #fff;
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+.abs { position: absolute; }
+.full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+.scene { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0; visibility: hidden; }
+.c { display: inline-block; white-space: pre; will-change: transform; }
+.w { display: inline-block; white-space: pre; }
+.gold { color: var(--gold-hi); }
+.goldtext {
+  background: linear-gradient(180deg, #FFE7A0 0%, #EBC75E 45%, #C9A227 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.t { letter-spacing: -0.045em; line-height: 1.12; }
+.center { left: 0; width: 1080px; text-align: center; }
+.left { left: 90px; width: 900px; }
+
+/* ---------- backgrounds ---------- */
+#bgNavy { background: radial-gradient(120% 80% at 50% 30%, #17335A 0%, #0D1F3A 45%, #071328 100%); }
+#bgPaper { background: var(--paper); opacity: 0; }
+#bgGlow  { background: radial-gradient(60% 40% at 50% 46%, rgba(235,199,94,.35) 0%, rgba(235,199,94,0) 70%); opacity: 0; }
+.grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 90px 90px; background-position: -1px -1px;
+}
+#gridPaper { opacity: 0;
+  background-image:
+    linear-gradient(rgba(16,36,62,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,36,62,.05) 1px, transparent 1px);
+  background-size: 90px 90px; background-position: -1px -1px;
+}
+#particles .p { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,225,140,.9) 0%, rgba(255,225,140,0) 70%); }
+#grain { pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1.6 -.3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+#vignette { pointer-events: none; background: radial-gradient(130% 90% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); }
+#flash { background: #FFF6DA; opacity: 0; pointer-events: none; }
+#cam { transform-origin: 540px 960px; }
+
+/* ---------- 01 hook ---------- */
+#hookTitle1 { top: 250px; font-size: 104px; font-weight: 900; }
+#hookTitle2 { top: 385px; font-size: 90px; font-weight: 900; }
+#chart { left: 110px; top: 640px; width: 860px; height: 760px; }
+#chart .bar {
+  position: absolute; bottom: 120px; width: 112px; border-radius: 18px 18px 6px 6px;
+  background: linear-gradient(180deg, #F6D877 0%, #C9A227 70%, #9A7B14 100%);
+  box-shadow: 0 0 40px rgba(235,199,94,.25); transform-origin: 50% 100%;
+}
+#chart .base { position: absolute; left: 0; right: 0; bottom: 116px; height: 4px; background: rgba(255,255,255,.25); border-radius: 2px; }
+#chart .lbl { position: absolute; bottom: 40px; width: 112px; text-align: center; font-size: 30px; font-weight: 600; color: rgba(255,255,255,.55); letter-spacing: -0.02em; }
+#trend { position: absolute; left: 0; top: 0; overflow: visible; }
+#salesTag { left: 600px; top: 600px; font-size: 44px; font-weight: 800; color: var(--gold-hi); }
+.crack { position: absolute; width: 4px; background: #071328; transform-origin: 50% 0; }
+.coin { position: absolute; width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFF1B8 0%, #EBC75E 40%, #9A7B14 100%);
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.2); opacity: 0; }
+.leak { position: absolute; padding: 14px 30px; border-radius: 999px; background: rgba(224,82,74,.16);
+  border: 2px solid rgba(224,82,74,.7); color: #FFB4AE; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; opacity: 0; white-space: nowrap; }
+
+/* ---------- 02 pain ---------- */
+#pain { color: var(--ink); }
+#painHead { top: 230px; font-size: 92px; font-weight: 900; color: var(--navy); }
+#painList { left: 130px; top: 520px; width: 860px; }
+.prow { display: flex; align-items: center; height: 118px; font-size: 52px; font-weight: 800; letter-spacing: -0.045em; color: var(--navy); opacity: 0; }
+.box { flex: 0 0 72px; height: 72px; border-radius: 18px; border: 4px solid #C7CDD6; margin-right: 30px; background: #fff; position: relative; }
+.box svg { position: absolute; left: 6px; top: 6px; width: 52px; height: 52px; overflow: visible; }
+.box .chk { fill: none; stroke: var(--gold); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+#painL0 { top: 1270px; font-size: 46px; font-weight: 700; color: var(--sub); }
+#painL1 { top: 1345px; font-size: 68px; font-weight: 800; color: var(--navy); }
+#painL2 { top: 1440px; font-size: 150px; font-weight: 900; color: var(--navy); }
+.mark { position: relative; display: inline-block; }
+.mark::after { content: ""; position: absolute; left: -8px; right: -8px; bottom: 14px; height: 46px; background: rgba(201,162,39,.45); z-index: -1; transform: scaleX(var(--s, 0)); transform-origin: 0 50%; border-radius: 4px; }
+
+/* ---------- 03 not only ---------- */
+#noHead { top: 300px; font-size: 62px; font-weight: 700; color: rgba(255,255,255,.7); }
+.noLine { left: 90px; font-size: 150px; font-weight: 900; letter-spacing: -0.05em; line-height: 1; opacity: 0; white-space: nowrap; }
+.noLine .strike { position: absolute; left: -10px; top: 52%; height: 16px; width: calc(100% + 20px); background: var(--gold); border-radius: 8px; transform: scaleX(0); transform-origin: 0 50%; box-shadow: 0 0 30px rgba(235,199,94,.6); }
+.noLine .x { position: absolute; left: calc(100% + 34px); top: 18px; width: 110px; height: 110px; opacity: 0; }
+#noClose { top: 1290px; font-size: 96px; font-weight: 900; }
+
+/* ---------- 04 reveal ---------- */
+#rvTop { top: 700px; font-size: 76px; font-weight: 700; color: rgba(255,255,255,.82); }
+#rvMain { top: 805px; font-size: 128px; font-weight: 900; }
+#wave { position: absolute; left: 0; top: 0; overflow: visible; }
+#brand { top: 1170px; display: flex; flex-direction: column; align-items: center; opacity: 0; }
+.logo { display: flex; align-items: center; gap: 22px; }
+.logo .wm { font-weight: 800; letter-spacing: -0.04em; }
+#brandSub { margin-top: 26px; font-size: 40px; font-weight: 700; color: rgba(255,255,255,.7); letter-spacing: .02em; }
+
+/* ---------- 05 stages ---------- */
+#stagesWrap { overflow: hidden; --m: 300px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent calc(var(--m) * .62), #000 var(--m));
+  mask-image: linear-gradient(to bottom, transparent 0, transparent calc(var(--m) * .62), #000 var(--m)); }
+#track { position: absolute; left: 0; top: 0; width: 1080px; height: 7680px; transform-origin: 0 0; }
+.sec { position: absolute; left: 0; width: 1080px; height: 1920px; }
+.num { position: absolute; left: 90px; top: 300px; font-size: 120px; font-weight: 900; letter-spacing: -0.03em; color: transparent; -webkit-text-stroke: 3px var(--gold-hi); }
+.word { position: absolute; left: 82px; top: 420px; font-size: 220px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+.q { position: absolute; left: 92px; top: 670px; font-size: 62px; font-weight: 800; letter-spacing: -0.04em; color: var(--gold-hi); }
+.chips { position: absolute; left: 90px; top: 1500px; width: 820px; display: flex; flex-wrap: wrap; gap: 18px; }
+.chip { padding: 16px 30px; border-radius: 999px; font-size: 40px; font-weight: 700; letter-spacing: -0.035em;
+  background: rgba(255,255,255,.07); border: 2px solid rgba(235,199,94,.55); color: #fff; white-space: nowrap; }
+.ssub { position: absolute; left: 92px; top: 1720px; width: 860px; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; line-height: 1.4; color: rgba(255,255,255,.72); }
+#flowSvg { position: absolute; left: 0; top: 0; overflow: visible; }
+.flow { fill: none; stroke: url(#goldGrad); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+.flowThin { fill: none; stroke: var(--gold-hi); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+#stepNav { top: 150px; display: flex; justify-content: center; gap: 14px; opacity: 0; }
+#stepNav .sn { width: 210px; text-align: center; font-size: 30px; font-weight: 800; color: rgba(255,255,255,.4); padding-top: 18px; position: relative; letter-spacing: -0.02em; }
+#stepNav .sn::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); }
+#stepNav .sn i { position: absolute; left: 0; top: 0; height: 6px; width: 100%; border-radius: 3px; background: var(--gold-hi); transform: scaleX(0); transform-origin: 0 50%; }
+#stepNav .sn.on { color: #fff; }
+
+/* ---------- 06 overview ---------- */
+#ovText { left: 470px; top: 640px; width: 560px; }
+#ovText .a { font-size: 50px; font-weight: 700; color: rgba(255,255,255,.65); letter-spacing: -0.04em; line-height: 1.25; }
+#ovText .b { margin-top: 70px; font-size: 64px; font-weight: 900; letter-spacing: -0.045em; line-height: 1.2; }
+
+/* ---------- 07 principles ---------- */
+#prHead { top: 290px; font-size: 46px; font-weight: 800; color: var(--gold-lo); letter-spacing: -0.02em; }
+#prHead span { display: inline-block; padding: 14px 34px; border: 3px solid var(--gold); border-radius: 999px; }
+.prLine { top: 820px; font-size: 100px; font-weight: 900; color: var(--navy); letter-spacing: -0.055em; line-height: 1.18; opacity: 0; }
+.prNum { top: 470px; font-size: 260px; font-weight: 900; color: transparent; -webkit-text-stroke: 4px var(--gold); letter-spacing: -0.02em; line-height: 1; opacity: 0; }
+#prDots { top: 1440px; display: flex; justify-content: center; gap: 22px; }
+#prDots i { width: 18px; height: 18px; border-radius: 50%; background: #CED4DD; display: block; }
+
+/* ---------- 08 process ---------- */
+#pcHead { top: 260px; font-size: 76px; font-weight: 900; letter-spacing: -0.05em; }
+#pcList { left: 90px; top: 470px; width: 900px; }
+.step { position: relative; height: 172px; padding-left: 130px; opacity: 0; }
+.step .dot { position: absolute; left: 18px; top: 10px; width: 64px; height: 64px; border-radius: 50%; background: var(--navy); border: 5px solid var(--gold-hi); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: var(--gold-hi); }
+.step .tt { font-size: 56px; font-weight: 900; letter-spacing: -0.045em; line-height: 1.05; }
+.step .ds { margin-top: 12px; font-size: 34px; font-weight: 600; color: rgba(255,255,255,.66); letter-spacing: -0.035em; }
+#pcRail { position: absolute; left: 136px; top: 520px; width: 6px; height: 690px; background: rgba(255,255,255,.14); border-radius: 3px; }
+#pcRail i { position: absolute; left: 0; top: 0; width: 6px; height: 100%; border-radius: 3px; background: linear-gradient(180deg, #FFE7A0, #C9A227); transform: scaleY(0); transform-origin: 50% 0; box-shadow: 0 0 22px rgba(235,199,94,.7); }
+#pcNet { left: 90px; top: 1390px; width: 900px; display: flex; flex-wrap: wrap; gap: 14px; opacity: 0; }
+#pcNet .chip { font-size: 34px; padding: 12px 24px; }
+#pcNetLbl { left: 90px; top: 1322px; font-size: 34px; font-weight: 700; color: var(--gold-hi); opacity: 0; letter-spacing: -0.03em; }
+
+/* ---------- 09 cta ---------- */
+#ctaH1 { top: 390px; font-size: 92px; font-weight: 900; }
+#ctaH2 { top: 530px; font-size: 56px; font-weight: 700; color: rgba(255,255,255,.8); line-height: 1.3; }
+#ctaLogo { top: 840px; display: flex; flex-direction: column; align-items: center; opacity: 0; }
+#ctaLogoSub { margin-top: 22px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+#ctaBtn { left: 120px; top: 1200px; width: 840px; height: 156px; border-radius: 999px; opacity: 0;
+  background: linear-gradient(180deg, #F3D57A 0%, #D9B23C 55%, #C9A227 100%);
+  box-shadow: 0 18px 60px rgba(201,162,39,.45), inset 0 -6px 0 rgba(0,0,0,.12);
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  font-size: 58px; font-weight: 900; color: var(--navy); letter-spacing: -0.045em; }
+#ctaRing { left: 120px; top: 1200px; width: 840px; height: 156px; border-radius: 999px; border: 5px solid var(--gold-hi); opacity: 0; }
+#ctaWays { top: 1410px; font-size: 38px; font-weight: 700; color: rgba(255,255,255,.75); letter-spacing: -0.02em; opacity: 0; }
+#ctaWays b { color: #fff; }
+#hand { left: 640px; top: 1270px; width: 150px; height: 150px; opacity: 0; }
+#ctaFoot { left: 70px; top: 1560px; width: 940px; text-align: center; font-size: 24px; line-height: 1.6; color: rgba(255,255,255,.5); font-weight: 500; letter-spacing: -0.02em; opacity: 0; }
+
+/* ---------- preview UI ---------- */
+#ui { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px; background: rgba(0,0,0,.75); color: #fff; font: 14px sans-serif; display: none; align-items: center; gap: 12px; z-index: 10; }
+#ui input { flex: 1; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bgNavy" class="full"></div>
+  <div id="bgPaper" class="full"></div>
+  <div id="gridNavy" class="full grid"></div>
+  <div id="gridPaper" class="full"></div>
+  <div id="bgGlow" class="full"></div>
+  <div id="particles" class="full"></div>
+
+  <div id="cam" class="full">
+
+    <!-- 01 HOOK -->
+    <section id="hook" class="scene">
+      <div id="hookTitle1" class="abs center t">매출은 늘었는데</div>
+      <div id="hookTitle2" class="abs center t">왜 <span class="goldtext">남는 돈</span>은 없을까요?</div>
+      <div id="chart" class="abs">
+        <div class="base"></div>
+      </div>
+    </section>
+
+    <!-- 02 PAIN -->
+    <section id="pain" class="scene">
+      <div id="painHead" class="abs center t">혹시 이런 고민,<br>하고 계신가요?</div>
+      <div id="painList" class="abs"></div>
+      <div id="painL0" class="abs center t">하나라도 해당된다면,</div>
+      <div id="painL1" class="abs center t">필요한 건 상품이 아니라</div>
+      <div id="painL2" class="abs center t"><span class="mark">순서</span>입니다</div>
+    </section>
+
+    <!-- 03 NOT ONLY -->
+    <section id="notonly" class="scene">
+      <div id="noHead" class="abs center t">하랑솔루션은</div>
+      <div class="noLine abs" style="top:470px"><span class="txt">정책자금만</span><i class="strike"></i></div>
+      <div class="noLine abs" style="top:660px"><span class="txt">보험만</span><i class="strike"></i></div>
+      <div class="noLine abs" style="top:850px"><span class="txt">대출만</span><i class="strike"></i></div>
+      <div class="noLine abs" style="top:1040px"><span class="txt">법인전환만</span><i class="strike"></i></div>
+      <div id="noClose" class="abs center t">하는 곳이 아닙니다</div>
+    </section>
+
+    <!-- 04 REVEAL -->
+    <section id="reveal" class="scene">
+      <svg id="wave" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+      <div id="rvTop" class="abs center t">매출보다 중요한 건,</div>
+      <div id="rvMain" class="abs center t"><span class="goldtext">돈의 흐름</span>입니다</div>
+      <div id="brand" class="abs center">
+        <div class="logo" id="brandLogo"></div>
+        <div id="brandSub">대표님의 사업과 돈, 전체를 같이 봅니다</div>
+      </div>
+    </section>
+
+    <!-- 05 STAGES -->
+    <section id="stages" class="scene">
+      <div id="stagesWrap" class="full">
+        <div id="track"></div>
+      </div>
+    </section>
+
+    <!-- 06 OVERVIEW (track 축소 상태 위 텍스트) -->
+    <section id="overview" class="scene">
+      <div id="ovText" class="abs">
+        <div class="a">대부분의 상담은<br>‘조달’에서 끝납니다.</div>
+        <div class="b">하랑솔루션은<br><span class="goldtext">네 단계</span>를<br>같이 봅니다.</div>
+      </div>
+    </section>
+
+    <!-- 07 PRINCIPLES -->
+    <section id="principles" class="scene">
+      <div id="prHead" class="abs center"><span>하랑솔루션의 상담 원칙</span></div>
+      <div class="prNum abs center">01</div>
+      <div class="prNum abs center">02</div>
+      <div class="prNum abs center">03</div>
+      <div class="prLine abs center">무조건 된다고<br>하지 않습니다</div>
+      <div class="prLine abs center">되는 것과 어려운 것,<br>구분해 드립니다</div>
+      <div class="prLine abs center">필요 없는 건<br>하지 마시라고<br>말씀드립니다</div>
+      <div id="prDots" class="abs center"><i></i><i></i><i></i></div>
+    </section>
+
+    <!-- 08 PROCESS -->
+    <section id="process" class="scene">
+      <div id="pcHead" class="abs center t">상담은 이렇게 진행됩니다</div>
+      <div id="pcRail"><i></i></div>
+      <div id="pcList" class="abs"></div>
+      <div id="pcNetLbl" class="abs">진단은 하랑솔루션이, 실행은 분야별 전문가와</div>
+      <div id="pcNet" class="abs"></div>
+    </section>
+
+    <!-- 09 CTA -->
+    <section id="cta" class="scene">
+      <div id="ctaH1" class="abs center t">지금 상황만 알려주세요</div>
+      <div id="ctaH2" class="abs center t">무엇부터 봐야 할지<br>먼저 정리해 드립니다</div>
+      <div id="ctaLogo" class="abs center">
+        <div class="logo" id="ctaLogoMark"></div>
+        <div id="ctaLogoSub" class="goldtext">매출보다 중요한 건, 돈의 흐름</div>
+      </div>
+      <div id="ctaRing" class="abs"></div>
+      <div id="ctaBtn" class="abs"><span id="ctaBtnText">무료 진단 상담 신청</span><svg width="52" height="52" viewBox="0 0 52 52"><path d="M12 26h26M28 14l12 12-12 12" fill="none" stroke="#10243E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <svg id="hand" class="abs" viewBox="0 0 150 150"></svg>
+      <div id="ctaWays" class="abs center"></div>
+      <div id="ctaFoot" class="abs"></div>
+    </section>
+
+  </div>
+
+  <div id="grain" class="full"></div>
+  <div id="vignette" class="full"></div>
+  <div id="flash" class="full"></div>
+</div>
+
+<div id="ui"><button id="play">▶︎</button><input id="scrub" type="range" min="0" max="39" step="0.001" value="0"><span id="tc">0.00</span></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE7A0"/><stop offset=".5" stop-color="#EBC75E"/><stop offset="1" stop-color="#C9A227"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="cometGrad"><stop offset="0" stop-color="#FFFBEA"/><stop offset=".35" stop-color="#FFE39A" stop-opacity=".9"/><stop offset="1" stop-color="#EBC75E" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script src="cues.js"></script>
+<script>
+/* =====================================================================
+   문구 설정 — 여기만 고치면 영상 속 글자가 바뀝니다.
+   ===================================================================== */
+const COPY = {
+  company: "하랑솔루션",
+  ctaButton: "무료 진단 상담 신청",
+  ctaWays: "<b>프로필 링크</b> · 카카오톡 · 전화",
+  footnote: "정책자금·대출 가능 여부는 각 기관과 금융회사의 심사에 따라 달라집니다.<br>하랑솔루션은 직접 대출하지 않으며, 분야별 금융기관·전문가와 연계합니다.",
+  pains: [
+    "매출은 늘었는데 세금이 커졌다",
+    "운영자금·시설자금이 필요하다",
+    "대출이 먼저? 정책자금이 먼저?",
+    "법인전환, 해야 하나 고민이다",
+    "버는데 대표 개인 자산은 그대로",
+    "직원 5인 이상, 안전관리까지",
+  ],
+  stages: [
+    { num: "01", word: "조달", q: "어떻게 조달하고",
+      chips: ["정책자금", "기업자금", "사업자·기업 대출", "시설·운영자금"],
+      sub: "한 군데 안 되면 끝이 아닙니다.<br>기관별·지역별 자금을 같이 봅니다." },
+    { num: "02", word: "방어", q: "어떻게 지키고",
+      chips: ["사업장 안전관리", "중대재해처벌법 대응", "위험성평가·TBM", "기업 리스크"],
+      sub: "서류만 만드는 게 아니라<br>현장에서 실제로 돌아가게 만듭니다." },
+    { num: "03", word: "보존", q: "어떻게 남기고",
+      chips: ["절세", "법인전환", "벤처·이노비즈 인증", "특허·기업부설연구소"],
+      sub: "법인전환은 목적이 아닙니다.<br>대표님께 돈이 남는 것이 목적입니다." },
+    { num: "04", word: "증식", q: "어떻게 대표님 자산으로",
+      chips: ["퇴직재원", "연금", "상속·가업승계", "개인·사업 자산 분리"],
+      sub: "사업의 성장과 대표님 자산의 성장은<br>따로 준비해야 합니다." },
+  ],
+  steps: [
+    ["문의·신청", "간단한 정보만 남겨 주시면 됩니다"],
+    ["전화 상담", "진단이 필요한지부터 먼저 판단합니다"],
+    ["1차 미팅", "상품이 아니라 사업 이야기부터 듣습니다"],
+    ["진단·실행안", "무엇부터 할지, 순서를 보여드립니다"],
+    ["실행·지속관리", "전문가와 연결하고, 이후에도 함께 봅니다"],
+  ],
+  network: ["자금·대출", "세무", "법무", "노무", "보험·연금", "인증·특허", "안전관리"],
+};
+
+/* ===================================================================== */
+const C = window.CUES;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rnd = mulberry32(20261112);
+const NS = "http://www.w3.org/2000/svg";
+function svgEl(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+
+/* 글자 단위 분해 (요소 구조는 유지) */
+function splitChars(el) {
+  const out = [];
+  (function walk(node) {
+    for (const ch of Array.from(node.childNodes)) {
+      if (ch.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const s of Array.from(ch.textContent)) {
+          const sp = document.createElement("span"); sp.className = "c"; sp.textContent = s; frag.appendChild(sp); out.push(sp);
+        }
+        ch.replaceWith(frag);
+      } else if (ch.nodeType === 1 && ch.tagName !== "BR") {
+        if (ch.classList.contains("goldtext")) {
+          // 그라디언트 글자는 글자마다 그라디언트를 다시 입힌다
+          ch.classList.remove("goldtext");
+          const before = out.length; walk(ch);
+          for (let i = before; i < out.length; i++) out[i].classList.add("goldtext");
+        } else walk(ch);
+      }
+    }
+  })(el);
+  return out;
+}
+
+function logoHTML(size) {
+  const s = size;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 120 120">
+    <defs><linearGradient id="lg${s}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D4E89"/><stop offset="1" stop-color="#10243E"/></linearGradient></defs>
+    <rect x="2" y="2" width="116" height="116" rx="32" fill="url(#lg${s})" stroke="rgba(235,199,94,.55)" stroke-width="3"/>
+    <path d="M22 86 C 44 86, 50 58, 66 52 S 88 42, 96 30" fill="none" stroke="#EBC75E" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="96" cy="30" r="9" fill="#FFF1B8"/>
+  </svg><span class="wm" style="font-size:${Math.round(s * 0.62)}px">${COPY.company}</span>`;
+}
+
+/* ---------- 정적 요소 만들기 ---------- */
+function build() {
+  // hook chart
+  const chart = $("#chart");
+  const heights = [150, 230, 320, 420, 540];
+  const labels = ["1년차", "2년차", "3년차", "4년차", "올해"];
+  heights.forEach((h, i) => {
+    const b = document.createElement("div"); b.className = "bar"; b.style.left = (40 + i * 170) + "px"; b.style.height = h + "px"; chart.appendChild(b);
+    const l = document.createElement("div"); l.className = "lbl"; l.style.left = (40 + i * 170) + "px"; l.textContent = labels[i]; chart.appendChild(l);
+  });
+  const trend = svgEl("svg", { id: "trend", width: 860, height: 760, viewBox: "0 0 860 760" }, chart);
+  const pts = heights.map((h, i) => [96 + i * 170, 760 - 120 - h - 46]);
+  let d = `M ${pts[0][0]} ${pts[0][1]}`; for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; d += ` C ${x0 + 70} ${y0}, ${x1 - 70} ${y1}, ${x1} ${y1}`; }
+  svgEl("path", { id: "trendPath", d, fill: "none", stroke: "#FFF1B8", "stroke-width": 8, "stroke-linecap": "round", filter: "url(#glow)" }, trend);
+  svgEl("path", { id: "trendArrow", d: `M ${pts[4][0] - 30} ${pts[4][1] - 12} L ${pts[4][0] + 14} ${pts[4][1] - 30} L ${pts[4][0] + 4} ${pts[4][1] + 16}`, fill: "none", stroke: "#FFF1B8", "stroke-width": 8, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, trend);
+  const tag = document.createElement("div"); tag.id = "salesTag"; tag.className = "abs"; tag.textContent = "매출 ↑"; tag.style.left = "560px"; tag.style.top = "40px"; tag.style.opacity = 0; chart.appendChild(tag);
+  // cracks + coins + leak tags
+  heights.forEach((h, i) => {
+    for (let k = 0; k < 2; k++) {
+      const cr = document.createElement("div"); cr.className = "crack"; cr.style.left = (40 + i * 170 + 30 + k * 46 + rnd() * 10) + "px";
+      cr.style.top = (760 - 120 - h * (0.45 + rnd() * 0.35)) + "px"; cr.style.height = (40 + rnd() * 70) + "px"; cr.dataset.r = (rnd() - .5) * 50; chart.appendChild(cr);
+    }
+  });
+  for (let i = 0; i < 26; i++) { const c = document.createElement("div"); c.className = "coin"; chart.appendChild(c); }
+  const leaks = [["세금", 60, 470], ["이자", 600, 380], ["리스크", 310, 560], ["새는 비용", 560, 610]];
+  leaks.forEach(([t, x, y]) => { const e = document.createElement("div"); e.className = "leak"; e.textContent = t; e.style.left = x + "px"; e.style.top = y + "px"; chart.appendChild(e); });
+
+  // pain list
+  const pl = $("#painList");
+  COPY.pains.forEach(t => {
+    const r = document.createElement("div"); r.className = "prow";
+    r.innerHTML = `<div class="box"><svg viewBox="0 0 52 52"><path class="chk" d="M8 27 L21 40 L45 12"/></svg></div><div class="ptxt">${t}</div>`;
+    pl.appendChild(r);
+  });
+
+  // not-only X marks
+  $$(".noLine").forEach(l => {
+    const x = svgEl("svg", { class: "x", viewBox: "0 0 110 110" }, l);
+    svgEl("path", { d: "M25 25 L85 85 M85 25 L25 85", stroke: "#E0524A", "stroke-width": 14, "stroke-linecap": "round", fill: "none" }, x);
+  });
+
+  // reveal wave
+  const wave = $("#wave");
+  svgEl("path", { id: "wavePath", class: "flow", d: "M -60 1060 C 160 960, 300 1120, 540 1060 S 900 960, 1140 1040" }, wave);
+
+  $("#brandLogo").innerHTML = logoHTML(128);
+  $("#ctaLogoMark").innerHTML = logoHTML(150);
+  $("#ctaBtnText").textContent = COPY.ctaButton;
+  $("#ctaWays").innerHTML = COPY.ctaWays;
+  $("#ctaFoot").innerHTML = "※ " + COPY.footnote;
+
+  // stages track
+  const track = $("#track");
+  COPY.stages.forEach((s, k) => {
+    const sec = document.createElement("div"); sec.className = "sec"; sec.style.top = (k * 1920) + "px";
+    sec.innerHTML = `<div class="num">${s.num}</div><div class="word">${s.word}</div><div class="q">${s.q}</div>
+      <div class="chips">${s.chips.map(c => `<span class="chip">${c}</span>`).join("")}</div><div class="ssub">${s.sub}</div>`;
+    track.appendChild(sec);
+  });
+  const fs = svgEl("svg", { id: "flowSvg", width: 1080, height: 7680, viewBox: "0 0 1080 7680" }, track);
+  buildFlow(fs);
+
+  // step nav (조달 방어 보존 증식)
+  const nav = document.createElement("div"); nav.id = "stepNav"; nav.className = "abs center";
+  COPY.stages.forEach(s => { const n = document.createElement("div"); n.className = "sn"; n.innerHTML = `<i></i>${s.word}`; nav.appendChild(n); });
+  $("#stages").appendChild(nav);
+
+  // process
+  const pc = $("#pcList");
+  COPY.steps.forEach(([tt, ds], i) => {
+    const s = document.createElement("div"); s.className = "step";
+    s.innerHTML = `<div class="dot">${String(i + 1).padStart(2, "0")}</div><div class="tt">${tt}</div><div class="ds">${ds}</div>`;
+    pc.appendChild(s);
+  });
+  $("#pcNet").innerHTML = COPY.network.map(n => `<span class="chip">${n}</span>`).join("");
+
+  // tap hand
+  const hand = $("#hand");
+  svgEl("circle", { id: "tapRing", cx: 46, cy: 40, r: 26, fill: "none", stroke: "#fff", "stroke-width": 5, opacity: 0 }, hand);
+  svgEl("path", { d: "M46 40 L46 98 M46 98 C 46 98, 30 92, 26 104 C 24 112, 44 132, 60 140 L 104 140 C 112 122, 118 104, 112 84 L 112 76 C 112 66, 98 64, 96 72 C 96 62, 82 60, 80 70 C 80 60, 66 58, 64 68 L 64 40 C 64 28, 46 28, 46 40 Z",
+    fill: "#fff", stroke: "#10243E", "stroke-width": 5, "stroke-linejoin": "round" }, hand);
+
+  // particles
+  const pw = $("#particles");
+  for (let i = 0; i < 34; i++) {
+    const p = document.createElement("div"); p.className = "p";
+    const s = 6 + rnd() * 26; p.style.width = p.style.height = s + "px";
+    p.dataset.x = rnd() * 1080; p.dataset.y = rnd() * 2100; p.dataset.v = 20 + rnd() * 60; p.dataset.a = 0.25 + rnd() * 0.75; p.dataset.ph = rnd() * 6.28;
+    pw.appendChild(p);
+  }
+}
+
+/* ---------- 흐름선(골드 라인) 경로 ---------- */
+const FLOW = {};
+function buildFlow(svg) {
+  const Y = k => k * 1920;
+  const P = (id, d, cls = "flow") => (FLOW[id] = svgEl("path", { id, d, class: cls }, svg));
+  // 01 조달: 세 줄기가 하나로 모인다
+  P("s1a", `M 200 820 C 200 1060, 540 1020, 540 1250`);
+  P("s1b", `M 540 800 L 540 1250`);
+  P("s1c", `M 880 820 C 880 1060, 540 1020, 540 1250`);
+  [[200, 820], [540, 800], [880, 820]].forEach(([x, y], i) => {
+    const g = svgEl("g", { id: "src" + i, opacity: 0, transform: `translate(${x} ${y})` }, svg);
+    svgEl("circle", { r: 44, fill: "#10243E", stroke: "#EBC75E", "stroke-width": 5 }, g);
+    const t = svgEl("text", { y: 16, "text-anchor": "middle", "font-size": 44, "font-weight": 900, fill: "#EBC75E", "font-family": "Pretendard Variable" }, g); t.textContent = "₩";
+  });
+  const merge = svgEl("g", { id: "merge", opacity: 0, transform: "translate(540 1300)" }, svg);
+  svgEl("circle", { r: 96, fill: "url(#cometGrad)", opacity: .6 }, merge);
+  svgEl("circle", { r: 62, fill: "#EBC75E" }, merge);
+  const mt = svgEl("text", { y: 17, "text-anchor": "middle", "font-size": 46, "font-weight": 900, fill: "#10243E", "font-family": "Pretendard Variable" }, merge); mt.textContent = "자금";
+  P("l1", `M 540 1362 C 540 1440, 1000 1400, 1000 1560 L 1000 ${Y(1) + 560} C 1000 ${Y(1) + 720}, 540 ${Y(1) + 640}, 540 ${Y(1) + 800}`);
+  // 02 방어: 방패
+  const o2 = Y(1);
+  P("sh", `M 540 ${o2 + 800} C 620 ${o2 + 850}, 700 ${o2 + 865}, 790 ${o2 + 865} L 790 ${o2 + 1110} C 790 ${o2 + 1270}, 680 ${o2 + 1370}, 540 ${o2 + 1430} C 400 ${o2 + 1370}, 290 ${o2 + 1270}, 290 ${o2 + 1110} L 290 ${o2 + 865} C 380 ${o2 + 865}, 460 ${o2 + 850}, 540 ${o2 + 800}`);
+  svgEl("path", { id: "shFill", d: FLOW.sh.getAttribute("d"), fill: "rgba(235,199,94,.12)", opacity: 0 }, svg);
+  P("ck", `M 428 ${o2 + 1105} L 512 ${o2 + 1190} L 668 ${o2 + 1010}`);
+  P("l2", `M 540 ${o2 + 1430} C 540 ${o2 + 1520}, 1000 ${o2 + 1480}, 1000 ${o2 + 1640} L 1000 ${Y(2) + 560} C 1000 ${Y(2) + 700}, 540 ${Y(2) + 650}, 540 ${Y(2) + 880}`);
+  // 03 보존: 그릇에 채워진다
+  const o3 = Y(2);
+  const jarD = `M 320 ${o3 + 880} L 320 ${o3 + 1300} Q 320 ${o3 + 1410} 430 ${o3 + 1410} L 650 ${o3 + 1410} Q 760 ${o3 + 1410} 760 ${o3 + 1300} L 760 ${o3 + 880}`;
+  const clip = svgEl("clipPath", { id: "jarClip" }, svg);
+  svgEl("path", { d: `M 332 ${o3 + 880} L 332 ${o3 + 1300} Q 332 ${o3 + 1398} 430 ${o3 + 1398} L 650 ${o3 + 1398} Q 748 ${o3 + 1398} 748 ${o3 + 1300} L 748 ${o3 + 880} Z` }, clip);
+  const fillG = svgEl("g", { "clip-path": "url(#jarClip)" }, svg);
+  svgEl("rect", { id: "jarFill", x: 300, y: o3 + 1410, width: 480, height: 520, fill: "url(#goldGrad)", opacity: .85 }, fillG);
+  svgEl("path", { id: "jarWave", d: `M 300 ${o3 + 1410} q 40 -18 80 0` + " t 80 0".repeat(9) + " v 40 h -800 z", fill: "#FFE7A0", opacity: .9 }, fillG);
+  P("jar", jarD);
+  const lock = svgEl("g", { id: "lock", opacity: 0, transform: `translate(540 ${o3 + 1150})` }, svg);
+  svgEl("rect", { x: -62, y: -20, width: 124, height: 100, rx: 18, fill: "#10243E", stroke: "#FFF1B8", "stroke-width": 6 }, lock);
+  svgEl("path", { d: "M -36 -20 L -36 -50 C -36 -92, 36 -92, 36 -50 L 36 -20", fill: "none", stroke: "#FFF1B8", "stroke-width": 10, "stroke-linecap": "round" }, lock);
+  svgEl("circle", { cx: 0, cy: 28, r: 12, fill: "#EBC75E" }, lock);
+  for (let i = 0; i < 9; i++) svgEl("circle", { class: "drop", cx: 540 + (i % 3 - 1) * 60, cy: o3 + 700, r: 16, fill: "#EBC75E", opacity: 0 }, svg);
+  P("l3", `M 540 ${o3 + 1410} C 540 ${o3 + 1500}, 1000 ${o3 + 1480}, 1000 ${o3 + 1640} L 1000 ${Y(3) + 1280} C 1000 ${Y(3) + 1380}, 960 ${Y(3) + 1410}, 880 ${Y(3) + 1410} L 170 ${Y(3) + 1410}`);
+  // 04 증식: 막대와 상승선
+  const o4 = Y(3);
+  [[250, 150], [395, 250], [540, 370], [685, 500]].forEach(([x, h], i) => {
+    svgEl("rect", { class: "gbar", x, y: o4 + 1400, width: 100, height: 0, rx: 14, fill: "rgba(235,199,94,.22)", stroke: "rgba(235,199,94,.55)", "stroke-width": 3, "data-h": h, "data-b": o4 + 1400 }, svg);
+  });
+  P("gr", `M 170 ${o4 + 1410} C 300 ${o4 + 1395}, 360 ${o4 + 1270}, 445 ${o4 + 1190} S 560 ${o4 + 1060}, 640 ${o4 + 1000} S 800 ${o4 + 860}, 905 ${o4 + 800}`);
+  P("ar", `M 846 ${o4 + 790} L 912 ${o4 + 796} L 884 ${o4 + 856}`);
+  // 혜성(선의 머리)
+  const comet = svgEl("g", { id: "comet", opacity: 0 }, svg);
+  svgEl("circle", { r: 60, fill: "url(#cometGrad)" }, comet);
+  svgEl("circle", { r: 13, fill: "#FFFDF2" }, comet);
+  const comet2 = svgEl("g", { id: "comet2", opacity: 0 }, svg); svgEl("circle", { r: 46, fill: "url(#cometGrad)" }, comet2); svgEl("circle", { r: 10, fill: "#FFFDF2" }, comet2);
+  const comet3 = svgEl("g", { id: "comet3", opacity: 0 }, svg); svgEl("circle", { r: 46, fill: "url(#cometGrad)" }, comet3); svgEl("circle", { r: 10, fill: "#FFFDF2" }, comet3);
+  Object.values(FLOW).forEach(p => { const L = p.getTotalLength(); p.dataset.len = L; p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
+}
+
+/* 선 그리기 + 머리 따라가기 */
+function draw(tl, id, at, dur, opts = {}) {
+  const p = FLOW[id] || document.getElementById(id);
+  if (!p.dataset.len) { const l = p.getTotalLength(); p.dataset.len = l; p.style.strokeDasharray = l; p.style.strokeDashoffset = l; }
+  const L = +p.dataset.len; const head = opts.head ? document.getElementById(opts.head) : null;
+  const o = { v: 0 };
+  tl.to(o, { v: 1, duration: dur, ease: opts.ease || "power2.inOut", onUpdate() {
+    p.style.strokeDashoffset = L * (1 - o.v);
+    if (head) { const pt = p.getPointAtLength(L * o.v); head.setAttribute("transform", `translate(${pt.x} ${pt.y})`); }
+  } }, at);
+  if (head) {
+    tl.to(head, { opacity: 1, duration: 0.12 }, at);
+    if (opts.hideHead !== false) tl.to(head, { opacity: 0, duration: 0.2 }, at + dur - 0.05);
+  }
+}
+
+/* ---------- 카메라 흔들림 (결정적) ---------- */
+const SHAKES = [];
+function shake(at, amp, dur = 0.35, freq = 26) { SHAKES.push({ at, amp, dur, freq }); }
+
+/* =====================================================================
+   타임라인
+   ===================================================================== */
+const tl = gsap.timeline({ paused: true });
+function showScene(id, at, until, fadeIn = 0.001) {
+  const el = document.getElementById(id);
+  if (at <= 0) { gsap.set(el, { visibility: "visible", opacity: 1 }); tl.set(el, { visibility: "hidden", opacity: 0 }, until); return; }
+  tl.set(el, { visibility: "visible" }, at);
+  tl.to(el, { opacity: 1, duration: fadeIn, ease: "none" }, at);
+  tl.set(el, { visibility: "hidden", opacity: 0 }, until);
+}
+function popChars(chars, at, o = {}) {
+  tl.fromTo(chars, { opacity: 0, y: o.y ?? 60, scale: o.scale ?? 1, filter: `blur(${o.blur ?? 10}px)` },
+    { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: o.dur ?? 0.5, ease: o.ease ?? "expo.out", stagger: o.stagger ?? 0.025 }, at);
+}
+
+function timeline() {
+  const H = C.hook, PN = C.pain, NO = C.notonly, RV = C.reveal, ST = C.stages, OV = C.overview, PR = C.principles, PC = C.process, CT = C.cta;
+
+  /* ---------- 배경 ---------- */
+  tl.set("#bgGlow", { opacity: 0 }, 0);
+  // pain: 밝은 종이
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 1, duration: 0.35, ease: "power2.inOut" }, PN.start - 0.2);
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 0, duration: 0.3, ease: "power2.inOut" }, PN.out + 0.1);
+  // principles: 밝은 종이
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 1, duration: 0.35, ease: "power2.inOut" }, PR.start - 0.25);
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 0, duration: 0.3, ease: "power2.inOut" }, PR.out + 0.05);
+  tl.to("#vignette", { opacity: 0.25, duration: 0.35 }, PN.start - 0.2);
+  tl.to("#vignette", { opacity: 1, duration: 0.3 }, PN.out + 0.1);
+  tl.to("#vignette", { opacity: 0.25, duration: 0.35 }, PR.start - 0.25);
+  tl.to("#vignette", { opacity: 1, duration: 0.3 }, PR.out + 0.05);
+  // 파티클 세기
+  tl.set(PART, { a: 0.35 }, 0);
+  tl.to(PART, { a: 0, duration: 0.3 }, PN.start - 0.2);
+  tl.to(PART, { a: 0.5, duration: 0.4 }, NO.start);
+  tl.to(PART, { a: 0.15, duration: 0.3 }, RV.start);
+  tl.to(PART, { a: 1, duration: 0.2 }, RV.drop);
+  tl.to(PART, { a: 0.55, duration: 1 }, RV.drop + 0.6);
+  tl.to(PART, { a: 0, duration: 0.3 }, PR.start - 0.25);
+  tl.to(PART, { a: 0.6, duration: 0.4 }, PC.start);
+  tl.to(PART, { a: 1, duration: 0.3 }, CT.start);
+
+  /* ---------- 01 HOOK ---------- */
+  showScene("hook", 0, PN.start);
+  const h1 = splitChars($("#hookTitle1")), h2 = splitChars($("#hookTitle2"));
+  // 첫 프레임부터 글자가 보이도록 아주 짧게
+  tl.fromTo("#hookTitle1", { scale: 1.12 }, { scale: 1, duration: 0.6, ease: "expo.out" }, 0);
+  tl.fromTo(h1, { opacity: 0.55, y: 18 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.012, ease: "expo.out" }, 0);
+  const bars = $$("#chart .bar"), lbls = $$("#chart .lbl");
+  tl.fromTo(bars, { scaleY: 0.12 }, { scaleY: 1, duration: 0.7, stagger: 0.14, ease: "back.out(1.6)" }, 0);
+  tl.fromTo(lbls, { opacity: 0.3, y: 10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.14 }, 0);
+  draw(tl, "trendPath", 0.2, 1.0, { ease: "power1.inOut" });
+  tl.to("#trendArrow", { opacity: 1, duration: 0.15 }, 1.2);
+  tl.fromTo("#salesTag", { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2.5)" }, 1.15);
+  // 남는 돈은 없을까요?
+  popChars(h2, H.leak, { stagger: 0.022, dur: 0.45 });
+  shake(H.leak, 10, 0.4);
+  const cracks = $$("#chart .crack");
+  gsap.set(cracks, { rotation: (i, el) => +el.dataset.r, scaleY: 0, transformOrigin: "50% 0%" });
+  tl.to(cracks, { scaleY: 1, duration: 0.18, stagger: 0.015, ease: "power4.out" }, H.leak + 0.05);
+  tl.fromTo(bars, { filter: "saturate(1) brightness(1)" }, { filter: "saturate(0.35) brightness(0.75)", duration: 0.5, immediateRender: false }, H.leak + 0.1);
+  tl.to(bars, { scaleY: (i) => [0.7, 0.62, 0.55, 0.5, 0.42][i], duration: 1.1, ease: "power2.in" }, H.leak + 0.25);
+  tl.to("#trendPath", { opacity: 0.25, duration: 0.4 }, H.leak + 0.1);
+  tl.to(["#trendArrow", "#salesTag"], { opacity: 0, duration: 0.3 }, H.leak + 0.1);
+  // 동전이 새어 나간다
+  const coins = $$("#chart .coin");
+  coins.forEach((c, i) => {
+    const bi = i % 5; const x0 = 40 + bi * 170 + 20 + rnd() * 70; const y0 = 760 - 120 - heights5[bi] * (0.3 + rnd() * 0.5);
+    const at = H.leak + 0.12 + i * 0.045;
+    tl.set(c, { x: x0, y: y0, opacity: 1, rotation: 0 }, at);
+    tl.to(c, { y: 1500, x: x0 + (rnd() - 0.5) * 220, rotation: (rnd() - 0.5) * 540, duration: 0.9 + rnd() * 0.4, ease: "power2.in" }, at);
+  });
+  $$("#chart .leak").forEach((l, i) => {
+    tl.fromTo(l, { opacity: 0, scale: 0.5, y: -30 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.6)", immediateRender: false }, H.leak + 0.35 + i * 0.18);
+    tl.to(l, { y: 520, opacity: 0, rotation: (i % 2 ? 8 : -8), duration: 0.9, ease: "power2.in" }, H.leak + 0.85 + i * 0.12);
+  });
+  // out
+  tl.to(["#hookTitle1", "#hookTitle2"], { y: -120, opacity: 0, filter: "blur(12px)", duration: 0.4, ease: "power3.in", stagger: 0.05 }, H.out);
+  tl.to("#chart", { y: 200, opacity: 0, duration: 0.4, ease: "power3.in" }, H.out);
+
+  /* ---------- 02 PAIN ---------- */
+  showScene("pain", PN.start - 0.1, PN.out + 0.45);
+  const ph = splitChars($("#painHead"));
+  popChars(ph, PN.start - 0.05, { stagger: 0.02, y: 50, blur: 8 });
+  const rows = $$(".prow");
+  rows.forEach((r, i) => {
+    const at = PN.checks[i];
+    tl.fromTo(r, { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out", immediateRender: false }, at - 0.22);
+    const chk = $(".chk", r); const L = 60; chk.style.strokeDasharray = L; chk.style.strokeDashoffset = L;
+    tl.to($(".box", r), { borderColor: "#C9A227", backgroundColor: "#FFF8E1", scale: 1.12, duration: 0.12, ease: "power2.out" }, at);
+    tl.to($(".box", r), { scale: 1, duration: 0.25, ease: "back.out(3)" }, at + 0.12);
+    tl.to(chk, { strokeDashoffset: 0, duration: 0.22, ease: "power3.out" }, at);
+  });
+  tl.to(rows, { opacity: 0.35, duration: 0.3 }, PN.line1 - 0.1);
+  tl.to("#painList", { y: -40, scale: 0.94, transformOrigin: "50% 0%", duration: 0.5, ease: "power2.inOut" }, PN.line1 - 0.1);
+  popChars(splitChars($("#painL0")), PN.line1 - 0.1, { stagger: 0.015, y: 30 });
+  popChars(splitChars($("#painL1")), PN.line1 + 0.15, { stagger: 0.018, y: 40 });
+  popChars(splitChars($("#painL2")), PN.line2, { stagger: 0.05, y: 30, scale: 1.6, blur: 16, dur: 0.4 });
+  shake(PN.line2 + 0.05, 9, 0.3);
+  tl.to($("#painL2 .mark"), { "--s": 1, duration: 0.35, ease: "power3.out" }, PN.line2 + 0.4);
+  tl.to("#pain > *", { y: -80, opacity: 0, duration: 0.35, ease: "power3.in", stagger: 0.03 }, PN.out);
+
+  /* ---------- 03 NOT ONLY ---------- */
+  showScene("notonly", NO.start - 0.05, NO.out + 0.45);
+  popChars(splitChars($("#noHead")), NO.start - 0.05, { stagger: 0.03, y: 30 });
+  $$(".noLine").forEach((l, i) => {
+    const at = NO.lines[i];
+    tl.fromTo(l, { opacity: 0, x: 120, scale: 1.15, filter: "blur(14px)" }, { opacity: 1, x: 0, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "expo.out", immediateRender: false }, at);
+    tl.to($(".strike", l), { scaleX: 1, duration: 0.16, ease: "power4.out" }, at + NO.strike);
+    tl.to($(".txt", l), { opacity: 0.32, duration: 0.2 }, at + NO.strike + 0.05);
+    tl.fromTo($(".x", l), { opacity: 0, scale: 0.3, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.25, ease: "back.out(3)", immediateRender: false }, at + NO.strike + 0.02);
+    shake(at + NO.strike, 6, 0.2);
+  });
+  const nc = splitChars($("#noClose"));
+  popChars(nc, NO.close, { stagger: 0.03, y: 70, scale: 1.2 });
+  shake(NO.close + 0.1, 8, 0.3);
+  tl.to("#notonly", { scale: 0.85, opacity: 0, filter: "blur(16px)", duration: 0.45, ease: "power3.in" }, NO.out);
+
+  /* ---------- 04 REVEAL ---------- */
+  showScene("reveal", RV.start, RV.out + 0.5);
+  const rvt = splitChars($("#rvTop"));
+  tl.fromTo(rvt, { opacity: 0 }, { opacity: 1, duration: 0.05, stagger: 0.075, ease: "none" }, RV.start + 0.1);
+  tl.to("#rvTop", { y: -40, duration: 0.5, ease: "power3.out" }, RV.drop);
+  const rvm = splitChars($("#rvMain"));
+  tl.fromTo(rvm, { opacity: 0, scale: 1.8, y: 30, filter: "blur(20px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out", stagger: 0.03 }, RV.drop);
+  tl.fromTo("#flash", { opacity: 0.85 }, { opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, RV.drop);
+  tl.fromTo("#bgGlow", { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, RV.drop);
+  tl.to("#bgGlow", { opacity: 0.45, duration: 1.2 }, RV.drop + 0.3);
+  shake(RV.drop, 16, 0.5);
+  draw(tl, "wavePath", RV.drop + 0.05, 0.9, { ease: "power2.out" });
+  tl.fromTo("#brand", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, RV.logo);
+  tl.to(["#rvTop", "#rvMain", "#brand"], { y: -260, opacity: 0, duration: 0.45, ease: "power3.in", stagger: 0.04 }, RV.out);
+  tl.to("#wave", { y: -600, opacity: 0, duration: 0.5, ease: "power3.in" }, RV.out);
+  tl.to("#bgGlow", { opacity: 0, duration: 0.4 }, RV.out);
+
+  /* ---------- 05 STAGES ---------- */
+  showScene("stages", RV.out + 0.1, OV.out + 0.5);
+  const T0 = ST.start, E = ST.each;
+  tl.fromTo("#track", { y: 1920 }, { y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, RV.out + 0.1);
+  tl.fromTo("#stepNav", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, immediateRender: false }, T0);
+  const navs = $$("#stepNav .sn");
+  const secs = $$("#track .sec");
+  secs.forEach((sec, k) => {
+    const at = T0 + k * E;
+    const word = splitChars($(".word", sec)), q = splitChars($(".q", sec));
+    const lead = k ? -0.22 : 0;
+    tl.fromTo($(".num", sec), { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, at + lead);
+    tl.fromTo(word, { opacity: 0, y: 120, filter: "blur(14px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, stagger: 0.06, ease: "expo.out" }, at + lead + 0.04);
+    tl.fromTo(q, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.015, ease: "expo.out" }, at + lead + 0.22);
+    tl.fromTo($$(".chip", sec), { opacity: 0, y: 30, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.07, ease: "back.out(2)" }, at + 0.55);
+    tl.fromTo($(".ssub", sec), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, at + 0.85);
+    // nav
+    tl.to($("i", navs[k]), { scaleX: 1, duration: E - 0.1, ease: "none" }, at);
+    tl.to(navs[k], { color: "#ffffff", duration: 0.2 }, at);
+    // camera
+    if (k > 0) tl.to("#track", { y: -k * 1920, duration: 0.6, ease: "power2.inOut" }, at - 0.45);
+  });
+  // 01 조달
+  ["src0", "src1", "src2"].forEach((id, i) => tl.fromTo("#" + id, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, T0 + 0.1 + i * 0.06));
+  draw(tl, "s1a", T0 + 0.3, 0.75, { head: "comet2" });
+  draw(tl, "s1b", T0 + 0.3, 0.75, { head: "comet" });
+  draw(tl, "s1c", T0 + 0.3, 0.75, { head: "comet3" });
+  tl.fromTo("#merge", { opacity: 0, scale: 0.2, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.6)", immediateRender: false }, T0 + 1.0);
+  draw(tl, "l1", T0 + 1.3, 0.85, { head: "comet", ease: "sine.inOut" });
+  // 02 방어
+  const T2 = T0 + E;
+  draw(tl, "sh", T2 + 0.15, 0.75, { head: "comet", ease: "power2.inOut" });
+  tl.to("#shFill", { opacity: 1, duration: 0.35 }, T2 + 0.8);
+  draw(tl, "ck", T2 + 0.85, 0.3, { ease: "power3.out" });
+  draw(tl, "l2", T2 + 1.3, 0.85, { head: "comet", ease: "sine.inOut" });
+  // 03 보존
+  const T3 = T0 + 2 * E;
+  draw(tl, "jar", T3 + 0.12, 0.55, { head: "comet" });
+  $$(".drop").forEach((d, i) => {
+    const at = T3 + 0.3 + i * 0.07;
+    tl.set(d, { opacity: 1, attr: { cy: 3840 + 700 } }, at);
+    tl.to(d, { attr: { cy: 3840 + 1300 - Math.min(i, 6) * 30 }, duration: 0.35, ease: "power2.in" }, at);
+    tl.to(d, { opacity: 0, duration: 0.08 }, at + 0.34);
+  });
+  tl.to(["#jarFill", "#jarWave"], { y: -380, duration: 0.95, ease: "power2.out" }, T3 + 0.45);
+  tl.fromTo("#lock", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(3)", immediateRender: false }, T3 + 1.05);
+  draw(tl, "l3", T3 + 1.3, 0.95, { head: "comet", ease: "sine.inOut" });
+  // 04 증식
+  const T4 = T0 + 3 * E;
+  $$(".gbar").forEach((b, i) => tl.to(b, { attr: { height: +b.dataset.h, y: +b.dataset.b - +b.dataset.h }, duration: 0.5, ease: "back.out(1.6)" }, T4 + 0.15 + i * 0.1));
+  draw(tl, "gr", T4 + 0.3, 0.8, { head: "comet", ease: "power2.inOut", hideHead: false });
+  draw(tl, "ar", T4 + 1.08, 0.18, { ease: "power3.out" });
+  tl.to("#comet", { opacity: 0, duration: 0.3 }, T4 + 1.25);
+
+  /* ---------- 06 OVERVIEW: 네 단계를 한 화면에 ---------- */
+  tl.to("#stepNav", { opacity: 0, y: -30, duration: 0.3 }, OV.start - 0.1);
+  tl.to("#track", { scale: 0.25, x: 135, y: 0, duration: 0.8, ease: "power3.inOut" }, OV.start - 0.05);
+  tl.to("#stagesWrap", { "--m": "0px", duration: 0.5 }, OV.start - 0.05);
+  tl.to($$("#track .chips, #track .ssub, #track .q, #track .num"), { opacity: 0.25, duration: 0.4 }, OV.start);
+  showScene("overview", OV.start, OV.out + 0.5);
+  tl.fromTo("#ovText .a", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, OV.text);
+  tl.fromTo("#ovText .b", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, OV.text + 0.45);
+  tl.to(["#stages", "#overview"], { opacity: 0, y: -200, duration: 0.3, ease: "power3.in" }, OV.out);
+
+  /* ---------- 07 PRINCIPLES ---------- */
+  showScene("principles", PR.start - 0.2, PR.out + 0.4);
+  tl.fromTo("#prHead", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out", immediateRender: false }, PR.start - 0.15);
+  const prL = $$(".prLine"), prN = $$(".prNum"), dots = $$("#prDots i");
+  prL.forEach((l, i) => {
+    const at = PR.lines[i];
+    const ch = splitChars(l);
+    tl.set(l, { opacity: 1 }, at);
+    tl.fromTo(ch, { opacity: 0, y: 80, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, stagger: 0.018, ease: "expo.out", immediateRender: false }, at);
+    tl.fromTo(prN[i], { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, immediateRender: false }, at);
+    tl.to(dots[i], { backgroundColor: "#C9A227", scale: 1.4, duration: 0.25 }, at);
+    if (i > 0) tl.to(dots[i - 1], { scale: 1, duration: 0.25 }, at);
+    const next = PR.lines[i + 1] ?? PR.out;
+    tl.to(ch, { opacity: 0, y: -60, filter: "blur(10px)", duration: 0.25, stagger: 0.006, ease: "power2.in" }, next - 0.28);
+    tl.to(prN[i], { opacity: 0, duration: 0.2 }, next - 0.2);
+  });
+  tl.to(["#prHead", "#prDots"], { opacity: 0, duration: 0.25 }, PR.out);
+
+  /* ---------- 08 PROCESS ---------- */
+  showScene("process", PC.start - 0.1, PC.out + 0.45);
+  popChars(splitChars($("#pcHead")), PC.start - 0.05, { stagger: 0.018, y: 40 });
+  tl.to("#pcRail i", { scaleY: 1, duration: PC.steps[4] - PC.steps[0] + 0.2, ease: "none" }, PC.steps[0]);
+  $$(".step").forEach((s, i) => {
+    const at = PC.steps[i];
+    tl.fromTo(s, { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out", immediateRender: false }, at);
+    tl.fromTo($(".dot", s), { scale: 0.3 }, { scale: 1, duration: 0.35, ease: "back.out(3)", immediateRender: false }, at);
+    tl.to($(".dot", s), { backgroundColor: "#C9A227", color: "#10243E", duration: 0.2 }, at + 0.1);
+  });
+  tl.fromTo("#pcNetLbl", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, immediateRender: false }, PC.network);
+  tl.set("#pcNet", { opacity: 1 }, PC.network);
+  tl.fromTo($$("#pcNet .chip"), { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.28, stagger: 0.045, ease: "back.out(2.5)" }, PC.network + 0.08);
+  tl.to("#process > *", { y: -120, opacity: 0, duration: 0.35, stagger: 0.02, ease: "power3.in" }, PC.out);
+
+  /* ---------- 09 CTA ---------- */
+  showScene("cta", CT.start - 0.05, CT.end + 1);
+  tl.fromTo("#bgGlow", { opacity: 0 }, { opacity: 0.55, duration: 0.6, immediateRender: false }, CT.start);
+  tl.fromTo("#flash", { opacity: 0.5 }, { opacity: 0, duration: 0.45, immediateRender: false }, CT.start);
+  shake(CT.start, 10, 0.35);
+  popChars(splitChars($("#ctaH1")), CT.start, { stagger: 0.022, y: 60, scale: 1.2 });
+  popChars(splitChars($("#ctaH2")), CT.start + 0.3, { stagger: 0.015, y: 30 });
+  tl.fromTo("#ctaLogo", { opacity: 0, scale: 0.8, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(2)", immediateRender: false }, CT.logo);
+  tl.fromTo("#ctaBtn", { opacity: 0, scale: 0.6, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(2.2)", immediateRender: false }, CT.button);
+  tl.fromTo("#ctaWays", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, immediateRender: false }, CT.button + 0.3);
+  tl.fromTo("#ctaFoot", { opacity: 0 }, { opacity: 1, duration: 0.5, immediateRender: false }, CT.button + 0.5);
+  // 손가락 탭
+  tl.fromTo("#hand", { opacity: 0, x: 140, y: 160, rotation: 10 }, { opacity: 1, x: 0, y: 0, rotation: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, CT.tap - 0.55);
+  tl.to("#hand", { scale: 0.88, duration: 0.08, transformOrigin: "30% 20%" }, CT.tap);
+  tl.to("#ctaBtn", { scale: 0.95, duration: 0.08 }, CT.tap);
+  tl.to("#hand", { scale: 1, duration: 0.2 }, CT.tap + 0.1);
+  tl.to("#ctaBtn", { scale: 1, duration: 0.3, ease: "back.out(3)" }, CT.tap + 0.1);
+  tl.fromTo("#tapRing", { opacity: 0.9, attr: { r: 10 } }, { opacity: 0, attr: { r: 70 }, duration: 0.5, ease: "power2.out", immediateRender: false }, CT.tap);
+  tl.to("#hand", { opacity: 0, x: 80, y: 120, duration: 0.4, ease: "power2.in" }, CT.tap + 0.9);
+  // 버튼 맥박
+  for (let t = CT.tap + 0.2; t < CT.end - 0.3; t += 1.0) {
+    tl.fromTo("#ctaRing", { opacity: 0.8, scale: 1 }, { opacity: 0, scale: 1.14, duration: 0.8, ease: "power2.out", immediateRender: false }, t);
+  }
+  tl.to("#cam", { scale: 1.03, duration: CT.end - CT.start, ease: "none" }, CT.start);
+  tl.set("#cam", { scale: 1 }, 0);
+
+  tl.to({}, { duration: 0.001 }, C.duration);
+}
+const PART = { a: 0.35 };
+const heights5 = [150, 230, 320, 420, 540];
+
+/* ---------- 프레임마다 계산되는 것들 ---------- */
+function onFrame(t) {
+  // 흔들림
+  let sx = 0, sy = 0;
+  for (const s of SHAKES) {
+    const dt = t - s.at; if (dt < 0 || dt > s.dur) continue;
+    const k = Math.pow(1 - dt / s.dur, 2);
+    sx += Math.sin(dt * s.freq * 6.283) * s.amp * k; sy += Math.cos(dt * s.freq * 5.1) * s.amp * 0.7 * k;
+  }
+  const cam = $("#cam");
+  const base = gsap.getProperty(cam, "scale");
+  cam.style.transform = `translate(${sx}px, ${sy}px) scale(${base})`;
+  // 파티클
+  const ps = $$("#particles .p");
+  for (const p of ps) {
+    const y = ((+p.dataset.y - t * +p.dataset.v) % 2100 + 2100) % 2100 - 90;
+    const x = +p.dataset.x + Math.sin(t * 0.8 + +p.dataset.ph) * 30;
+    p.style.transform = `translate(${x}px, ${y}px)`;
+    p.style.opacity = PART.a * +p.dataset.a * (0.6 + 0.4 * Math.sin(t * 2 + +p.dataset.ph));
+  }
+  // 그레인
+  const f = Math.floor(t * 30);
+  $("#grain").style.backgroundPosition = `${(f * 73) % 256}px ${(f * 151) % 256}px`;
+  // 보존 단계의 물결
+  const jw = document.getElementById("jarWave"); if (jw) jw.setAttribute("transform", `translate(${(t * 90) % 160 - 160} ${gsap.getProperty(jw, "y") || 0})`);
+}
+
+function seek(t) {
+  tl.time(Math.min(t, tl.duration()), false);
+  onFrame(t);
+}
+
+/* ---------- 실행 ---------- */
+const params = new URLSearchParams(location.search);
+window.__ready = (async () => {
+  await document.fonts.load('900 100px "Pretendard Variable"');
+  await document.fonts.ready;
+  build();
+  timeline();
+  window.__seek = seek;
+  window.__duration = C.duration;
+  if (params.has("render")) { seek(0); return true; }
+  // 미리보기 모드: 화면 크기에 맞춰 축소하고 재생 버튼 제공
+  const st = $("#stage");
+  const fit = () => { const s = Math.min(innerWidth / 1080, (innerHeight - 50) / 1920); st.style.transform = `scale(${s})`; st.style.left = ((innerWidth - 1080 * s) / 2) + "px"; };
+  fit(); addEventListener("resize", fit);
+  const ui = $("#ui"); ui.style.display = "flex";
+  const audio = new Audio("build/score.wav");
+  const scrub = $("#scrub"), tc = $("#tc"); scrub.max = C.duration;
+  let playing = false, t0 = 0, startAt = 0;
+  const tick = () => {
+    if (!playing) return;
+    let t = audio.readyState >= 2 && !audio.paused ? audio.currentTime : (performance.now() - startAt) / 1000 + t0;
+    if (t >= C.duration) { playing = false; t = C.duration; }
+    seek(t); scrub.value = t; tc.textContent = t.toFixed(2);
+    requestAnimationFrame(tick);
+  };
+  $("#play").onclick = () => {
+    playing = !playing;
+    if (playing) { t0 = +scrub.value >= C.duration ? 0 : +scrub.value; startAt = performance.now(); audio.currentTime = t0; audio.play().catch(() => {}); tick(); }
+    else audio.pause();
+  };
+  scrub.oninput = () => { playing = false; audio.pause(); seek(+scrub.value); tc.textContent = (+scrub.value).toFixed(2); };
+  seek(+(params.get("t") || 0));
+  return true;
+})();
+</script>
+</body>
+</html>
