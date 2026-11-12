@@ -22,8 +22,33 @@
 |---|---|---|
 | 정책자금 40초 | [`out/ad-fund-9x16.mp4`](out/ad-fund-9x16.mp4) | [`out/ad-fund-9x16-voice-ready.mp4`](out/ad-fund-9x16-voice-ready.mp4) |
 | 숏폼 20초 | [`out/ad-short-9x16.mp4`](out/ad-short-9x16.mp4) | [`out/ad-short-9x16-voice-ready.mp4`](out/ad-short-9x16-voice-ready.mp4) |
+| **섞은 영상 38초** (사람 장면 + 모션그래픽 + 실제 로고) | [`out/ad-mix-9x16.mp4`](out/ad-mix-9x16.mp4) | [`out/ad-mix-9x16-voice-ready.mp4`](out/ad-mix-9x16-voice-ready.mp4) |
 
 다시 만들기: `node render.mjs --page fund.html --variant ad --fps 60 --mux build/score-fund.wav=out/ad-fund-9x16.mp4 --mux build/score-fund-vo.wav=out/ad-fund-9x16-voice-ready.mp4`
+
+## 섞은 영상 38초 흐름 (`mix.html`)
+
+힉스필드로 만든 사람 장면(가게 사장님·카페·상담)과 정책자금 영상의 모션그래픽을 합친 광고용 영상입니다. 끝 화면에 실제 로고(`assets/logo-harangsol.png`)를 씁니다. 광고 버튼은 **더 알아보기**로 설정해야 끝 화면 안내와 맞습니다.
+
+| 시간 | 장면 | 화면 |
+|---|---|---|
+| 0–4초 | 가게 사장님 (실사) | 사장님, 정책자금은 우리 가게와 **상관없다고** 생각하셨나요? |
+| 4–9.5초 | 카페 사장님 (실사) → 그래픽 | 창업한 지 얼마 안 됐어도, 운영 중이어도 → 상황에 따라 **검토할 수 있는 자금**이 있습니다 |
+| 9.5–13.5초 | 그래픽 | 기관·자금 이름 10개가 어지럽게: 종류도 많고 기관마다 조건도 다릅니다 |
+| 13.5–18초 | 그래픽 (음악 드롭) | 하랑솔루션은 **순서**부터 정리합니다. 칩이 줄 맞춰 정렬 |
+| 18–24초 | 상담 장면 (실사) + 그래픽 | 사장님 가게를 **진단**합니다: 업종·매출·업력·신용·부채 → 어떤 자금을, 어떤 순서로 |
+| 24–30초 | 그래픽 | 정책자금, 무조건 되나요? **아닙니다.** 되는 것과 어려운 것, 먼저 구분해 드립니다 |
+| 30–38초 | 흰 끝 화면 | 실제 로고 · 우리 가게도 대상이 될까요? · 무료로 진단받아 보세요 · 아래 '더 알아보기' |
+
+실사 장면은 `assets/footage/*.mp4`(원본 영상의 위쪽만 잘라 낸 것)에 있습니다. 다시 만들 때:
+
+```bash
+python3 tools/prep_footage.py      # 실사 장면을 프레임 그림으로 풀기 (build/footage/)
+python3 score_mix.py
+node render.mjs --page mix.html --fps 60 \
+  --mux build/score-mix.wav=out/ad-mix-9x16.mp4 \
+  --mux build/score-mix-vo.wav=out/ad-mix-9x16-voice-ready.mp4
+```
 
 ## 숏폼 20초 흐름 (`short.html`)
 
@@ -134,6 +159,9 @@ node render.mjs --page fund.html --fps 60 \
 | `index.html` · `cues.js` · `score.py` | 본편 화면 · 타이밍 · 음악 |
 | `short.html` · `cues-short.js` · `score_short.py` | 숏폼 화면 · 타이밍(+내레이션 줄) · 음악 |
 | `fund.html` · `cues-fund.js` · `score_fund.py` | 정책자금 화면 · 타이밍(+내레이션 줄) · 음악 |
+| `mix.html` · `cues-mix.js` · `score_mix.py` | 섞은 영상 화면 · 타이밍(+내레이션 줄) · 음악 |
+| `assets/` | 실제 로고, 실사 장면 클립 |
+| `tools/prep_footage.py` | 실사 장면을 프레임 그림으로 풀기 |
 | `lib/base.css` · `lib/engine.js` | 숏폼·정책자금 공통 스타일과 애니메이션 도구 |
 | `synth.py` | 숏폼·정책자금 공통 악기·믹서 (게시용 -14 LUFS, 음성용 -21 LUFS 두 벌 출력) |
 | `render.mjs` | 프레임 캡처 → ffmpeg 인코딩 |

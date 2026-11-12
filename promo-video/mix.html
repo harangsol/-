@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>하랑솔루션 섞은 영상</title>
+<link rel="stylesheet" href="lib/base.css">
+<style>
+/* 실사 장면 패널: 화면 위쪽 1060px. 아래로 갈수록 투명해져 남색 배경에 녹아든다 */
+.fv { position: absolute; left: 0; top: 0; width: 1080px; height: 1060px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 70%, transparent 100%); }
+.fv img { position: absolute; left: 0; top: 0; width: 1080px; height: 1060px; transform-origin: 50% 35%; }
+.fv::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(7,19,40,.28) 0, rgba(7,19,40,0) 18%); }
+.cap { font-weight: 900; letter-spacing: -0.045em; line-height: 1.12; }
+.hl { display: inline-block; padding: 0 16px; margin: 0 4px 0 -6px; border-radius: 14px; color: #fff;
+  background: linear-gradient(180deg, #F3D57A, #D9B23C) no-repeat 0 50% / 0% 100%; }
+
+/* 01 hook */
+#hk1 { top: 1085px; font-size: 66px; font-weight: 800; color: var(--gold-hi); }
+#hk2 { top: 1172px; font-size: 88px; }
+#hk3 { top: 1290px; font-size: 88px; }
+/* 02 cafe */
+#cf1 { top: 1110px; font-size: 80px; }
+#cf2 { top: 1215px; font-size: 80px; color: var(--gold-hi); }
+/* 03 funds */
+#fd1 { top: 640px; font-size: 76px; font-weight: 700; color: rgba(255,255,255,.82); }
+#fd2 { top: 750px; font-size: 124px; line-height: 1.16; }
+#fdChips { top: 1100px; display: flex; justify-content: center; gap: 24px; }
+#fdChips .chip { font-size: 46px; padding: 16px 34px 16px 22px; display: flex; align-items: center; gap: 14px; opacity: 0; }
+.ckdot { width: 48px; height: 48px; border-radius: 50%; background: var(--gold); display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+#fdNote { top: 1240px; font-size: 28px; font-weight: 600; color: rgba(255,255,255,.55); }
+/* 04 maze */
+#mz1 { top: 1290px; font-size: 86px; }
+#mz2 { top: 1395px; font-size: 86px; color: var(--gold-hi); }
+#chipLayer { left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; }
+#chipLayer .chip { position: absolute; left: 0; top: 0; opacity: 0; font-size: 40px; border-color: rgba(255,255,255,.3); background: rgba(16,36,62,.92); }
+/* 05 order */
+#oT1 { top: 250px; font-size: 60px; font-weight: 700; color: rgba(255,255,255,.72); }
+#oT2 { top: 330px; font-size: 116px; font-weight: 900; }
+.grpH { left: 90px; font-size: 40px; font-weight: 800; color: var(--gold-hi); letter-spacing: -0.02em; opacity: 0; }
+#oSub { font-size: 46px; font-weight: 700; color: rgba(255,255,255,.82); }
+/* 06 diagnose */
+#dg1 { top: 1085px; font-size: 56px; font-weight: 700; color: rgba(255,255,255,.78); }
+#dg2 { top: 1158px; font-size: 88px; }
+#dgChips { top: 1300px; display: flex; justify-content: center; gap: 12px; }
+#dgChips .chip { font-size: 40px; padding: 12px 22px 12px 14px; display: flex; align-items: center; gap: 10px; opacity: 0; border-color: rgba(255,255,255,.28); }
+#dgChips .ckdot { width: 42px; height: 42px; background: rgba(255,255,255,.16); }
+#dgResult { left: 90px; top: 1420px; width: 900px; height: 136px; border-radius: 28px; background: linear-gradient(180deg, #F3D57A, #C9A227); color: var(--navy);
+  display: flex; align-items: center; justify-content: center; font-size: 62px; font-weight: 900; letter-spacing: -0.05em; opacity: 0; box-shadow: 0 20px 60px rgba(201,162,39,.35); }
+/* 07 honest */
+#honest { color: var(--navy); }
+#nQ1 { top: 700px; font-size: 72px; font-weight: 700; color: var(--sub); }
+#nQ2 { top: 790px; font-size: 124px; font-weight: 900; }
+#nA { top: 830px; font-size: 270px; font-weight: 900; letter-spacing: -0.07em; }
+#nL1 { top: 1060px; font-size: 72px; font-weight: 800; }
+#nL2 { top: 1150px; font-size: 72px; font-weight: 800; }
+#nChips { top: 1320px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; padding: 0 60px; }
+#nChips span { padding: 14px 28px; border-radius: 999px; border: 3px solid var(--navy); font-size: 34px; font-weight: 800; letter-spacing: -0.03em; opacity: 0; }
+/* 08 end card (흰 배경 + 실제 로고) */
+#bgWhite { background: #fff; opacity: 0; }
+#cta { color: #14254A; }
+#ecLogo { left: 291px; top: 400px; width: 498px; height: 403px; opacity: 0; }
+#ecQ { top: 900px; font-size: 72px; font-weight: 800; letter-spacing: -0.045em; }
+#ecBtn { left: 120px; top: 1050px; width: 840px; height: 150px; border-radius: 999px; opacity: 0;
+  background: linear-gradient(180deg, #EECB96, #DEB379); box-shadow: 0 16px 44px rgba(222,179,121,.5);
+  display: flex; align-items: center; justify-content: center; font-size: 60px; font-weight: 900; letter-spacing: -0.045em; color: #14254A; }
+#ecRing { left: 120px; top: 1050px; width: 840px; height: 150px; border-radius: 999px; border: 5px solid #DEB379; opacity: 0; }
+#ecGuide { top: 1250px; font-size: 46px; font-weight: 600; color: #6B7280; letter-spacing: -0.03em; opacity: 0; }
+#ecGuide b { color: #14254A; font-weight: 800; }
+#ecArrow { left: 500px; top: 1335px; width: 80px; height: 110px; opacity: 0; }
+#ecFoot { left: 90px; top: 1500px; width: 900px; text-align: center; font-size: 26px; line-height: 1.6; color: #9AA1AC; font-weight: 500; opacity: 0; }
+#hand { left: 650px; top: 1110px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bgNavy" class="full"></div>
+  <div id="bgPaper" class="full"></div>
+  <div id="bgWhite" class="full"></div>
+  <div class="full grid" id="gridNavy"></div>
+  <div id="gridPaper" class="full"></div>
+  <div id="bgGlow" class="full"></div>
+  <div id="particles" class="full"></div>
+  <div id="cam" class="full">
+
+    <section id="hook" class="scene">
+      <div class="fv"><img id="fvHook" alt=""></div>
+      <div id="hk1" class="abs center cap">사장님,</div>
+      <div id="hk2" class="abs center cap">정책자금은 우리 가게와</div>
+      <div id="hk3" class="abs center cap"><span class="hl">상관없다고</span>생각하셨나요?</div>
+    </section>
+
+    <section id="cafe" class="scene">
+      <div class="fv"><img id="fvCafe" alt=""></div>
+      <div id="cf1" class="abs center cap">창업한 지 얼마 안 됐어도,</div>
+      <div id="cf2" class="abs center cap">안정적으로 운영 중이어도</div>
+    </section>
+
+    <section id="funds" class="scene">
+      <div id="fd1" class="abs center t">상황에 따라</div>
+      <div id="fd2" class="abs center cap"><span class="goldtext">검토할 수 있는<br>자금이 있습니다</span></div>
+      <div id="fdChips" class="abs center"></div>
+      <div id="fdNote" class="abs center">※ 지원 가능 여부는 각 기관 심사에 따라 달라집니다</div>
+    </section>
+
+    <section id="maze" class="scene">
+      <div id="mz1" class="abs center cap">종류도 많고</div>
+      <div id="mz2" class="abs center cap">기관마다 조건도 다릅니다</div>
+    </section>
+
+    <section id="order" class="scene">
+      <div id="oT1" class="abs center t">하랑솔루션은</div>
+      <div id="oT2" class="abs center t"><span class="goldtext">순서</span>부터 정리합니다</div>
+      <div id="gA" class="abs grpH">기관 자금</div>
+      <div id="gB" class="abs grpH">지역 · 업종 · 지원사업</div>
+      <div id="oSub" class="abs center t">기관별 · 지역별 · 업종별 자금을 함께 봅니다</div>
+    </section>
+
+    <div id="chipLayer" class="abs"></div>
+
+    <section id="diagnose" class="scene">
+      <div class="fv"><img id="fvConsult" alt=""></div>
+      <div id="dg1" class="abs center t">하랑솔루션은 먼저</div>
+      <div id="dg2" class="abs center cap">사장님 가게를 <span class="goldtext">진단</span>합니다</div>
+      <div id="dgChips" class="abs center"></div>
+      <div id="dgResult" class="abs">어떤 자금을, 어떤 순서로</div>
+    </section>
+
+    <section id="honest" class="scene">
+      <div id="nQ1" class="abs center t">정책자금,</div>
+      <div id="nQ2" class="abs center t">무조건 되나요?</div>
+      <div id="nA" class="abs center t"><span class="mark">아닙니다</span>.</div>
+      <div id="nL1" class="abs center t">되는 것과 어려운 것,</div>
+      <div id="nL2" class="abs center t">먼저 <span style="color:#9A7B14">구분</span>해 드립니다</div>
+      <div id="nChips" class="abs center"><span>무조건 된다고 하지 않습니다</span><span>필요 없는 건 권하지 않습니다</span></div>
+    </section>
+
+    <section id="cta" class="scene">
+      <img id="ecLogo" class="abs" src="assets/logo-harangsol.png" alt="하랑솔루션">
+      <div id="ecQ" class="abs center">우리 가게도 대상이 될까요?</div>
+      <div id="ecRing" class="abs"></div>
+      <div id="ecBtn" class="abs"></div>
+      <svg id="hand" class="abs hand" viewBox="0 0 150 150"></svg>
+      <div id="ecGuide" class="abs center"></div>
+      <svg id="ecArrow" class="abs" viewBox="0 0 80 110"><path d="M40 6 V96 M12 66 L40 98 L68 66" fill="none" stroke="#DEB379" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div id="ecFoot" class="abs"></div>
+    </section>
+  </div>
+  <div id="grain" class="full"></div>
+  <div id="vignette" class="full"></div>
+  <div id="flash" class="full"></div>
+</div>
+<div id="ui"><button id="play">▶︎</button><input id="scrub" type="range" min="0" max="38" step="0.001" value="0"><span id="tc">0.00</span></div>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7A0"/><stop offset=".5" stop-color="#EBC75E"/><stop offset="1" stop-color="#C9A227"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="cometGrad"><stop offset="0" stop-color="#FFFBEA"/><stop offset=".35" stop-color="#FFE39A" stop-opacity=".9"/><stop offset="1" stop-color="#EBC75E" stop-opacity="0"/></radialGradient>
+</defs></svg>
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script src="cues-mix.js"></script>
+<script src="lib/engine.js"></script>
+<script>
+/* ===== 문구 설정 ===== */
+const COPY = {
+  ctaButton: "무료로 진단받아 보세요",
+  ctaGuide: "아래 <b>‘더 알아보기’</b>를 눌러주세요",
+  footnote: "※ 정책자금 지원 여부는 각 기관 심사에 따라 달라지며,<br>결과를 보장하지 않습니다.",
+  stageChips: ["창업 초기", "운영 중"],
+  fundsA: ["소상공인시장진흥공단", "신용보증재단", "신용보증기금", "기술보증기금", "중소벤처기업진흥공단"],
+  fundsB: ["지역별 정책자금", "업종별 특화자금", "정부지원사업", "고용지원금", "R&D·비상환 지원"],
+  checks: ["업종", "매출", "업력", "신용", "부채"],
+};
+/* ==================== */
+const { C, $, $$, svgEl, splitChars, tl, shake, PART, frameHooks, asyncHooks, showScene, popChars, ctaHand } = Engine;
+const CHECK = '<svg width="30" height="30" viewBox="0 0 40 40"><path d="M8 21 L17 30 L33 11" fill="none" stroke="#10243E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CHIPS = [];
+
+/* 실사 장면: 시간에 맞는 그림 한 장을 불러와 보여 준다 */
+const FV = { hook: { img: "fvHook" }, cafe: { img: "fvCafe" }, consult: { img: "fvConsult" } };
+function footageAt(name, t) {
+  const f = C.footage[name], v = FV[name];
+  const idx = Math.max(0, Math.min(f.frames - 1, Math.floor((t - f.start) * 30 * f.speed)));
+  if (v.cur === idx) return null;
+  v.cur = idx;
+  const img = document.getElementById(v.img);
+  img.src = `build/footage/${name}/f${String(idx + 1).padStart(4, "0")}.jpg`;
+  return img.decode().catch(() => {});
+}
+asyncHooks.push(async t => {
+  const jobs = [];
+  for (const name in FV) {
+    const f = C.footage[name], len = f.frames / 30 / f.speed;
+    if (t >= f.start - 0.3 && t <= f.start + len + 2.5) jobs.push(footageAt(name, t));
+  }
+  await Promise.all(jobs.filter(Boolean));
+});
+
+function build() {
+  $("#fdChips").innerHTML = COPY.stageChips.map(t => `<span class="chip"><i class="ckdot">${CHECK}</i>${t}</span>`).join("");
+  $("#dgChips").innerHTML = COPY.checks.map(t => `<span class="chip"><i class="ckdot">${CHECK}</i>${t}</span>`).join("");
+  $("#ecBtn").textContent = COPY.ctaButton;
+  $("#ecGuide").innerHTML = COPY.ctaGuide;
+  $("#ecFoot").innerHTML = COPY.footnote;
+  ctaHand($("#hand"));
+
+  // 칩: 어지러운 배치와 정리된 배치
+  const layer = $("#chipLayer");
+  const all = [...COPY.fundsA, ...COPY.fundsB];
+  const chaos = [[110, 340, -9], [570, 300, 7], [300, 470, 4], [640, 520, -6], [80, 640, 8], [460, 690, -11], [690, 820, 5], [150, 850, -4], [420, 950, 10], [110, 1050, -7]];
+  all.forEach((t, i) => { const e = document.createElement("span"); e.className = "chip"; e.textContent = t; layer.appendChild(e); CHIPS.push({ el: e, chaos: { x: chaos[i][0], y: chaos[i][1], r: chaos[i][2] } }); });
+  const place = (list, offset, y0) => {
+    let x = 90, y = y0;
+    list.forEach((_, j) => { const c = CHIPS[offset + j]; const w = c.el.offsetWidth; if (x + w > 990) { x = 90; y += 96; } c.grid = { x, y }; x += w + 18; });
+    return y + 96;
+  };
+  const endA = place(COPY.fundsA, 0, 640);
+  $("#gA").style.top = "570px";
+  $("#gB").style.top = (endA + 30) + "px";
+  const endB = place(COPY.fundsB, COPY.fundsA.length, endA + 100);
+  $("#oSub").style.top = (endB + 50) + "px";
+  CHIPS.forEach(c => gsap.set(c.el, { x: c.chaos.x, y: c.chaos.y, rotation: c.chaos.r }));
+}
+
+const WOB = { a: 0 }, ARW = { a: 0 };
+frameHooks.push(t => {
+  if (WOB.a > 0.001) CHIPS.forEach((c, i) => { c.el.style.translate = `${Math.sin(t * 3.1 + i) * 8 * WOB.a}px ${Math.cos(t * 2.7 + i * 1.7) * 6 * WOB.a}px`; });
+  $("#ecArrow").style.translate = `0px ${Math.sin(t * 6.283 * 1.0) * 12 * ARW.a}px`;
+});
+
+function timeline() {
+  const H = C.hook, CF = C.cafe, FD = C.funds, M = C.maze, O = C.order, D = C.diagnose, N = C.honest, CT = C.cta;
+  /* 배경 */
+  tl.set(PART, { a: 0.3 }, 0);
+  tl.to(PART, { a: 0.6, duration: 0.3 }, FD.start);
+  tl.to(PART, { a: 1, duration: 0.2 }, O.drop);
+  tl.to(PART, { a: 0.5, duration: 1 }, O.drop + 0.6);
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 1, duration: 0.35 }, N.start - 0.2);
+  tl.to("#vignette", { opacity: 0.25, duration: 0.35 }, N.start - 0.2);
+  tl.to(PART, { a: 0, duration: 0.3 }, N.start - 0.2);
+  tl.to("#bgWhite", { opacity: 1, duration: 0.3 }, CT.start - 0.15);
+  tl.to("#gridPaper", { opacity: 0, duration: 0.3 }, CT.start - 0.15);
+  tl.to("#vignette", { opacity: 0, duration: 0.3 }, CT.start - 0.15);
+
+  /* 01 hook: 가게 사장님 */
+  showScene("hook", 0, H.out);
+  tl.fromTo("#fvHook", { scale: 1.05 }, { scale: 1.11, duration: H.out, ease: "none" }, 0);
+  tl.fromTo("#hk1", { opacity: 0.9, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 0);
+  tl.fromTo(splitChars($("#hk2")), { opacity: 0.85, y: 12 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.012, ease: "expo.out" }, 0);
+  tl.fromTo("#hk3", { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, H.line3);
+  tl.to("#hk3 .hl", { backgroundSize: "100% 100%", color: "#10243E", duration: 0.3, ease: "power3.out" }, H.mark);
+  shake(H.mark, 5, 0.25);
+
+  /* 02 cafe: 카페 사장님 */
+  showScene("cafe", CF.start, CF.out + 0.3);
+  tl.fromTo("#fvCafe", { scale: 1.16 }, { scale: 1.08, duration: 0.5, ease: "expo.out", immediateRender: false }, CF.start);
+  tl.to("#fvCafe", { scale: 1.14, duration: CF.out - CF.start, ease: "none" }, CF.start + 0.5);
+  popChars(splitChars($("#cf1")), CF.line1, { stagger: 0.02, y: 40 });
+  popChars(splitChars($("#cf2")), CF.line2, { stagger: 0.02, y: 40 });
+  tl.to("#cafe", { opacity: 0, y: -60, duration: 0.3, ease: "power2.in" }, CF.out);
+
+  /* 03 funds */
+  showScene("funds", FD.start, FD.out + 0.35);
+  popChars(splitChars($("#fd1")), FD.start + 0.05, { stagger: 0.03, y: 30 });
+  tl.fromTo(splitChars($("#fd2")), { opacity: 0, scale: 1.5, y: 30, filter: "blur(16px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out", stagger: 0.022 }, FD.main);
+  tl.fromTo("#bgGlow", { opacity: 0 }, { opacity: 0.5, duration: 0.3, immediateRender: false }, FD.main);
+  tl.to("#bgGlow", { opacity: 0, duration: 0.4 }, FD.out);
+  shake(FD.main, 7, 0.3);
+  tl.fromTo($$("#fdChips .chip"), { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.32, stagger: 0.18, ease: "back.out(2.5)", immediateRender: false }, FD.chips);
+  tl.fromTo("#fdNote", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, FD.chips + 0.2);
+  tl.to("#funds > *", { y: -100, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.02 }, FD.out);
+
+  /* 04 maze */
+  showScene("maze", M.start - 0.05, M.out + 0.4);
+  CHIPS.forEach((c, i) => tl.fromTo(c.el, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.6)", immediateRender: false }, M.chips + i * M.chipStep));
+  tl.to(WOB, { a: 1, duration: 0.5 }, M.chips);
+  popChars(splitChars($("#mz1")), M.line1, { stagger: 0.025, y: 40 });
+  popChars(splitChars($("#mz2")), M.line2, { stagger: 0.022, y: 40, scale: 1.1 });
+  tl.to(["#mz1", "#mz2"], { y: 80, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.03 }, M.out);
+
+  /* 05 order: 흩어진 칩이 정리된다 */
+  showScene("order", O.start, O.out + 0.4);
+  popChars(splitChars($("#oT1")), O.start, { stagger: 0.025, y: 30 });
+  tl.fromTo(splitChars($("#oT2")), { opacity: 0, scale: 1.8, y: 30, filter: "blur(18px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out", stagger: 0.03 }, O.drop);
+  tl.fromTo("#flash", { opacity: 0.7 }, { opacity: 0, duration: 0.5, immediateRender: false }, O.drop);
+  shake(O.drop, 14, 0.45);
+  tl.to(WOB, { a: 0, duration: 0.3 }, O.drop);
+  CHIPS.forEach((c, i) => tl.to(c.el, { x: c.grid.x, y: c.grid.y, rotation: 0, borderColor: "rgba(235,199,94,.7)", duration: 0.6, ease: "expo.inOut" }, O.drop + 0.05 + i * 0.05));
+  tl.fromTo(["#gA", "#gB"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.2, immediateRender: false }, O.drop + 0.6);
+  popChars(splitChars($("#oSub")), O.sub, { stagger: 0.012, y: 20 });
+  tl.to(["#oT1", "#oT2", "#gA", "#gB", "#oSub"], { y: -120, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.02 }, O.out);
+  tl.to(CHIPS.map(c => c.el), { y: "-=200", opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.01 }, O.out);
+
+  /* 06 diagnose: 상담 장면 + 5가지 진단 */
+  showScene("diagnose", D.start, D.out + 0.4);
+  tl.fromTo("#diagnose .fv", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, D.start);
+  tl.fromTo("#fvConsult", { scale: 1.12 }, { scale: 1.04, duration: 0.6, ease: "expo.out", immediateRender: false }, D.start);
+  tl.to("#fvConsult", { scale: 1.12, duration: D.out - D.start, ease: "none" }, D.start + 0.6);
+  popChars(splitChars($("#dg1")), D.start + 0.05, { stagger: 0.02, y: 30 });
+  popChars(splitChars($("#dg2")), D.start + 0.2, { stagger: 0.022, y: 40 });
+  $$("#dgChips .chip").forEach((ch, i) => {
+    const at = D.rows[i];
+    tl.fromTo(ch, { opacity: 0, y: 24, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "back.out(2.4)", immediateRender: false }, at - 0.12);
+    tl.to(ch.querySelector(".ckdot"), { backgroundColor: "#C9A227", scale: 1.25, duration: 0.12 }, at + 0.15);
+    tl.to(ch.querySelector(".ckdot"), { scale: 1, duration: 0.25, ease: "back.out(3)" }, at + 0.27);
+    tl.to(ch, { borderColor: "rgba(235,199,94,.8)", duration: 0.2 }, at + 0.15);
+  });
+  tl.fromTo("#dgResult", { opacity: 0, scale: 0.7, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "back.out(2)", immediateRender: false }, D.result);
+  shake(D.result, 7, 0.3);
+  tl.to("#diagnose", { opacity: 0, y: -80, duration: 0.3, ease: "power3.in" }, D.out);
+
+  /* 07 honest */
+  showScene("honest", N.start - 0.15, N.out + 0.4);
+  popChars(splitChars($("#nQ1")), N.start, { stagger: 0.03, y: 30 });
+  popChars(splitChars($("#nQ2")), N.start + 0.25, { stagger: 0.03, y: 50 });
+  tl.to(["#nQ1", "#nQ2"], { y: -120, opacity: 0, duration: 0.3, ease: "power3.in" }, N.no - 0.25);
+  tl.fromTo(splitChars($("#nA")), { opacity: 0, scale: 2.2, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.in", stagger: 0.03 }, N.no - 0.15);
+  tl.to("#nA", { y: -180, duration: 0.5, ease: "power3.inOut" }, N.line - 0.2);
+  shake(N.no + 0.15, 14, 0.4);
+  tl.to($("#nA .mark"), { "--s": 1, duration: 0.35, ease: "power3.out" }, N.no + 0.3);
+  popChars(splitChars($("#nL1")), N.line, { stagger: 0.02, y: 40 });
+  popChars(splitChars($("#nL2")), N.line + 0.5, { stagger: 0.02, y: 40 });
+  tl.fromTo($$("#nChips span"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.2, immediateRender: false }, N.chips);
+  tl.to("#honest > *", { y: -100, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.02 }, N.out);
+
+  /* 08 end card */
+  showScene("cta", CT.start - 0.05, CT.end + 1);
+  tl.fromTo("#ecLogo", { opacity: 0, scale: 0.8, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(1.8)", immediateRender: false }, CT.start + 0.05);
+  popChars(splitChars($("#ecQ")), CT.question, { stagger: 0.02, y: 40 });
+  tl.fromTo("#ecBtn", { opacity: 0, scale: 0.6, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(2.2)", immediateRender: false }, CT.button);
+  tl.fromTo("#ecGuide", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, immediateRender: false }, CT.guide);
+  tl.fromTo("#ecArrow", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, CT.guide + 0.2);
+  tl.to(ARW, { a: 1, duration: 0.3 }, CT.guide + 0.2);
+  tl.fromTo("#ecFoot", { opacity: 0 }, { opacity: 1, duration: 0.5, immediateRender: false }, CT.guide + 0.4);
+  tl.fromTo("#hand", { opacity: 0, x: 140, y: 160, rotation: 10 }, { opacity: 1, x: 0, y: 0, rotation: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, CT.tap - 0.55);
+  tl.to("#hand", { scale: 0.88, duration: 0.08, transformOrigin: "30% 20%" }, CT.tap);
+  tl.to("#ecBtn", { scale: 0.95, duration: 0.08 }, CT.tap);
+  tl.to("#hand", { scale: 1, duration: 0.2 }, CT.tap + 0.1);
+  tl.to("#ecBtn", { scale: 1, duration: 0.3, ease: "back.out(3)" }, CT.tap + 0.1);
+  tl.to("#hand", { opacity: 0, x: 80, y: 120, duration: 0.4, ease: "power2.in" }, CT.tap + 0.9);
+  for (let t = CT.tap + 0.2; t < CT.end - 0.3; t += 1.0)
+    tl.fromTo("#ecRing", { opacity: 0.8, scale: 1 }, { opacity: 0, scale: 1.14, duration: 0.8, ease: "power2.out", immediateRender: false }, t);
+  tl.to("#cam", { scale: 1.02, duration: CT.end - CT.start, ease: "none" }, CT.start);
+}
+window.__ready = Engine.boot(build, timeline, "build/score-mix.wav");
+</script>
+</body>
+</html>

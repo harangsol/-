@@ -10,6 +10,8 @@
    → out/harangsol-short-9x16-with-voice.mp4 (또는 fund)
      python3 tools/mix_vo.py fund --ad
    → 광고판 영상에 얹기. 광고판에서 대사가 다른 줄(S6, F1, F7)은 S6-ad.mp3 처럼 저장
+     python3 tools/mix_vo.py mix
+   → 섞은 영상(out/ad-mix-…). vo/mix/M1.mp3 … M7.mp3. M4·M5·M6 은 없으면 vo/fund/F3·F4·F6 을 대신 씀
 
 각 음성은 cues 파일에 적힌 시작 시간에 놓이고, 음성이 나오는 동안 배경음악이 자동으로 줄어든다.
 음성이 다음 줄 자리까지 넘치면 경고를 띄운다(일레븐랩스 속도를 1.05~1.1로 올려 다시 만들면 된다).
@@ -25,7 +27,7 @@ sys.path.insert(0, str(ROOT))
 from synth import load_cues  # noqa: E402
 
 ap = argparse.ArgumentParser()
-ap.add_argument("name", choices=["short", "fund"])
+ap.add_argument("name", choices=["short", "fund", "mix"])
 ap.add_argument("--dir", help="음성 파일 폴더 (기본: vo/<name>)")
 ap.add_argument("--gain", type=float, default=0.0, help="음성 볼륨 보정(dB)")
 ap.add_argument("--ad", action="store_true", help="광고판 영상(out/ad-…)에 얹기. <ID>-ad.mp3 가 있으면 그 줄은 그것을 씀")
@@ -33,7 +35,7 @@ a = ap.parse_args()
 
 cues = load_cues(ROOT / f"cues-{a.name}.js")
 vdir = Path(a.dir) if a.dir else ROOT / "vo" / a.name
-prefix = "ad" if a.ad else "harangsol"
+prefix = "ad" if (a.ad or a.name == "mix") else "harangsol"   # 섞은 영상은 광고판만 있다
 video = ROOT / f"out/{prefix}-{a.name}-9x16-voice-ready.mp4"
 out = ROOT / f"out/{prefix}-{a.name}-9x16-with-voice.mp4"
 if not video.exists():
@@ -48,7 +50,10 @@ def duration(p):
 clips, missing = [], []
 for v in cues["vo"]:
     names = ([f"{v['id']}-ad"] if a.ad else []) + [v["id"]]
-    f = next((vdir / f"{n}{ext}" for n in names for ext in (".mp3", ".wav", ".m4a") if (vdir / f"{n}{ext}").exists()), None)
+    cands = [vdir / n for n in names]
+    if v.get("same_as"):  # 다른 영상에서 이미 만든 같은 대사를 그대로 쓴다 (예: fund/F3)
+        cands.append(ROOT / "vo" / v["same_as"])
+    f = next((Path(f"{c}{ext}") for c in cands for ext in (".mp3", ".wav", ".m4a") if Path(f"{c}{ext}").exists()), None)
     if not f:
         missing.append(v["id"])
         continue

@@ -42,6 +42,7 @@
   const SHAKES = [];
   const PART = { a: 0.35 };
   const frameHooks = [];
+  const asyncHooks = [];   // 프레임마다 기다려야 하는 일(예: 실사 장면 그림 불러오기)
   function shake(at, amp, dur = 0.35, freq = 26) { SHAKES.push({ at, amp, dur, freq }); }
 
   function showScene(id, at, until) {
@@ -125,6 +126,7 @@
     for (const h of frameHooks) h(t);
   }
   function seek(t) { tl.time(Math.min(t, tl.duration()), false); onFrame(t); }
+  async function seekAsync(t) { seek(t); if (asyncHooks.length) await Promise.all(asyncHooks.map(h => h(t))); }
 
   async function boot(build, timeline, audioPath) {
     await document.fonts.load('900 100px "Pretendard Variable"');
@@ -134,9 +136,9 @@
     timeline();
     tl.set("#cam", { scale: 1 }, 0);
     tl.to({}, { duration: 0.001 }, C.duration);
-    window.__seek = seek; window.__duration = C.duration;
+    window.__seek = seekAsync; window.__duration = C.duration;
     const params = new URLSearchParams(location.search);
-    if (params.has("render")) { seek(0); return true; }
+    if (params.has("render")) { await seekAsync(0); return true; }
     const st = $("#stage");
     const fit = () => { const s = Math.min(innerWidth / 1080, (innerHeight - 50) / 1920); st.style.transform = `scale(${s})`; st.style.left = ((innerWidth - 1080 * s) / 2) + "px"; };
     fit(); addEventListener("resize", fit);
@@ -148,17 +150,17 @@
       if (!playing) return;
       let t = audio.readyState >= 2 && !audio.paused ? audio.currentTime : (performance.now() - startAt) / 1000 + t0;
       if (t >= C.duration) { playing = false; t = C.duration; }
-      seek(t); scrub.value = t; tc.textContent = t.toFixed(2); requestAnimationFrame(tick);
+      seekAsync(t); scrub.value = t; tc.textContent = t.toFixed(2); requestAnimationFrame(tick);
     };
     $("#play").onclick = () => {
       playing = !playing;
       if (playing) { t0 = +scrub.value >= C.duration ? 0 : +scrub.value; startAt = performance.now(); audio.currentTime = t0; audio.play().catch(() => {}); tick(); }
       else audio.pause();
     };
-    scrub.oninput = () => { playing = false; audio.pause(); seek(+scrub.value); tc.textContent = (+scrub.value).toFixed(2); };
-    seek(+(params.get("t") || 0));
+    scrub.oninput = () => { playing = false; audio.pause(); seekAsync(+scrub.value); tc.textContent = (+scrub.value).toFixed(2); };
+    await seekAsync(+(params.get("t") || 0));
     return true;
   }
 
-  window.Engine = { C, $, $$, rnd, svgEl, splitChars, logoHTML, tl, shake, PART, frameHooks, showScene, popChars, initPath, draw, comet, ctaHand, ctaAnim, boot };
+  window.Engine = { C, $, $$, rnd, svgEl, splitChars, logoHTML, tl, shake, PART, frameHooks, asyncHooks, showScene, popChars, initPath, draw, comet, ctaHand, ctaAnim, boot };
 })();
