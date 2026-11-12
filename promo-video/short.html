@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>하랑솔루션 숏폼</title>
+<link rel="stylesheet" href="lib/base.css">
+<style>
+/* hook */
+#hookTitle1 { top: 250px; font-size: 104px; font-weight: 900; }
+#hookTitle2 { top: 385px; font-size: 90px; font-weight: 900; }
+#chart { left: 110px; top: 640px; width: 860px; height: 760px; }
+#chart .bar { position: absolute; bottom: 120px; width: 112px; border-radius: 18px 18px 6px 6px;
+  background: linear-gradient(180deg, #F6D877 0%, #C9A227 70%, #9A7B14 100%); box-shadow: 0 0 40px rgba(235,199,94,.25); transform-origin: 50% 100%; }
+#chart .base { position: absolute; left: 0; right: 0; bottom: 116px; height: 4px; background: rgba(255,255,255,.25); border-radius: 2px; }
+#chart .lbl { position: absolute; bottom: 40px; width: 112px; text-align: center; font-size: 30px; font-weight: 600; color: rgba(255,255,255,.55); }
+#salesTag { font-size: 44px; font-weight: 800; color: var(--gold-hi); }
+.crack { position: absolute; width: 4px; background: #071328; }
+.coin { position: absolute; width: 38px; height: 38px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #FFF1B8 0%, #EBC75E 40%, #9A7B14 100%); opacity: 0; }
+.leak { position: absolute; padding: 14px 30px; border-radius: 999px; background: rgba(224,82,74,.16); border: 2px solid rgba(224,82,74,.7);
+  color: #FFB4AE; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; opacity: 0; white-space: nowrap; }
+/* order */
+#order { color: var(--navy); }
+#orA { top: 690px; font-size: 76px; font-weight: 800; color: var(--sub); }
+#orB { top: 800px; font-size: 220px; font-weight: 900; letter-spacing: -0.06em; }
+#orDots { top: 1150px; display: flex; justify-content: center; gap: 26px; }
+#orDots span { width: 110px; height: 110px; border-radius: 50%; border: 5px solid var(--gold); display: flex; align-items: center; justify-content: center;
+  font-size: 50px; font-weight: 900; color: var(--gold-lo); background: #fff; opacity: 0; }
+/* reveal */
+#rvTop { top: 700px; font-size: 76px; font-weight: 700; color: rgba(255,255,255,.82); }
+#rvMain { top: 805px; font-size: 128px; font-weight: 900; }
+#wave { position: absolute; left: 0; top: 0; overflow: visible; }
+#brand { top: 1170px; display: flex; flex-direction: column; align-items: center; opacity: 0; }
+#brandSub { margin-top: 26px; font-size: 40px; font-weight: 700; color: rgba(255,255,255,.7); }
+/* stack */
+#stA { top: 230px; font-size: 52px; font-weight: 700; color: rgba(255,255,255,.7); }
+#stB { top: 300px; font-size: 96px; font-weight: 900; }
+#stackSvg { position: absolute; left: 0; top: 0; overflow: visible; }
+.row { position: absolute; left: 300px; width: 720px; opacity: 0; }
+.row .n { font-size: 40px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold-hi); letter-spacing: .02em; }
+.row .w { font-size: 120px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; margin-top: 2px; }
+.row .d { margin-top: 14px; font-size: 38px; font-weight: 700; color: rgba(255,255,255,.75); letter-spacing: -0.035em; }
+.row .d b { color: var(--gold-hi); font-weight: 800; }
+/* cta */
+#ctaH1 { top: 390px; } #ctaH2 { top: 530px; } #ctaLogo { top: 840px; }
+#ctaBtn, #ctaRing { top: 1200px; } #ctaWays { top: 1410px; } #hand { left: 640px; top: 1270px; } #ctaFoot { top: 1560px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bgNavy" class="full"></div>
+  <div id="bgPaper" class="full"></div>
+  <div class="full grid"></div>
+  <div id="gridPaper" class="full"></div>
+  <div id="bgGlow" class="full"></div>
+  <div id="particles" class="full"></div>
+  <div id="cam" class="full">
+    <section id="hook" class="scene">
+      <div id="hookTitle1" class="abs center t">매출은 늘었는데</div>
+      <div id="hookTitle2" class="abs center t">왜 <span class="goldtext">남는 돈</span>은 없을까요?</div>
+      <div id="chart" class="abs"><div class="base"></div></div>
+    </section>
+    <section id="order" class="scene">
+      <div id="orA" class="abs center t">필요한 건 상품이 아니라</div>
+      <div id="orB" class="abs center t"><span class="mark">순서</span>입니다</div>
+      <div id="orDots" class="abs center"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+    </section>
+    <section id="reveal" class="scene">
+      <svg id="wave" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+      <div id="rvTop" class="abs center t">매출보다 중요한 건,</div>
+      <div id="rvMain" class="abs center t"><span class="goldtext">돈의 흐름</span>입니다</div>
+      <div id="brand" class="abs center"><div class="logo" id="brandLogo"></div><div id="brandSub">대표님의 사업과 돈, 전체를 같이 봅니다</div></div>
+    </section>
+    <section id="stack" class="scene">
+      <div id="stA" class="abs center t">하랑솔루션은</div>
+      <div id="stB" class="abs center t"><span class="goldtext">네 단계</span>를 같이 봅니다</div>
+      <svg id="stackSvg" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+    </section>
+    <section id="cta" class="scene">
+      <div id="ctaH1" class="abs center t ctaH1">지금 상황만 알려주세요</div>
+      <div id="ctaH2" class="abs center t ctaH2">무엇부터 봐야 할지<br>먼저 정리해 드립니다</div>
+      <div id="ctaLogo" class="abs center ctaLogo"><div class="logo" id="ctaLogoMark"></div><div class="ctaLogoSub goldtext">매출보다 중요한 건, 돈의 흐름</div></div>
+      <div id="ctaRing" class="abs ctaRing"></div>
+      <div id="ctaBtn" class="abs ctaBtn"><span id="ctaBtnText"></span><svg width="52" height="52" viewBox="0 0 52 52"><path d="M12 26h26M28 14l12 12-12 12" fill="none" stroke="#10243E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <svg id="hand" class="abs hand" viewBox="0 0 150 150"></svg>
+      <div id="ctaWays" class="abs center ctaWays"></div>
+      <div id="ctaFoot" class="abs ctaFoot"></div>
+    </section>
+  </div>
+  <div id="grain" class="full"></div>
+  <div id="vignette" class="full"></div>
+  <div id="flash" class="full"></div>
+</div>
+<div id="ui"><button id="play">▶︎</button><input id="scrub" type="range" min="0" max="20" step="0.001" value="0"><span id="tc">0.00</span></div>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7A0"/><stop offset=".5" stop-color="#EBC75E"/><stop offset="1" stop-color="#C9A227"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glowU" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="cometGrad"><stop offset="0" stop-color="#FFFBEA"/><stop offset=".35" stop-color="#FFE39A" stop-opacity=".9"/><stop offset="1" stop-color="#EBC75E" stop-opacity="0"/></radialGradient>
+</defs></svg>
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script src="cues-short.js"></script>
+<script src="lib/engine.js"></script>
+<script>
+/* ===== 문구 설정 ===== */
+const COPY = {
+  company: "하랑솔루션",
+  ctaButton: "무료 진단 상담 신청",
+  ctaWays: "<b>프로필 링크</b> · 카카오톡 · 전화",
+  footnote: "※ 정책자금·대출 가능 여부는 기관·금융회사 심사에 따라 달라지며, 하랑솔루션은 직접 대출하지 않습니다.",
+  rows: [
+    ["01", "조달", "<b>정책자금</b> · 기업자금 · 대출"],
+    ["02", "방어", "<b>안전관리</b> · 기업 리스크"],
+    ["03", "보존", "<b>절세</b> · 법인전환 · 인증·특허"],
+    ["04", "증식", "<b>퇴직재원</b> · 연금 · 가업승계"],
+  ],
+};
+/* ==================== */
+const { C, $, $$, rnd, svgEl, splitChars, logoHTML, tl, shake, PART, showScene, popChars, draw, comet, ctaHand, ctaAnim } = Engine;
+const HEIGHTS = [150, 230, 320, 420, 540];
+const ROWY = [500, 800, 1100, 1400];
+
+function build() {
+  // hook chart (본편과 같은 구성)
+  const chart = $("#chart");
+  ["1년차", "2년차", "3년차", "4년차", "올해"].forEach((l, i) => {
+    const b = document.createElement("div"); b.className = "bar"; b.style.left = (40 + i * 170) + "px"; b.style.height = HEIGHTS[i] + "px"; chart.appendChild(b);
+    const t = document.createElement("div"); t.className = "lbl"; t.style.left = (40 + i * 170) + "px"; t.textContent = l; chart.appendChild(t);
+  });
+  const trend = svgEl("svg", { width: 860, height: 760, viewBox: "0 0 860 760", style: "position:absolute;left:0;top:0;overflow:visible" }, chart);
+  const pts = HEIGHTS.map((h, i) => [96 + i * 170, 760 - 120 - h - 46]);
+  let d = `M ${pts[0][0]} ${pts[0][1]}`; for (let i = 1; i < 5; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; d += ` C ${x0 + 70} ${y0}, ${x1 - 70} ${y1}, ${x1} ${y1}`; }
+  svgEl("path", { id: "trendPath", d, fill: "none", stroke: "#FFF1B8", "stroke-width": 8, "stroke-linecap": "round", filter: "url(#glow)" }, trend);
+  svgEl("path", { id: "trendArrow", d: `M ${pts[4][0] - 30} ${pts[4][1] - 12} L ${pts[4][0] + 14} ${pts[4][1] - 30} L ${pts[4][0] + 4} ${pts[4][1] + 16}`, fill: "none", stroke: "#FFF1B8", "stroke-width": 8, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, trend);
+  const tag = document.createElement("div"); tag.id = "salesTag"; tag.className = "abs"; tag.textContent = "매출 ↑"; tag.style.left = "560px"; tag.style.top = "40px"; tag.style.opacity = 0; chart.appendChild(tag);
+  HEIGHTS.forEach((h, i) => { for (let k = 0; k < 2; k++) {
+    const cr = document.createElement("div"); cr.className = "crack"; cr.style.left = (40 + i * 170 + 30 + k * 46 + rnd() * 10) + "px";
+    cr.style.top = (760 - 120 - h * (0.45 + rnd() * 0.35)) + "px"; cr.style.height = (40 + rnd() * 70) + "px"; cr.dataset.r = (rnd() - .5) * 50; chart.appendChild(cr);
+  } });
+  for (let i = 0; i < 26; i++) { const c = document.createElement("div"); c.className = "coin"; chart.appendChild(c); }
+  [["세금", 60, 470], ["이자", 600, 380], ["리스크", 310, 560], ["새는 비용", 560, 610]].forEach(([t, x, y]) => {
+    const e = document.createElement("div"); e.className = "leak"; e.textContent = t; e.style.left = x + "px"; e.style.top = y + "px"; chart.appendChild(e);
+  });
+  // reveal
+  svgEl("path", { id: "wavePath", class: "flow", d: "M -60 1060 C 160 960, 300 1120, 540 1060 S 900 960, 1140 1040" }, $("#wave"));
+  $("#brandLogo").innerHTML = logoHTML(128, COPY.company);
+  // stack
+  const sv = $("#stackSvg");
+  svgEl("path", { id: "stLine", fill: "none", stroke: "#EBC75E", "stroke-width": 12, "stroke-linecap": "round", filter: "url(#glowU)", d: `M 170 ${ROWY[0] - 40} L 170 ${ROWY[3] + 240}` }, sv);
+  const glyphs = [
+    g => { const t = svgEl("text", { y: 22, "text-anchor": "middle", "font-size": 64, "font-weight": 900, fill: "#EBC75E", "font-family": "Pretendard Variable" }, g); t.textContent = "₩"; },
+    g => svgEl("path", { d: "M 0 -40 C 16 -30, 30 -28, 38 -28 L 38 2 C 38 24, 20 38, 0 46 C -20 38, -38 24, -38 2 L -38 -28 C -30 -28, -16 -30, 0 -40 Z M -16 2 L -4 14 L 18 -10", fill: "none", stroke: "#EBC75E", "stroke-width": 7, "stroke-linejoin": "round", "stroke-linecap": "round" }, g),
+    g => { svgEl("rect", { x: -30, y: -6, width: 60, height: 46, rx: 10, fill: "none", stroke: "#EBC75E", "stroke-width": 7 }, g); svgEl("path", { d: "M -18 -6 L -18 -20 C -18 -42, 18 -42, 18 -20 L 18 -6", fill: "none", stroke: "#EBC75E", "stroke-width": 7, "stroke-linecap": "round" }, g); },
+    g => { svgEl("path", { d: "M -36 30 L -10 4 L 6 18 L 34 -12 M 14 -14 L 36 -14 L 36 8", fill: "none", stroke: "#EBC75E", "stroke-width": 8, "stroke-linecap": "round", "stroke-linejoin": "round" }, g); },
+  ];
+  COPY.rows.forEach(([n, w, d], k) => {
+    const g = svgEl("g", { id: "ic" + k, opacity: 0, transform: `translate(170 ${ROWY[k] + 110})` }, sv);
+    svgEl("circle", { r: 96, fill: "url(#cometGrad)", opacity: 0.35 }, g);
+    svgEl("circle", { r: 78, fill: "#10243E", stroke: "#EBC75E", "stroke-width": 6 }, g);
+    glyphs[k](g);
+    const row = document.createElement("div"); row.className = "row"; row.style.top = (ROWY[k] + 10) + "px";
+    row.innerHTML = `<div class="n">${n}</div><div class="w">${w}</div><div class="d">${d}</div>`;
+    $("#stack").appendChild(row);
+  });
+  comet(sv, "stComet", 56);
+  // cta
+  $("#ctaLogoMark").innerHTML = logoHTML(150, COPY.company);
+  $("#ctaBtnText").textContent = COPY.ctaButton;
+  $("#ctaWays").innerHTML = COPY.ctaWays;
+  $("#ctaFoot").innerHTML = COPY.footnote;
+  ctaHand($("#hand"));
+}
+
+function timeline() {
+  const H = C.hook, O = C.order, RV = C.reveal, S = C.stack, CT = C.cta;
+  // 배경
+  tl.set(PART, { a: 0.35 }, 0);
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 1, duration: 0.3 }, O.start - 0.15);
+  tl.to("#vignette", { opacity: 0.25, duration: 0.3 }, O.start - 0.15);
+  tl.to(PART, { a: 0, duration: 0.3 }, O.start - 0.15);
+  tl.to(["#bgPaper", "#gridPaper"], { opacity: 0, duration: 0.3 }, O.out + 0.05);
+  tl.to("#vignette", { opacity: 1, duration: 0.3 }, O.out + 0.05);
+  tl.to(PART, { a: 0.15, duration: 0.3 }, RV.start);
+  tl.to(PART, { a: 1, duration: 0.2 }, RV.drop);
+  tl.to(PART, { a: 0.55, duration: 1 }, RV.drop + 0.6);
+  tl.to(PART, { a: 1, duration: 0.3 }, CT.start);
+
+  /* 01 hook */
+  showScene("hook", 0, O.start);
+  const h1 = splitChars($("#hookTitle1")), h2 = splitChars($("#hookTitle2"));
+  tl.fromTo("#hookTitle1", { scale: 1.12 }, { scale: 1, duration: 0.6, ease: "expo.out" }, 0);
+  tl.fromTo(h1, { opacity: 0.55, y: 18 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.012, ease: "expo.out" }, 0);
+  const bars = $$("#chart .bar"), lbls = $$("#chart .lbl");
+  tl.fromTo(bars, { scaleY: 0.12 }, { scaleY: 1, duration: 0.7, stagger: 0.14, ease: "back.out(1.6)" }, 0);
+  tl.fromTo(lbls, { opacity: 0.3, y: 10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.14 }, 0);
+  draw("trendPath", 0.2, 1.0, { ease: "power1.inOut" });
+  tl.to("#trendArrow", { opacity: 1, duration: 0.15 }, 1.2);
+  tl.fromTo("#salesTag", { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2.5)" }, 1.15);
+  popChars(h2, H.leak, { stagger: 0.022, dur: 0.45 });
+  shake(H.leak, 10, 0.4);
+  const cracks = $$("#chart .crack");
+  gsap.set(cracks, { rotation: (i, el) => +el.dataset.r, scaleY: 0, transformOrigin: "50% 0%" });
+  tl.to(cracks, { scaleY: 1, duration: 0.18, stagger: 0.015, ease: "power4.out" }, H.leak + 0.05);
+  tl.fromTo(bars, { filter: "saturate(1) brightness(1)" }, { filter: "saturate(0.35) brightness(0.75)", duration: 0.5, immediateRender: false }, H.leak + 0.1);
+  tl.to(bars, { scaleY: i => [0.7, 0.62, 0.55, 0.5, 0.42][i], duration: 1.1, ease: "power2.in" }, H.leak + 0.25);
+  tl.to("#trendPath", { opacity: 0.25, duration: 0.4 }, H.leak + 0.1);
+  tl.to(["#trendArrow", "#salesTag"], { opacity: 0, duration: 0.3 }, H.leak + 0.1);
+  $$("#chart .coin").forEach((c, i) => {
+    const bi = i % 5; const x0 = 40 + bi * 170 + 20 + rnd() * 70; const y0 = 760 - 120 - HEIGHTS[bi] * (0.3 + rnd() * 0.5); const at = H.leak + 0.12 + i * 0.045;
+    tl.set(c, { x: x0, y: y0, opacity: 1 }, at);
+    tl.to(c, { y: 1500, x: x0 + (rnd() - 0.5) * 220, rotation: (rnd() - 0.5) * 540, duration: 0.9 + rnd() * 0.4, ease: "power2.in" }, at);
+  });
+  $$("#chart .leak").forEach((l, i) => {
+    tl.fromTo(l, { opacity: 0, scale: 0.5, y: -30 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.6)", immediateRender: false }, H.leak + 0.35 + i * 0.18);
+    tl.to(l, { y: 520, opacity: 0, rotation: i % 2 ? 8 : -8, duration: 0.9, ease: "power2.in" }, H.leak + 0.85 + i * 0.12);
+  });
+  tl.to(["#hookTitle1", "#hookTitle2"], { y: -120, opacity: 0, filter: "blur(12px)", duration: 0.4, ease: "power3.in", stagger: 0.05 }, H.out);
+  tl.to("#chart", { y: 200, opacity: 0, duration: 0.4, ease: "power3.in" }, H.out);
+
+  /* 02 order */
+  showScene("order", O.start - 0.1, O.out + 0.4);
+  popChars(splitChars($("#orA")), O.lineA, { stagger: 0.018, y: 40 });
+  popChars(splitChars($("#orB")), O.lineB, { stagger: 0.05, y: 30, scale: 1.6, blur: 16, dur: 0.4 });
+  shake(O.lineB + 0.05, 10, 0.3);
+  tl.to($("#orB .mark"), { "--s": 1, duration: 0.35, ease: "power3.out" }, O.lineB + 0.35);
+  $$("#orDots span").forEach((d, i) => tl.fromTo(d, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, O.lineB + 0.4 + i * 0.12));
+  tl.to("#order > *", { y: -80, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.03 }, O.out);
+
+  /* 03 reveal */
+  showScene("reveal", RV.start, RV.out + 0.5);
+  tl.fromTo(splitChars($("#rvTop")), { opacity: 0 }, { opacity: 1, duration: 0.05, stagger: 0.075, ease: "none" }, RV.start + 0.1);
+  tl.to("#rvTop", { y: -40, duration: 0.5, ease: "power3.out" }, RV.drop);
+  tl.fromTo(splitChars($("#rvMain")), { opacity: 0, scale: 1.8, y: 30, filter: "blur(20px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out", stagger: 0.03 }, RV.drop);
+  tl.fromTo("#flash", { opacity: 0.85 }, { opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, RV.drop);
+  tl.fromTo("#bgGlow", { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, RV.drop);
+  tl.to("#bgGlow", { opacity: 0.45, duration: 1.2 }, RV.drop + 0.3);
+  shake(RV.drop, 16, 0.5);
+  draw("wavePath", RV.drop + 0.05, 0.9, { ease: "power2.out" });
+  tl.fromTo("#brand", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, RV.logo);
+  tl.to(["#rvTop", "#rvMain", "#brand"], { y: -260, opacity: 0, duration: 0.4, ease: "power3.in", stagger: 0.04 }, RV.out);
+  tl.to("#wave", { y: -600, opacity: 0, duration: 0.45, ease: "power3.in" }, RV.out);
+  tl.to("#bgGlow", { opacity: 0, duration: 0.4 }, RV.out);
+
+  /* 04 stack */
+  showScene("stack", S.start - 0.1, S.out + 0.45);
+  popChars(splitChars($("#stA")), S.start - 0.05, { stagger: 0.02, y: 30 });
+  popChars(splitChars($("#stB")), S.start + 0.05, { stagger: 0.025, y: 50 });
+  const rows = $$(".row");
+  const r0 = S.rows[0], r3 = S.rows[3];
+  draw("stLine", r0 - 0.15, r3 - r0 + 0.6, { head: "stComet", ease: "none" });
+  S.rows.forEach((at, k) => {
+    tl.fromTo("#ic" + k, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.6)", immediateRender: false }, at);
+    tl.fromTo(rows[k], { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out", immediateRender: false }, at + 0.03);
+    shake(at, 4, 0.2);
+  });
+  tl.to(".row .w", { color: "#FFE7A0", duration: 0.2, stagger: 0.06 }, S.glow);
+  tl.to(".row .w", { color: "#FFFFFF", duration: 0.3, stagger: 0.06 }, S.glow + 0.3);
+  tl.to("#stack > *", { y: -120, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.015 }, S.out);
+
+  /* 05 cta */
+  showScene("cta", CT.start - 0.05, CT.end + 1);
+  tl.fromTo("#bgGlow", { opacity: 0 }, { opacity: 0.55, duration: 0.6, immediateRender: false }, CT.start);
+  tl.fromTo("#flash", { opacity: 0.5 }, { opacity: 0, duration: 0.45, immediateRender: false }, CT.start);
+  shake(CT.start, 10, 0.35);
+  popChars(splitChars($("#ctaH1")), CT.start, { stagger: 0.022, y: 60, scale: 1.2 });
+  popChars(splitChars($("#ctaH2")), CT.start + 0.3, { stagger: 0.015, y: 30 });
+  ctaAnim($("#cta"), CT.start, CT);
+  tl.to("#cam", { scale: 1.03, duration: CT.end - CT.start, ease: "none" }, CT.start);
+}
+window.__ready = Engine.boot(build, timeline, "build/score-short.wav");
+</script>
+</body>
+</html>

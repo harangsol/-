@@ -1,0 +1,93 @@
+/* 하랑솔루션 영상 공통 스타일 (short.html, fund.html) */
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("../node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2");
+  font-weight: 45 920;
+  font-display: block;
+}
+:root {
+  --navy: #10243E;
+  --navy-deep: #08152A;
+  --navy-2: #1D4E89;
+  --gold: #C9A227;
+  --gold-hi: #EBC75E;
+  --gold-lo: #9A7B14;
+  --paper: #F7F8FA;
+  --ink: #14213A;
+  --sub: #5B6472;
+  --line: #E3E6EB;
+  --red: #E0524A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #000; overflow: hidden; }
+body { font-family: "Pretendard Variable", sans-serif; word-break: keep-all; }
+
+#stage {
+  position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden;
+  background: var(--navy-deep); transform-origin: 0 0; color: #fff;
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+.abs { position: absolute; }
+.full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+.scene { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0; visibility: hidden; }
+.c { display: inline-block; white-space: pre; will-change: transform; }
+.goldtext {
+  background: linear-gradient(180deg, #FFE7A0 0%, #EBC75E 45%, #C9A227 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.t { letter-spacing: -0.045em; line-height: 1.12; }
+.center { left: 0; width: 1080px; text-align: center; }
+.left { left: 90px; width: 900px; }
+
+#bgNavy { background: radial-gradient(120% 80% at 50% 30%, #17335A 0%, #0D1F3A 45%, #071328 100%); }
+#bgPaper { background: var(--paper); opacity: 0; }
+#bgGlow  { background: radial-gradient(60% 40% at 50% 46%, rgba(235,199,94,.35) 0%, rgba(235,199,94,0) 70%); opacity: 0; }
+.grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 90px 90px; background-position: -1px -1px;
+}
+#gridPaper { opacity: 0;
+  background-image:
+    linear-gradient(rgba(16,36,62,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,36,62,.05) 1px, transparent 1px);
+  background-size: 90px 90px; background-position: -1px -1px;
+}
+#particles .p { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,225,140,.9) 0%, rgba(255,225,140,0) 70%); }
+#grain { pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1.6 -.3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+#vignette { pointer-events: none; background: radial-gradient(130% 90% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); }
+#flash { background: #FFF6DA; opacity: 0; pointer-events: none; }
+#cam { transform-origin: 540px 960px; }
+
+/* 공통 부품 */
+.chip { display: inline-block; padding: 16px 30px; border-radius: 999px; font-size: 40px; font-weight: 700; letter-spacing: -0.035em;
+  background: rgba(255,255,255,.07); border: 2px solid rgba(235,199,94,.55); color: #fff; white-space: nowrap; }
+.logo { display: flex; align-items: center; gap: 22px; }
+.logo .wm { font-weight: 800; letter-spacing: -0.04em; }
+.flow { fill: none; stroke: url(#goldGrad); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+.flowThin { fill: none; stroke: var(--gold-hi); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+.mark { position: relative; display: inline-block; }
+.mark::after { content: ""; position: absolute; left: -8px; right: -8px; bottom: 14px; height: 46px; background: rgba(201,162,39,.45); z-index: -1; transform: scaleX(var(--s, 0)); transform-origin: 0 50%; border-radius: 4px; }
+
+/* 신청 화면 */
+.ctaH1 { font-size: 92px; font-weight: 900; }
+.ctaH2 { font-size: 56px; font-weight: 700; color: rgba(255,255,255,.8); line-height: 1.3; }
+.ctaLogo { display: flex; flex-direction: column; align-items: center; opacity: 0; }
+.ctaLogoSub { margin-top: 22px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+.ctaBtn { left: 110px; width: 860px; height: 156px; border-radius: 999px; opacity: 0;
+  background: linear-gradient(180deg, #F3D57A 0%, #D9B23C 55%, #C9A227 100%);
+  box-shadow: 0 18px 60px rgba(201,162,39,.45), inset 0 -6px 0 rgba(0,0,0,.12);
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  font-size: 56px; font-weight: 900; color: var(--navy); letter-spacing: -0.045em; }
+.ctaRing { left: 110px; width: 860px; height: 156px; border-radius: 999px; border: 5px solid var(--gold-hi); opacity: 0; }
+.ctaWays { font-size: 38px; font-weight: 700; color: rgba(255,255,255,.75); letter-spacing: -0.02em; opacity: 0; }
+.ctaWays b { color: #fff; }
+.hand { width: 150px; height: 150px; opacity: 0; }
+.ctaFoot { left: 70px; width: 940px; text-align: center; font-size: 24px; line-height: 1.6; color: rgba(255,255,255,.5); font-weight: 500; letter-spacing: -0.02em; opacity: 0; }
+.example { font-size: 24px; font-weight: 600; color: rgba(255,255,255,.55); letter-spacing: -0.01em; }
+
+#ui { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px; background: rgba(0,0,0,.75); color: #fff; font: 14px sans-serif; display: none; align-items: center; gap: 12px; z-index: 10; }
+#ui input { flex: 1; }

@@ -1,10 +1,46 @@
-# 하랑솔루션 홍보영상 (39초 · 세로 9:16)
+# 하랑솔루션 홍보영상 (세로 9:16)
 
-릴스·쇼츠·틱톡용 상담신청 유도 영상입니다. 완성본은 [`out/harangsol-promo-9x16.mp4`](out/harangsol-promo-9x16.mp4) (1080×1920, 60fps, 음악 포함, -14 LUFS)입니다.
+릴스·쇼츠·틱톡용 상담신청 유도 영상 세 편입니다. 모두 1080×1920, 60fps입니다.
 
-화면은 HTML과 GSAP로 만든 모션그래픽이고, 음악과 효과음은 `score.py`가 수식으로 직접 합성합니다. 외부 영상·사진·음원을 쓰지 않아 저작권 문제가 없습니다. 문구를 바꾸고 명령 두 줄이면 다시 뽑을 수 있습니다.
+| 영상 | 게시용 (음악 포함, -14 LUFS) | 음성 얹기용 (배경음악 낮춤) | 내레이션 대본 |
+|---|---|---|---|
+| 본편 39초 | [`out/harangsol-promo-9x16.mp4`](out/harangsol-promo-9x16.mp4) | — | — |
+| 인스타 숏폼 20초 | [`out/harangsol-short-9x16.mp4`](out/harangsol-short-9x16.mp4) | [`out/harangsol-short-9x16-voice-ready.mp4`](out/harangsol-short-9x16-voice-ready.mp4) | [`scripts/voiceover.md`](scripts/voiceover.md) 3장 |
+| 정책자금 40초 | [`out/harangsol-fund-9x16.mp4`](out/harangsol-fund-9x16.mp4) | [`out/harangsol-fund-9x16-voice-ready.mp4`](out/harangsol-fund-9x16-voice-ready.mp4) | [`scripts/voiceover.md`](scripts/voiceover.md) 4장 |
 
-## 영상 흐름
+화면은 HTML과 GSAP로 만든 모션그래픽이고, 음악과 효과음은 파이썬이 수식으로 직접 합성합니다. 외부 영상·사진·음원을 쓰지 않아 저작권 문제가 없습니다.
+
+**일레븐랩스 음성 넣기**: 대본(`scripts/voiceover.md`)의 줄마다 음성을 만들어 `vo/short/S1.mp3`…, `vo/fund/F1.mp3`… 로 저장한 뒤 `python3 tools/mix_vo.py short` (또는 `fund`)를 실행하면 `out/…-with-voice.mp4`가 나옵니다. 음성이 나올 때 배경음악이 자동으로 줄어듭니다.
+
+## 숏폼 20초 흐름 (`short.html`)
+
+| 시간 | 장면 |
+|---|---|
+| 0–4초 | 매출은 늘었는데 왜 남는 돈은 없을까요? (본편과 같은 후킹) |
+| 4–6초 | 상품이 아니라 **순서입니다** |
+| 6–10초 | 매출보다 중요한 건, **돈의 흐름**입니다 + 로고 (8초 음악 드롭) |
+| 10–14초 | 네 단계를 한 화면에: 조달·방어·보존·증식이 금빛 선으로 이어짐 |
+| 14–20초 | 지금 상황만 알려주세요 → 무료 진단 상담 신청 버튼 |
+
+## 정책자금 40초 흐름 (`fund.html`)
+
+근거는 홈페이지 기획안 4장 ①정책자금·②대출 카드, 9장 FAQ 2번("정책자금은 무조건 받을 수 있나요? → 아닙니다")입니다.
+
+| 시간 | 장면 | 의도 |
+|---|---|---|
+| 0–4초 | 대출 심사 결과에 **"부결"** 도장 → 아직, 끝이 아닙니다 | 은행 거절을 겪은 대표님을 바로 붙잡는다 |
+| 4–10초 | 정책자금, 어디서부터 보세요? 기관·자금 이름 10개가 어지럽게 쏟아짐 → 한 번 거절에 멈추게 됩니다 | 혼자 하면 막막하다는 걸 보여 준다 |
+| 10–14초 | 하랑솔루션은 **순서**부터 정리합니다. 흩어진 칩이 '기관 자금 / 지역·업종·지원사업'으로 정렬 | 혼란 → 정리, 음악 드롭 |
+| 14–20초 | 업종·매출·업력·신용·부채를 진단 → 어떤 자금을, 어떤 순서로 (+ 대출을 볼 때는 월 상환액·만기·거치기간·향후 정책자금 영향까지) | 방법이 있다는 신뢰 |
+| 20–26초 | 상담 예시 (화면에 "예시" 표시): 경기·제조업·연 매출 12억 → 추가 대출보다 정책자금 검토가 먼저 → ①신용 정리 ②기술보증기금 검토 ③시설자금 분리 신청 → 함께 본 것: 법인전환 시점·대표자 퇴직재원 | 구체적인 실행 순서, 정책자금 외 영역으로 연결 |
+| 26–32초 | 정책자금, 무조건 되나요? **아닙니다.** 되는 것과 어려운 것, 먼저 구분해 드립니다 | 과장 광고와의 차별화, 규제 방어 |
+| 32–40초 | 운영자금·시설자금 필요하시다면 → **정책자금 진단 상담 신청** 버튼 | 행동 유도 |
+
+정책자금 영상 하단 고지: "정책자금 지원 여부와 한도는 각 기관의 심사 기준에 따라 달라집니다. 하랑솔루션은 자금을 직접 지원하거나 대출하지 않습니다." (`fund.html`의 `COPY.footnote`)
+
+> 정책자금 컨설팅 광고는 공공기관들이 "수수료를 받고 승인을 약속하는 제3자 개입"을 경계하는 분야입니다. 영상과 대본에는 승인 약속·대행 표현을 넣지 않았습니다. 게시 전에 이 기준으로 한 번 더 확인하세요.
+
+## 본편 39초 흐름 (`index.html`)
 
 시청자가 "내 얘기네"라고 느끼게 한 뒤 → 하랑솔루션이 다르게 보는 방식 → 믿을 근거 → 신청 후 진행 절차 → 신청 버튼 순서입니다. 문구의 근거는 모두 홈페이지 기획안(`claude/harang-solution-homepage-plan-8qou94` 브랜치의 `docs/harangsol-homepage-plan.md`)에 정리된 회사 메시지입니다.
 
@@ -22,7 +58,7 @@
 
 ## 올리기 전에 확인할 것
 
-- [ ] **"무료 진단 상담"**: 홈페이지 기획안의 버튼 문구를 그대로 썼습니다. 실제로 상담 비용이 없을 때만 쓰세요. 아니라면 `index.html`의 `COPY.ctaButton`을 "진단 상담 신청" 등으로 바꿉니다.
+- [ ] **"무료 진단 상담"**: 홈페이지 기획안의 버튼 문구를 그대로 썼습니다(본편·숏폼). 실제로 상담 비용이 없을 때만 쓰세요. 아니라면 `index.html`·`short.html`의 `COPY.ctaButton`을 "진단 상담 신청" 등으로 바꿉니다. 정책자금 영상 버튼은 "정책자금 진단 상담 신청"입니다.
 - [ ] **신청 경로**: 마지막 화면은 "프로필 링크 · 카카오톡 · 전화"입니다. 전화번호나 카카오톡 채널명을 넣으려면 `COPY.ctaWays`를 고칩니다.
 - [ ] **로고**: 영상 속 로고(남색 사각형 안의 금빛 곡선)는 임시로 만든 것입니다. 정식 로고가 있으면 교체해야 합니다(아래 '문구·로고 바꾸기').
 - [ ] **하단 고지문**: "정책자금·대출 가능 여부는 각 기관과 금융회사의 심사에 따라 달라집니다. 하랑솔루션은 직접 대출하지 않으며, 분야별 금융기관·전문가와 연계합니다." 기획안 10장의 광고 규제 검토에 맞춰 넣었습니다. 대출모집 등록번호 등 표기 의무가 있으면 `COPY.footnote`에 추가하세요.
@@ -42,23 +78,39 @@ Node.js 20 이상, Python 3.11 이상, ffmpeg, Playwright(Chromium)가 필요합
 
 ```bash
 cd promo-video
-npm install                 # gsap, pretendard 글꼴
-pip install numpy scipy     # 음악 합성용
-python3 score.py            # build/score.wav (음악·효과음)
-node render.mjs --fps 60    # out/harangsol-promo-9x16.mp4
+npm install                            # gsap, pretendard 글꼴
+pip install numpy scipy pyloudnorm     # 음악 합성용
+
+# 본편
+python3 score.py && node render.mjs --fps 60
+
+# 숏폼
+python3 score_short.py
+node render.mjs --page short.html --fps 60 \
+  --mux build/score-short.wav=out/harangsol-short-9x16.mp4 \
+  --mux build/score-short-vo.wav=out/harangsol-short-9x16-voice-ready.mp4
+
+# 정책자금
+python3 score_fund.py
+node render.mjs --page fund.html --fps 60 \
+  --mux build/score-fund.wav=out/harangsol-fund-9x16.mp4 \
+  --mux build/score-fund-vo.wav=out/harangsol-fund-9x16-voice-ready.mp4
 ```
 
 | 명령 | 용도 |
 |---|---|
-| `node render.mjs --stills 2,15,25` | 지정한 초의 정지화면만 `build/stills/`에 저장 (빠른 확인용) |
+| `node render.mjs --page fund.html --stills 2,15,25` | 지정한 초의 정지화면만 `build/stills-fund/`에 저장 (빠른 확인용) |
+| `node render.mjs --page fund.html --mux-only --mux …` | 이미 뽑은 프레임에 음악만 다시 합치기 |
+| `python3 tools/vo_check.py cues-short.js cues-fund.js` | 내레이션 줄이 영상 자리에 들어가는지 확인 |
+| `python3 tools/mix_vo.py short` | 일레븐랩스 음성(`vo/short/S1.mp3`…)을 얹은 완성본 만들기 |
 | `node render.mjs --fps 30` | 30fps로 빠르게 렌더 (약 1분 반) |
 | `python3 tools/contact_sheet.py` | 정지화면을 한 장에 모아 비교 |
 | 브라우저로 `index.html` 열기 | 재생 버튼과 탐색 막대로 미리보기 (로컬 서버 필요: `npx serve` 등) |
 
 ## 문구·로고 바꾸기
 
-- **글자**: `index.html` 안의 `COPY` 묶음만 고치면 됩니다(회사명, 고민 6개, 4단계 문구, 절차, 버튼, 고지문).
-- **타이밍**: `cues.js`에서 장면별 시작 초를 바꾸면 화면과 음악이 함께 움직입니다. 음악은 120BPM(0.5초 단위)이라 0.5초 단위로 옮기는 것이 가장 자연스럽습니다.
+- **글자**: 각 HTML(`index.html`, `short.html`, `fund.html`) 안의 `COPY` 묶음만 고치면 됩니다(회사명, 버튼, 고지문, 장면 문구).
+- **타이밍**: `cues.js`·`cues-short.js`·`cues-fund.js`에서 장면별 시작 초를 바꾸면 화면과 음악이 함께 움직입니다. 음악은 120BPM(0.5초 단위)이라 0.5초 단위로 옮기는 것이 가장 자연스럽습니다.
 - **로고**: `index.html`의 `logoHTML()` 함수 안 `<svg>`를 정식 로고 SVG로 바꿉니다.
 - **색**: `:root`의 `--navy`, `--gold` 등. 기획안 8.2의 브랜드 색(딥 네이비 #10243E, 골드 #C9A227)을 썼습니다.
 
@@ -66,9 +118,13 @@ node render.mjs --fps 60    # out/harangsol-promo-9x16.mp4
 
 | 파일 | 역할 |
 |---|---|
-| `index.html` | 모션그래픽 전체 (장면·애니메이션·문구) |
-| `cues.js` | 장면 타이밍. 화면과 음악이 같이 읽음 |
-| `score.py` | 음악·효과음 합성 → `build/score.wav` |
+| `index.html` · `cues.js` · `score.py` | 본편 화면 · 타이밍 · 음악 |
+| `short.html` · `cues-short.js` · `score_short.py` | 숏폼 화면 · 타이밍(+내레이션 줄) · 음악 |
+| `fund.html` · `cues-fund.js` · `score_fund.py` | 정책자금 화면 · 타이밍(+내레이션 줄) · 음악 |
+| `lib/base.css` · `lib/engine.js` | 숏폼·정책자금 공통 스타일과 애니메이션 도구 |
+| `synth.py` | 숏폼·정책자금 공통 악기·믹서 (게시용 -14 LUFS, 음성용 -21 LUFS 두 벌 출력) |
 | `render.mjs` | 프레임 캡처 → ffmpeg 인코딩 |
+| `scripts/voiceover.md` | 일레븐랩스 내레이션 대본과 설정 |
+| `tools/mix_vo.py` · `tools/vo_check.py` | 음성 얹기 · 대본 길이 확인 |
 | `tools/contact_sheet.py` | 검토용 정지화면 모음 |
-| `out/harangsol-promo-9x16.mp4` | 완성 영상 |
+| `out/` | 완성 영상 |
