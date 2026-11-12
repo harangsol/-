@@ -6,6 +6,7 @@
 //        --mux build/score-short-vo.wav=out/b.mp4     프레임 한 번 뽑아 음악별로 여러 파일 만들기
 //   node render.mjs --page fund.html --mux-only --mux ...   이미 뽑은 프레임으로 음악만 다시 합치기
 //   node render.mjs --page fund.html --stills 0.5,9,20      정지화면만 build/stills-<page>/ 에 저장
+//   --variant ad  광고판 문구로 렌더 (페이지 주소에 ?ad 를 붙임)
 //   --workers 4   병렬 브라우저 페이지 수
 import { createServer } from "node:http";
 import { readFile, mkdir, rm, access, readdir } from "node:fs/promises";
@@ -22,7 +23,8 @@ const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] :
 const opts = k => args.flatMap((a, i) => (a === k ? [args[i + 1]] : []));
 
 const PAGE = opt("--page", "index.html");
-const TAG = PAGE.replace(/\.html$/, "");
+const VARIANT = opt("--variant", "");
+const TAG = PAGE.replace(/\.html$/, "") + (VARIANT ? `-${VARIANT}` : "");
 const FRAMES = join(ROOT, TAG === "index" ? "build/frames" : `build/frames-${TAG}`);
 let MUX = opts("--mux").map(s => s.split("="));
 if (!MUX.length && TAG === "index") MUX = [["build/score.wav", opt("--out", "out/harangsol-promo-9x16.mp4")]];
@@ -64,7 +66,7 @@ const server = createServer(async (req, res) => {
   } catch { res.writeHead(404); res.end(); }
 });
 await new Promise(r => server.listen(0, "127.0.0.1", r));
-const URL_ = `http://127.0.0.1:${server.address().port}/${PAGE}?render`;
+const URL_ = `http://127.0.0.1:${server.address().port}/${PAGE}?render${VARIANT ? "&" + VARIANT : ""}`;
 
 const browser = await chromium.launch();
 async function openPage() {

@@ -8,6 +8,8 @@
      python3 tools/mix_vo.py short
      python3 tools/mix_vo.py fund
    → out/harangsol-short-9x16-with-voice.mp4 (또는 fund)
+     python3 tools/mix_vo.py fund --ad
+   → 광고판 영상에 얹기. 광고판에서 대사가 다른 줄(S6, F1, F7)은 S6-ad.mp3 처럼 저장
 
 각 음성은 cues 파일에 적힌 시작 시간에 놓이고, 음성이 나오는 동안 배경음악이 자동으로 줄어든다.
 음성이 다음 줄 자리까지 넘치면 경고를 띄운다(일레븐랩스 속도를 1.05~1.1로 올려 다시 만들면 된다).
@@ -26,12 +28,14 @@ ap = argparse.ArgumentParser()
 ap.add_argument("name", choices=["short", "fund"])
 ap.add_argument("--dir", help="음성 파일 폴더 (기본: vo/<name>)")
 ap.add_argument("--gain", type=float, default=0.0, help="음성 볼륨 보정(dB)")
+ap.add_argument("--ad", action="store_true", help="광고판 영상(out/ad-…)에 얹기. <ID>-ad.mp3 가 있으면 그 줄은 그것을 씀")
 a = ap.parse_args()
 
 cues = load_cues(ROOT / f"cues-{a.name}.js")
 vdir = Path(a.dir) if a.dir else ROOT / "vo" / a.name
-video = ROOT / f"out/harangsol-{a.name}-9x16-voice-ready.mp4"
-out = ROOT / f"out/harangsol-{a.name}-9x16-with-voice.mp4"
+prefix = "ad" if a.ad else "harangsol"
+video = ROOT / f"out/{prefix}-{a.name}-9x16-voice-ready.mp4"
+out = ROOT / f"out/{prefix}-{a.name}-9x16-with-voice.mp4"
 if not video.exists():
     sys.exit(f"영상이 없습니다: {video}")
 
@@ -43,7 +47,8 @@ def duration(p):
 
 clips, missing = [], []
 for v in cues["vo"]:
-    f = next((vdir / f"{v['id']}{ext}" for ext in (".mp3", ".wav", ".m4a") if (vdir / f"{v['id']}{ext}").exists()), None)
+    names = ([f"{v['id']}-ad"] if a.ad else []) + [v["id"]]
+    f = next((vdir / f"{n}{ext}" for n in names for ext in (".mp3", ".wav", ".m4a") if (vdir / f"{n}{ext}").exists()), None)
     if not f:
         missing.append(v["id"])
         continue

@@ -116,6 +116,9 @@ const COPY = {
   ],
 };
 /* ==================== */
+/* 광고판(?ad): 메타 광고 정책(개인 특성 단정 금지)과 광고 버튼에 맞춘 문구 */
+const AD = new URLSearchParams(location.search).has("ad");
+if (AD) COPY.ctaWays = "아래 <b>신청하기</b> 버튼으로 간단히 남겨 주세요";
 const { C, $, $$, rnd, svgEl, splitChars, logoHTML, tl, shake, PART, showScene, popChars, draw, comet, ctaHand, ctaAnim } = Engine;
 const HEIGHTS = [150, 230, 320, 420, 540];
 const ROWY = [500, 800, 1100, 1400];

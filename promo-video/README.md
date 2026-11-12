@@ -12,6 +12,19 @@
 
 **일레븐랩스 음성 넣기**: 대본(`scripts/voiceover.md`)의 줄마다 음성을 만들어 `vo/short/S1.mp3`…, `vo/fund/F1.mp3`… 로 저장한 뒤 `python3 tools/mix_vo.py short` (또는 `fund`)를 실행하면 `out/…-with-voice.mp4`가 나옵니다. 음성이 나올 때 배경음악이 자동으로 줄어듭니다.
 
+## 인스타그램 광고
+
+광고 계획은 [`ads/instagram-campaign-plan.md`](ads/instagram-campaign-plan.md), 날마다 적는 성과표는 [`ads/tracker.csv`](ads/tracker.csv)(구글 시트로 열기)입니다.
+
+광고에는 **광고판 영상**을 씁니다. 메타 광고 정책(보는 사람의 재정 상태를 단정·암시하지 않기)에 맞춰 정책자금 영상의 첫 문장과 끝 화면을 바꾸고, 끝 화면 안내를 "아래 신청하기 버튼"으로 바꾼 판입니다.
+
+| 광고판 | 게시용 | 음성 얹기용 |
+|---|---|---|
+| 정책자금 40초 | [`out/ad-fund-9x16.mp4`](out/ad-fund-9x16.mp4) | [`out/ad-fund-9x16-voice-ready.mp4`](out/ad-fund-9x16-voice-ready.mp4) |
+| 숏폼 20초 | [`out/ad-short-9x16.mp4`](out/ad-short-9x16.mp4) | [`out/ad-short-9x16-voice-ready.mp4`](out/ad-short-9x16-voice-ready.mp4) |
+
+다시 만들기: `node render.mjs --page fund.html --variant ad --fps 60 --mux build/score-fund.wav=out/ad-fund-9x16.mp4 --mux build/score-fund-vo.wav=out/ad-fund-9x16-voice-ready.mp4`
+
 ## 숏폼 20초 흐름 (`short.html`)
 
 | 시간 | 장면 |

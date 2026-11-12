@@ -127,3 +127,20 @@ python3 tools/mix_vo.py fund    → out/harangsol-fund-9x16-with-voice.mp4
 - **"대출해 드립니다", "받아 드립니다"처럼 하랑솔루션이 직접 자금을 주는 것처럼 들리는 말도 쓰지 않았습니다.** 진단하고 순서를 정한다는 표현만 씁니다.
 - F5의 상담 예시는 화면에 "이해를 돕기 위한 예시"라고 표시되어 있습니다. 실제 사례로 바꾸려면 식별 정보를 빼고 써야 합니다.
 - 대본 줄과 시간을 바꾸려면 `cues-short.js`, `cues-fund.js`의 `vo` 항목을 고치고 `python3 tools/vo_check.py cues-short.js cues-fund.js`로 자리에 맞는지 확인합니다.
+
+---
+
+## 6. 인스타그램 광고판 대사
+
+메타 광고 정책은 보는 사람의 재정 상태를 단정하거나 암시하는 표현을 금지합니다. 그래서 광고판 영상(`out/ad-…`)에서는 아래 세 줄만 바꿨습니다. 나머지 줄은 위와 같습니다.
+
+| ID | 시작 | 자리 | 광고판 대사 | 파일 이름 |
+|---|---|---|---|---|
+| S6 | 0:17.95 | 2.0초 | 아래 버튼으로 신청하세요. | `vo/short/S6-ad.mp3` |
+| F1 | 0:00.20 | 3.6초 | 은행에서 안 된다고 해도, 아직 끝이 아닙니다. | `vo/fund/F1-ad.mp3` |
+| F7 | 0:32.10 | 7.8초 | 운영자금, 시설자금. 내 사업에 맞는 자금부터 순서대로 확인하세요. 하랑솔루션, 아래 버튼으로 신청하세요. | `vo/fund/F7-ad.mp3` |
+
+```
+python3 tools/mix_vo.py short --ad   → out/ad-short-9x16-with-voice.mp4
+python3 tools/mix_vo.py fund --ad    → out/ad-fund-9x16-with-voice.mp4
+```
